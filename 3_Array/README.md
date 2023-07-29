@@ -20,8 +20,9 @@ while(i<end){
 
 ## Pascal Triangle
 
-Remember this formula of ```c = c*(i-j)/j;```  
+Remember this formula of `c = c*(i-j)/j;`  
 This is used to find binomial coefficients
+
 ```c++
 vector<vector<int>> answer;
         int n = numRows;
