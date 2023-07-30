@@ -97,3 +97,15 @@ github repository of love babbar DSA challanges
 [Largest number](./5_char_array_string/Assignment.md)
 
 ## Pointers and Mathematics algorithms
+
+[Seive of Erathosthenes - prime number](/6_pointers/README.md)  
+[GCD euclid algorithm](/6_pointers/README.md)  
+[Modulus properties](/6_pointers/README.md)  
+[Fast exponential pow(a,b)](/6_pointers/README.md)  
+[Pigeon hole](/6_pointers/README.md)  
+[catalan number bst](/6_pointers/README.md)  
+[inclusion exclusion principle](/6_pointers/README.md)  
+[chinese reminder theorem](/6_pointers/README.md)  
+[lucas's theorem](/6_pointers/README.md)  
+[fermat's theorem](/6_pointers/README.md)  
+[probability concepts](/6_pointers/README.md)
