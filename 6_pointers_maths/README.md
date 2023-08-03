@@ -29,9 +29,35 @@ int countPrime(int n){
 }
 ```
 
+### OPTIMIZED version of prime number seive erathosthenes
+
+- in for loop i <= root(n)  
+  because i greater than root(n) will be greater than n which is out of bound
+- j = i\*i not i\*2 because from experimenting we find that for numbers in factor of j which are less than i\*i are already marked by numbers less than i.
+
+```cpp
+int countPrime(int n){
+    if(n==0) return 0;
+    vector<bool> prime(n,true);
+    prime[0]=prime[1] = false;
+    int ans = 0;
+    for(int i=2;i<sqrt(n);i++){
+        if(prime[i]){
+            ans++;
+            j = i*i;
+            while(j<n){
+                prime[j] = false;
+                j = j+i;
+            }
+        }
+    }
+    return ans;
+}
+```
+
 ## GCD Euclid algorithm
 
-```
+```cpp
 gcd(a,b) = gcd(a-b,b) for(a>b)
 or
 gcd(a,b) = gcd(b-a,a) for (b>a)
@@ -59,13 +85,13 @@ gcd(a,b) = gcd(a%b,b) this is not prefer because modulus is heave operation comp
 
 another important formula
 
-```
+```cpp
 gcd(a,b) * lcm(a,b) = a*b
 ```
 
 ## Modulus properties
 
-```
+```cpp
 - (a+b)%M = a%M + b%M
 - a%m - b%M = (a-b)%M
 - (((a%M)%M)%M) = a%M
