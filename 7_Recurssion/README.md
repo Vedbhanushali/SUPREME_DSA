@@ -90,7 +90,7 @@ int maxi = INT_MIN;
 findMax(arr,0,arr_size,maxi);
 ```
 
-## fining value in array using recursion
+## finding value in array using recursion
 
 ```cpp
 bool checkKey(int arr[],int key,int i,int n){
@@ -182,5 +182,76 @@ int main(){
     string output = "";
     int i = 0;
     printSubsequence(str,output,i);
+}
+```
+
+## Coin exchange
+
+find minimum number of elements required to reach target sum.
+
+```cpp
+int solve(arr,target){
+    if(target==0) return 0;
+    if(target < 0)
+        return INT_MAX;
+    int mini = INT_MAX
+    for(int i=0;i<n;i++){
+        int ans = solve(arr,target-arr[i])
+        if(ans!=INT_MAX){
+            mini = min(mini,ans+1);
+        }
+    }
+    return mini;
+}
+```
+
+## Cut into segments
+
+N length rod, find max no of segments you can make of three segments.
+x = 5,y=2,z=2
+
+```cpp
+int solve(int n,int x,int y,int z){
+    if(n<=0) return INT_MIN;
+    if(n==0) return 0;
+    int a1 = solve(n-x,x,y,z)+1;
+    int a2 = solve(n-y,x,y,z)+1;
+    int a3 = solve(n-z,x,y,z)+1;
+    return max(a1,max(a2,a3));
+}
+//function call
+int ans = solve(7,5,2,2);
+if(ans < 0) cout<<"no segments possible"
+```
+
+## Maximum sum of adjacent elements
+
+find non adjacent elements whose sum is maximum
+
+2 1 4 9  
+pairs are  
+2 4  
+2 9  
+1 9  
+
+```cpp
+void solve(vector<int> &arr,int sum,int i,int &maxi){
+    if(i >= arr.size()){
+        maxi = max(maxi,sum);
+        return;
+    }
+    //include
+    solve(arr,sum+arr[i],i+2,maxi);
+    //exclude
+    solve(arr,sum,i+1,maxi);
+}
+//function call
+main(){
+    vector<int> arr = {1,3,5,9};
+    int sum = 0;
+    int i = 0;
+    int maxi = INT_MIN;
+    solve(arr,sum,i,maxi);
+    cout<<"ans "<<maxi;
 }
 ```

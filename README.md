@@ -109,3 +109,66 @@ github repository of love babbar DSA challanges
 [lucas's theorem](/6_pointers_maths/README.md)  
 [fermat's theorem](/6_pointers_maths/README.md)  
 [probability concepts](/6_pointers_maths/README.md)
+
+### Assigments
+
+NA
+
+## Recursion
+
+[print 1 to n](/7_Recurssion/README.md)  
+[factorial](/7_Recurssion/README.md)  
+[fibonaci](/7_Recurssion/README.md)  
+[climbing stairs](/7_Recurssion/README.md)  
+[array print all element using recursion](/7_Recurssion/README.md)  
+[find max in array using recursion](/7_Recurssion/README.md)  
+[finding value in array using array](/7_Recurssion/README.md)  
+[print all digits of number using recursion](/7_Recurssion/README.md)  
+[finding is array sorted](/7_Recurssion/README.md)  
+[Binary search using recursion](/7_Recurssion/README.md)  
+[Subsequence of string](/7_Recurssion/README.md)  
+[Coin exchange](/7_Recurssion/README.md)  
+[Cut into segement](/7_Recurssion/README.md)  
+[Maximum sum of adjacent elements](/7_Recurssion/README.md)  
+
+### Assigments of recursion
+
+TODO
+
+## Divide and Conquer
+
+[merge sort](/8_Divide_and_conquor/README.md)  
+[quick sort](/8_Divide_and_conquor/README.md)  
+
+### Assigments of D&C
+
+TODO
+
+## Backtracking
+
+[permutation of string](/9_backtracking/README.md)  
+[house robber problem](/9_backtracking/README.md)  
+[rate in maze](/9_backtracking/README.md)  
+[sudoko solver](/9_backtracking/README.md)  
+[N Queen](/9_backtracking/README.md)  
+
+### Assigments of Backtracking
+
+TODO
+
+## OOPS
+
+[Static memory allocation](/10_OPPS/README.md)  
+[Dynamic memory allocation](/10_OPPS/README.md)  
+[1D array and 2D array heap memory](/10_OPPS/README.md)  
+[Constructor](/10_OPPS/README.md)  
+[Destructor](/10_OPPS/README.md)  
+[Encapsulation](/10_OPPS/README.md)  
+[Inheritance](/10_OPPS/README.md)  
+[Types of inheritance](/10_OPPS/README.md)  
+[Polymorphism](/10_OPPS/README.md)  
+[Abstraction](/10_OPPS/README.md)  
+
+### Assigments of OOP
+
+TODO
