@@ -138,6 +138,7 @@ TODO
 ## Divide and Conquer
 
 [merge sort](/8_Divide_and_conquor/README.md)  
+[In place Merge sort](/8_Divide_and_conquor/README.md)  
 [quick sort](/8_Divide_and_conquor/README.md)  
 
 ### Assigments of D&C
@@ -172,3 +173,24 @@ TODO
 ### Assigments of OOP
 
 TODO
+
+## LinkedList
+
+[Single LinkedList structure](/11_LinkedList/LINKEDLIST.md)  
+[find length of linkedlist](/11_LinkedList/LINKEDLIST.md)  
+[Insert at head](/11_LinkedList/LINKEDLIST.md)  
+[Insert at tail](/11_LinkedList/LINKEDLIST.md)  
+[Insert at position](/11_LinkedList/LINKEDLIST.md)  
+[Delete node at postion](/11_LinkedList/LINKEDLIST.md)  
+[Reverse Linked list using loops](/11_LinkedList/LINKEDLIST.md)  
+[Reverse linked list using recursion](/11_LinkedList/LINKEDLIST.md)  
+
+## Doubly LinkedList
+
+[Doubly linked list structure](/11_LinkedList/DOUBLY_LINKEDLIST.md)  
+[print doubly linked list](/11_LinkedList/DOUBLY_LINKEDLIST.md)  
+[length of doubly linked list](/11_LinkedList/DOUBLY_LINKEDLIST.md)  
+[Insert at head](/11_LinkedList/DOUBLY_LINKEDLIST.md)  
+[Insert at tail](/11_LinkedList/DOUBLY_LINKEDLIST.md)  
+[Insert at position](/11_LinkedList/DOUBLY_LINKEDLIST.md)  
+[Delete node from position](/11_LinkedList/DOUBLY_LINKEDLIST.md)  
