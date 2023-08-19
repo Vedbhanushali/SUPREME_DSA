@@ -189,10 +189,421 @@ while(1){
 
 ## Book Allocation Problem
 
+<https://practice.geeksforgeeks.org/problems/allocate-minimum-number-of-pages0937/1>
+
+You have N books, each with Ai number of pages. M students need to be allocated contiguous books, with each student getting at least one book. Out of all the permutations, the goal is to find the permutation where the student with the most books allocated to him gets the minimum number of pages, out of all possible permutations.
+
+Note: Return -1 if a valid assignment is not possible, and allotment should be in contiguous order (see the explanation for better understanding).
+
+Example 1:
+
+Input:
+N = 4
+A[] = {12,34,67,90}
+M = 2
+Output:113
+Explanation:Allocation can be done in
+following ways:
+{12} and {34, 67, 90} Maximum Pages = 191
+{12, 34} and {67, 90} Maximum Pages = 157
+{12, 34, 67} and {90} Maximum Pages =113.
+Therefore, the minimum of these cases is 113,
+which is selected as the output.
+
+### approach
+
+```cpp
+//{ Driver Code Starts
+// Initial template for C++
+
+#include<bits/stdc++.h>
+using namespace std;
+
+
+// } Driver Code Ends
+//User function template in C++
+
+class Solution 
+{
+    public:
+    bool isPossible(int A[],int N,int M,int sol){
+        int pageSum = 0;
+        int c = 1;
+        for(int i=0;i<N;i++){
+            if(A[i] > sol){
+                return false;
+            }
+            if(pageSum + A[i] > sol){
+                c++;
+                pageSum = A[i];
+                if(c>M){
+                    //mean books still pending but students over
+                    return false;
+                }
+            } else {
+                pageSum += A[i];
+            }
+        }
+        return true;
+    }
+    //Function to find minimum number of pages.
+    int findPages(int A[], int N, int M) 
+    {
+        //code here
+        if(M > N) return -1;
+        
+        int start  = 0;
+        int end = accumulate(A,A+N,0);
+        
+        int ans = -1;
+        
+        while(start<=end){
+            int mid = (start + end)>>1;
+            if(isPossible(A,N,M,mid)){
+                ans = mid;
+                end = mid - 1;
+            } else {
+                start = mid + 1;
+            }
+        }
+        return ans;
+    }
+};
+
+//{ Driver Code Starts.
+
+int main() {
+    int t;
+    cin>>t;
+    while(t--){
+        int n;
+        cin>>n;
+        int A[n];
+        for(int i=0;i<n;i++){
+            cin>>A[i];
+        }
+        int m;
+        cin>>m;
+        Solution ob;
+        cout << ob.findPages(A, n, m) << endl;
+    }
+    return 0;
+}
+
+// } Driver Code Ends
+```
+
 ## Painters Partition Problem
+
+```cpp
+//{ Driver Code Starts
+// driver code
+
+#include <bits/stdc++.h>
+using namespace std;
+
+
+// } Driver Code Ends
+//User function template for C++
+
+class Solution
+{
+  public:
+    bool isPossible(int arr[],int n,int k,long long sol){
+        long long sum = 0;
+        int c = 1;
+        for(int i=0;i<n,i++){
+            if(arr[i] > sol){
+                return false;
+            }
+            if(arr[i] + sum > sol ){
+                c++;
+                if(c>k){
+                    return false;
+                }
+                sum = arr[i];
+                
+            } else {
+                sum += arr[i];
+            }
+        }
+        return true;
+    }
+    long long minTime(int arr[], int n, int k)
+    {
+        // code here
+        // return minimum time
+        long long start = 0;
+        long long end = accumulate(arr,arr+n,0);
+        long long ans = -1;
+        
+        while(start<=end){
+            long long mid = start + (end-start)/2;
+            if(isPossible(arr,n,k,mid)){
+                ans = mid;
+                end = mid - 1;
+            } else {
+                start = mid + 1;
+            }
+        }
+        return ans;
+    }
+};
+
+//{ Driver Code Starts.
+
+int main()
+{
+ int t;
+ cin>>t;
+ while(t--)
+ {
+  int k,n;
+  cin>>k>>n;
+  
+  int arr[n];
+  for(int i=0;i<n;i++)
+      cin>>arr[i];
+  Solution obj;
+  cout << obj.minTime(arr, n, k) << endl;
+ }
+ return 0;
+}
+// } Driver Code Ends
+```
 
 ## Aggresive Cows
 
+<https://practice.geeksforgeeks.org/problems/aggressive-cows/0>
+
+```cpp
+//{ Driver Code Starts
+// Initial Template for C++
+#include <bits/stdc++.h>
+using namespace std;
+
+
+// } Driver Code Ends
+// User function Template for C++
+
+class Solution {
+public:
+    
+    bool isPossible(vector<int>& stalls,int cows,int minDis){
+        //can we place cows with at least minDistance    
+        int c = 1;
+        int pos = stalls[0]; 
+        for(int i = 1;i<stalls.size();i++){
+            if(stalls[i] - pos >= minDis){
+                c++;
+                pos = stalls[i];
+            }
+            if(c == cows) return true;
+        }
+        return false;
+    }
+    int solve(int n, int k, vector<int> &stalls) {
+    
+        // Write your code here
+        sort(stalls.begin(),stalls.end());
+        int s = 0;
+        int e = stalls[stalls.size()-1] - stalls[0];
+        int ans = -1;
+        int mid = s + (e-s)/2;
+        while(s<=e){
+            if(isPossible(stalls,k,mid)){
+                ans = mid;
+                s = mid+1;
+            } else {
+                e = mid - 1;
+            }
+            mid = s + (e-s) / 2;
+        }
+        return ans;
+    }
+};
+
+//{ Driver Code Starts.
+
+int main() {
+    int t = 1;
+    cin >> t;
+
+    // freopen ("output_gfg.txt", "w", stdout);
+
+    while (t--) {
+        // Input
+
+        int n, k;
+        cin >> n >> k;
+
+        vector<int> stalls(n);
+        for (int i = 0; i < n; i++) {
+            cin >> stalls[i];
+        }
+        // char ch;
+        // cin >> ch;
+
+        Solution obj;
+        cout << obj.solve(n, k, stalls) << endl;
+
+        // cout << "~\n";
+    }
+    // fclose(stdout);
+
+    return 0;
+}
+// } Driver Code Ends
+```
+
 ## EKO SPOJ
 
+<https://www.spoj.com/problems/EKO/>
+
+Lumberjack Mirko needs to chop down M metres of wood. It is an easy job for him since he has a nifty new woodcutting machine that can take down forests like wildfire. However, Mirko is only allowed to cut a single row of trees.
+
+Mirko‟s machine works as follows: Mirko sets a height parameter H (in metres), and the machine raises a giant sawblade to that height and cuts off all tree parts higher than H (of course, trees not higher than H meters remain intact). Mirko then takes the parts that were cut off. For example, if the tree row contains trees with heights of 20, 15, 10, and 17 metres, and Mirko raises his sawblade to 15 metres, the remaining tree heights after cutting will be 15, 15, 10, and 15 metres, respectively, while Mirko will take 5 metres off the first tree and 2 metres off the fourth tree (7 metres of wood in total).
+
+Mirko is ecologically minded, so he doesn‟t want to cut off more wood than necessary. That‟s why he wants to set his sawblade as high as possible. Help Mirko find the maximum integer height of the sawblade that still allows him to cut off at least M metres of wood.
+
+Input
+The first line of input contains two space-separated positive integers, N (the number of trees, 1 ≤ N ≤ 1 000 000) and M (Mirko‟s required wood amount, 1 ≤ M ≤ 2 000 000 000).
+
+The second line of input contains N space-separated positive integers less than 1 000 000 000, the heights of each tree (in metres). The sum of all heights will exceed M, thus Mirko will always be able to obtain the required amount of wood.
+
+Output
+The first and only line of output must contain the required height setting.
+
+Example
+Input:
+4 7
+20 15 10 17
+
+Output:
+15
+
+```cpp
+#include<iostream>
+#include<std/bitsc++.h>
+using namespace std;
+bool isPossible(vector<long long int> & trees, long long int m,long long int height){
+    long long int sum = 0;
+    for(long long int i = 0;i<trees.size();i++){
+        if(trees[i] > mid)
+        sum += trees[i] - height;
+    }
+    return (sum >= m) 
+}
+long long int solve(vector<long long int> &trees, long long int &m){
+    long long int start = 0;
+    long long int end = *max_element(trees.begin(),trees.end());
+    long long int ans = -1;
+    while(start <= e){
+        long long int mid = start + (end - start)/2;
+        if(isPossible(trees,m,mid)){
+            ans = mid;
+            start = mid + 1;
+        } else {
+            end = mid - 1;
+        }
+    }
+    return ans;
+}
+int main(){
+    long long int n,m;
+    cin>>n>>m;
+    vector<long long int> trees;
+    while(n--){
+        long long int height;
+        cin>> height;
+        trees.emplace_back(height);
+    }
+    cout<<solve(trees,m);
+    return 0;
+}
+```
+
 ## PRATA
+
+<https://www.spoj.com/problems/PRATA/>
+
+IEEE is having its AGM next week and the president wants to serve cheese prata after the meeting. The subcommittee members are asked to go to food connection and get P (P<=1000) pratas packed for the function. The stall has L cooks (L<=50) and each cook has a rank R (1<=R<=8). A cook with a rank R can cook 1 prata in the first R minutes 1 more prata in the next 2R minutes, 1 more prata in 3R minutes and so on (he can only cook a complete prata) (For example if a cook is ranked 2, he will cook one prata in 2 minutes one more prata in the next 4 mins an one more in the next 6 minutes hence in total 12 minutes he cooks 3 pratas in 13 minutes also he can cook only 3 pratas as he does not have enough time for the 4th prata). The webmaster wants to know the minimum time to get the order done. Please write a program to help him out.
+
+Input
+The first line tells the number of test cases. Each test case consist of 2 lines. In the first line of the test case we have P the number of prata ordered. In the next line the first integer denotes the number of cooks L and L integers follow in the same line each denoting the rank of a cook.
+
+Output
+Print an integer which tells the number of minutes needed to get the order done.
+
+Example
+Input:
+3
+10
+4 1 2 3 4
+8
+1 1
+8
+8 1 1 1 1 1 1 1 1
+
+Output:
+12
+36
+1
+
+```cpp
+#include<iostream>
+#include<std/bitsc++.h>
+using namespace std;
+
+bool isPossible(vector<int>& cookRanks,int p,int timeLimit){
+    int currP = 0; //track of cooked parata
+    for(int i = 0;i<cookRanks.size();i++){
+        int R = cookRanks[i] , j = 1; // j - 1 for first time then increase as time increase as 1R, 2R, 3R,...
+        int timeTaken = 0;
+        while(true){
+            if(timeTaken + j*R<=timeLimit){
+                timeTaken += j*R;
+                ++j;
+                ++currP;
+            } else {
+                break; 
+            }
+        }
+        if(currP >= P) return true;
+    }
+    return false;
+}
+int completeOrder(vector<int>& cookRanks,int p){
+    int s = 0;
+    int max_rank = *max_element(cookRanks.begin(),cookRanks.end());
+    int e = (max_rank*(p*(p+1) / 2));
+    int ans = -1;
+    while(s<=e){
+        int mid = s+(e-s)/2;
+        if(isPossible(cookRanks,p,mid)){
+            ans = mid;
+            e = mid - 1;
+        } else {
+            s = mid + 1;
+        }
+    }
+    return ans;
+}
+void solve(){
+    int nP,int nC;
+    cin>>nP>>nC;
+    vector<int> cookRanks;
+    while(nC--){
+        int rank;cin>>rank;
+        cookRanks.emplace_back(rank);
+    }
+    cout<<completeOrder(cookRanks,nP);
+}
+int main(){
+    int T;cin>>T;
+    while(T--){
+        solve();
+    }
+    return 0;
+}
+```

@@ -18,7 +18,7 @@ github repository of love babbar DSA challanges
 [Pascal Triangle](/3_Array/README.md)  
 [CODE SNIPPETS (swapping,reverse array)](/3_Array/README.md)
 
-### Assignment questions
+### Array Assignment questions
 
 [sort colors](/3_Array/Assignment.md)  
 [move all -ve no the left side of array](/3_Array/Assignment.md)  
@@ -133,7 +133,19 @@ NA
 
 ### Assigments of recursion
 
-TODO
+[Last occurrence of a char](/7_Recurssion/Assignment.md)  
+[Reverse a string RE](/7_Recurssion/Assignment.md)  
+[Add string RE](/7_Recurssion/Assignment.md)  
+[palindrome check RE](/7_Recurssion/Assignment.md)  
+[Remove all occurrence of substring](/7_Recurssion/Assignment.md)  
+[print all subarrays using RE](/7_Recurssion/Assignment.md)  
+[Buy and sell stocks](/7_Recurssion/Assignment.md)  
+[House Robber](/7_Recurssion/Assignment.md)  
+[Integer to English words](/7_Recurssion/Assignment.md)  
+[Wild card Matching](/7_Recurssion/Assignment.md)  
+[Perfect squares](/7_Recurssion/Assignment.md)  
+[Minimum cost for tickets](/7_Recurssion/Assignment.md)  
+[Number of dice roll with target sum](/7_Recurssion/Assignment.md)  
 
 ## Divide and Conquer
 
