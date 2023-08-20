@@ -417,3 +417,101 @@ It can be achieved with the help of Encapsulation and access modifier.
 
 - Abstraction - essential info show
 - Encapsulation - wrapping data member and member function using class
+
+## Const keyword
+
+The const keyword to declare that a variable, function, or object is immutable, i.e., its value cannot be changed after initialisation.
+
+E.g., if you declare a variable as const int x = 5;, you cannot modify the value of x later in the program any attempt to modify the value will result in a compilation error.
+
+You can declare a function as const, which means that it does not modify the state of the
+object it is called on.
+
+Compiler may be able to store const variables in read-only memory, which can result in faster
+access time.
+
+```cpp
+int main(){
+    const int x = 5;
+    //Intialization can be done 
+    // but we cannot re-assigne value
+    x = 10;//error
+
+    //const with pointer
+    int *a = new int;
+    *a = 2;
+    cout<<*a; //2
+    delete a;
+    int b = 5;
+    a=&b;
+    cout<<*a; //5
+
+    const int *a = new int(2);
+    //and
+    int const *b = new int(5);
+    //both syntax are same because
+    //If I write const before * then content will be const
+
+    // this mean data/content of pointer is const
+    // but pointer can be reassigned
+
+    cout<<*a; //2
+    *a = 20; //will throw compilation error
+    //this will not throw error
+    int b = 5;
+    a = &b;
+    cout<<*a; //valid
+
+    // const pointer but non const data
+    int * const a = new int(2);
+    //this mean data/content can be changed but 
+    // pointer can not be reassigned
+    cout<<*a; // 2;
+    *a = 20; //valid
+    cout<<*a; //20
+    int b = 30;
+    a = &b; //will throw error
+
+    //const pointer and const data
+    const int * const a = new int(50);
+    *a = 50; //error
+    a = &b; //error
+    return 0;
+}
+```
+
+If method of class is made const then it means that method can't change any of the member variable
+
+```cpp
+class abc{
+    int x;
+    int *y;
+    public:
+    abc(){
+        x = 0;
+        y = new int(0);
+    }
+    int getX() const{ //this mean it can never modify any variable of class
+        x = 50; // error
+        return x;
+    }
+    void setX(int _val){ //setter function can never contain const
+        x =_val;
+    }
+    int getY(){
+        return y;
+    }
+    void setY(int _val){
+        *y = _val;
+    }
+};
+int main(){
+    abc a;
+    cout<<a.getX();
+    cout<<a.getY();
+    return 0;
+}
+```
+
+L - value => variable having memory location
+R - value => variable doesn't have memory location

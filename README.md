@@ -164,10 +164,20 @@ TODO
 [rate in maze](/9_backtracking/README.md)  
 [sudoko solver](/9_backtracking/README.md)  
 [N Queen](/9_backtracking/README.md)  
+[generate paranthesis](/9_backtracking/README.md)  
+[phonekeypad problem](/9_backtracking/README.md)  
 
 ### Assigments of Backtracking
 
-TODO
+[count inversion](/9_backtracking/Assignment.md)  
+[inplace mergesort](/8_Divide_and_conquor/README.md)  
+[max sub array sum](/9_backtracking/Assignment.md)  
+[quicksort end element as pivot](/8_Divide_and_conquor/README.md)  best way (short)
+[combination sum](/9_backtracking/Assignment.md)  
+[combination sum II](/9_backtracking/Assignment.md)  
+[permutation II](/9_backtracking/Assignment.md)  
+[Beautiful arrangment](/9_backtracking/Assignment.md)  
+[Distribute Repeating Integers](/9_backtracking/Assignment.md)  
 
 ## OOPS
 
