@@ -191,10 +191,22 @@ TODO
 [Types of inheritance](/10_OPPS/README.md)  
 [Polymorphism](/10_OPPS/README.md)  
 [Abstraction](/10_OPPS/README.md)  
+[const keyword](/10_OPPS/README.md)  
+[mutable keyword](/10_OPPS/README.md)  
+[Initialization list](/10_OPPS/README.md)  
+[Macros](/10_OPPS/README.md)  
+[Shallow copy vs deep copy](/10_OPPS/README.md)  
+[local and global variables](/10_OPPS/README.md)  
+[Static keyword in class](/10_OPPS/README.md)  
+[Abstraction deep](/10_OPPS/README.md)  
+[Inline function](/10_OPPS/README.md)  
+[friend keyword](/10_OPPS/README.md)  
+[private constructor](/10_OPPS/README.md)  
+[Virtual constructor vs virtual destructor](/10_OPPS/README.md)  
 
 ### Assigments of OOP
 
-TODO
+NA
 
 ## LinkedList
 

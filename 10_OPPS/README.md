@@ -116,23 +116,27 @@ delete [] arr;
 class Animal{
     private:
     int age;
+    int y;
     public:
 
     //Default constructor
     Animal(){
         cout<<"Constructor called";
         this->age = 0;
+        this->y = 0;
     }
 
-    //Parameterized constructor
-    Animal(int age){
+    //Parameterized constructor with default argument
+    Animal(int age,int y = 10){
         cout<<"Constructor called";
         this->age = age;
+        this->y = y;
     }
 
     //copy constructor
     Animal(Animal & obj){
         this->age = obj.age;
+        this->y = obj.y;
     }
     /* Note */
     /* Pass by reference in copy constructor because if pass by value then agin obj is copy of parameters and infinite loop is created. */
@@ -140,7 +144,8 @@ class Animal{
 //Driver call
 Animal a; // default constructor call
 Animal *ptr = new Animal //default constructor call
-Animal b(10); //parameterized constructor call
+Animal b(10,30); //parameterized constructor call
+Animal b(10); // y value by default will become 10
 Animal *ptr2 = new Animal(10); //parameterized constructor call
 //copy constructor call
 Animal c = a;
@@ -505,6 +510,12 @@ class abc{
         *y = _val;
     }
 };
+void printAB(const abc &a ){ // now that that we have marked our argument variable as const
+//this print function cannot modify any variable of a object
+    cout<<a.getX(); //valid
+    cout<<a.getY(); //will throw error because this function is not const, mean it is possible that this function might change the variables of a object
+    cout<<a.setX(); //will throw error as function modifying variable of a object
+}
 int main(){
     abc a;
     cout<<a.getX();
@@ -513,5 +524,479 @@ int main(){
 }
 ```
 
-L - value => variable having memory location
-R - value => variable doesn't have memory location
+## mutable (used for debugging purpose only - production code not good practise)
+
+```cpp
+class abc{
+    mutable int x;
+    int *y;
+    public:
+    abc(){
+        x = 0;
+        y = new int(0);
+    }
+    int getX() const{ //this mean it can never modify any variable of class
+        x = 50; // will not throw error because we have made it mutable
+        return x;
+    }
+};
+```
+
+## Initialization list
+
+```cpp
+class abc{
+    mutable int x;
+    int *y;
+    const int z;
+    public:
+    
+    //old ctor method (ctor -  constructor)
+    // abc(int _x,int _y,int _Z){
+    //     x = _x;
+    //     y = new int(_y);
+    //     z = _z; //will throw error because z is const and reassigning value
+    // }
+
+    // better way of writing ctor
+    abc(int _x,int _y):x(_x), y(new int(_y)), z(_z){
+        // z can be reassign in this method.
+
+        // normal constructor code can also be written 
+        cout<<"constructor called";
+        x = _x * 10; // valid
+        z = _z * 10; //not valid, reassigne only possible in initialization list
+    } 
+
+    int getX() const{ //this mean it can never modify any variable of class
+        x = 50; // will not throw error because we have made it mutable
+        return x;
+    }
+};
+```
+
+## Macros
+
+In C++, macros are preprocessor directives that allow you to define constants, functions, or code snippets that can be used throughout your code. They are typically defined using the \#define directive and are evaluated by the preprocessor before the code is compiled.
+
+Macros can be used for a variety of purposes, such as defining constants or creating shorthand for commonly used expressions.
+
+```cpp
+#include <iostream>
+using namespace std;
+#defing PI 3.145954
+#defint MAX(x,y) (x>y ? x:y)
+
+float circleArea(float r){
+    return PI * r * r;
+}
+
+int main(){
+    cout<< circleArea(3.2);
+    cout<<MAX(3,5)
+    int a = 0;
+    int b = -1;
+    cout<<MAX(a,b) // (0>-1 ? 0 : -1) // expansion
+    return 0;
+}
+```
+
+## Shallow copy vs deep copy
+
+```cpp
+class abc{
+    public:
+    int x;
+    int *y;
+    abc(int _x,int _y):x(_x),y(new int(_y)) {}
+    
+    //default dumb copy constructor
+    // it does shallow copy
+    // abc(const abc & obj){
+    //     x = obj.x;
+    //     y = obj.y;
+    // }
+
+    //deep copy for copy constructor
+    abc(const abc & obj){
+        x = obj.x;
+        y = new int(*obj.y);
+    }
+    void print() {
+        cout<<x<<y<<*y;
+    }
+    ~abc(){
+        delete y;
+    }
+
+};
+int main(){
+    abc a(1,3);
+    a.print();
+
+    abc b(a);
+    b.print();
+    
+    // here content of b is exactly same as a event pointer y points to same address as address of y in object a, now both are linked if obj a changes y pointer value
+    // it will also affect obj b
+    b.*y = 20;
+    a.print(); // y = 20;
+    b.print(); // y = 20
+    return 0;
+}
+```
+
+## Local and global variables
+
+- global variable
+  - written outside a function
+  - accessible to all function same copy
+- local variable
+  - written inside a function
+  - accessible inside that function scope only
+  - scoped
+
+```cpp
+#include <iostream>
+using namespace std;
+
+//global variable
+int x = 2;
+int main(){
+    // x = 20; //will access global variable and modify
+    // ::x = 20; same as above if x not declared before it will take reference of globar variable
+    int x = 20;
+    cout<<x; //20 - will access local first preference higher , if not found then it will look for global scope
+    //if want to access global variable explicitly
+    cout<<::x; //2
+    return 0;
+}
+```
+
+## Static Keyword in class
+
+static data member - that variable is going to share memory with all of the class instances
+
+static member function - there is no instance of that class being passed into that method
+
+```cpp
+class abc {
+    public:
+    int x,y;
+    void print() const {
+        cout<<x<<y;
+    }
+};
+int main(){
+    abc a = {1,2};
+    abc b = {2,5};
+    a.print(); // 1 2
+    b.print(); // 2 5
+}
+```
+
+Static data member
+
+```cpp
+class abc{
+    public:
+    static int x,y;
+    void print() const {
+        cout<<x<<y;
+    }
+};
+// need to define class static variables outside class to use them
+int abc::x;
+int abc::y;
+
+int main(){
+    abc a;
+    a.x = 10;
+    b.y = 5;
+    a.print(); // 10 5
+    
+    abc b;
+    b.x = 15;
+    b.y = 20;
+    a.print(); //15 20 --- will modify for class a as well as static member is shared among all class instances
+    b.print(); //15 20
+
+
+    return 0;
+}
+```
+
+Static member function
+
+```cpp
+class abc{
+    public:
+    static int x,y;
+    static void print() const { // function can only use static data members as It does not know instance data members
+        cout<<x<<y;
+    }
+};
+// need to define class static variables outside class to use them
+int abc::x;
+int abc::y;
+
+int main(){
+    abc a;
+    a.x = 10;
+    b.y = 5;
+    abc::print(); // 10 5
+    
+    return 0;
+}
+```
+
+## Abstraction deep
+
+- Delivering only essential information to the outer world while masking the background details.
+- It is a design and programming method that separates the interface from the implementation.
+- Real life e.g., various functionalities of AirPods but don't know the actual implementation/working
+  - To drive a car, one only needs to know the driving process and not the mechanics of the car engine
+
+Abstraction in Header files
+
+1. Function's implementation is hidden in header files.
+2. We could use the same program without knowing its inside working.
+3. E.g., Sort(), for example, is used to sort an array, a list, or a collection of items, and we know that if we give a container to sort, it will sort it, but we don't know which sorting algorithm it uses to sort that container.
+
+Abstraction using Classes
+
+1. Grouping data members and member functions into classes using access specifiers.
+2. A class can choose which data members are visible to the outside world and which are hidden.
+
+What is Abstract Class?
+
+1. Class that contains at least one pure virtual function, and these classes cannot be instantiated.
+2. It has come from the idea of Abstraction.
+
+Bird.h implementation
+
+```cpp
+#if !define(BIRD_H)
+#define BIRD_H
+#include <iostream>
+class Bird{
+    public:
+    virtual void eat() = 0;
+    virtual void fly() = 0;
+    //classes that inherits this class
+    // has to implement pure virutal functions
+};
+class sparrow: public Bird{
+    private:
+    void eat(){
+        std::cout<<"sparrow is eating";
+    }
+    void fly(){
+        std::cout<<"sparrow is flying";
+    }
+};
+class eagle: public Bird{
+    private:
+    void eat(){
+        std::cout<<"eagle is eating";
+    }
+    void fly(){
+        std::cout<<"eagle is flying";
+    }
+};
+
+#endif //BIRD_H
+```
+
+main file implementation
+
+```cpp
+#include <iostream>
+#include "bird.h"
+using namespace std;
+
+void bridDoesSomething(Bird *&b){
+    b->eat();
+    b->fly();
+}
+
+int main() {
+    Bird *bird1 = new sparrow();
+    birdDoesSomething(bird1); //here sparrow related functions will be called
+    Bird *bird1 = new eagle(); 
+    birdDoesSomething(bird2); // here eagle related functions will be called
+
+    Bird *b = new Bird(); //cannot instantiate Bird interface object, other class which inherits this interface their class can be instantiate
+    return 0;
+}
+```
+
+Design Strategy
+
+- Abstraction divides code into two categories:interface and implementation. so when creating your component, keep the interface separate from the implementation(Bird.h file) so that if  underlying implementation changes, the interface stays the same(main file)
+
+- In this instance, any program that uses these interfaces would remain unaffected and would require recompilation with the most recent implementation.
+
+## Inline function
+
+to reduce function call overhead
+
+It is used when function is smaller, because if used in bigger function then executable size will increase as the code size will increase as code will be copied and pasted in where called
+
+1. An inline function is a regular function that is defined by the inline keyword.
+2. The code for an inline function is inserted directly into the code of the calling function by compile while compiling, which can result in faster execution and less overhead compared to regular function calls.
+3. Instead of calling function the statements of functions are pasted in calling function.
+4. Used with small sized functions. So that executables are small (handled automatically by compiler optimisation levels).
+
+```cpp
+#include <iostream>
+
+inline void numberShow(int num){
+    cout<<num;
+} //this way we don't need to edit all the functional calls and also it reduces function call overhead
+int main(){
+    numberShow(10);
+    numberShow(20);
+    return 0;
+}
+```
+
+## Friend keyword
+
+- friend is a keyword in C++ that is used to share the information of a class that was previously hidden.
+- For example, the private members of a class are hidden from every other class and cannot be modified except through getters or setters. Similarly, the protected members are hidden from all classes other than its children classes.
+
+```cpp
+#include<iostream>
+using namespace std;
+
+class A{
+    private:
+    int x;
+    public:
+    A(int _x):x(_x){};
+    int getX() const {
+        return x;
+    }
+    int setX(int _x){
+        x = _x;
+    }
+
+    //by using friend keyword allowing to access private member of this class
+    friend class B;
+    friend void print(const A&a);
+};
+class B{
+    public:
+    void print(const A& a){
+        cout<<a.x; //valid
+    }
+};
+void print(const A &a){
+    cout<<a.x;
+}
+int main(){
+    A a(5);
+    B b;
+    b.print(a);
+    print(a);
+    return 0;
+}
+```
+
+1. Although information hiding is encouraged because it prevents unwanted bugs in a program, there are cases where two classes need to frequently interact with each other.
+2. In such a scenario, one of the classes declares another to be its friend.
+3. The class declaring the friendship can now make all of its data available to its friend
+
+## Private constructor
+
+used when we don't want user to create that class instance and keep track of instance of that class
+
+```cpp
+#include <iostream>
+using namespace std;
+class Box {
+    int w;
+    Box(_w):w(_w){};
+    public:
+    int getW() const{ return w;}
+    void setW(int _w) {
+        w = _w;
+    }
+    friend class BoxFactory;
+}
+class BoxFactory{
+    int count;
+    public:
+    Box getABox(int _w){
+        ++count
+        return new Box(_w);
+    }
+}
+int main(){
+    BoxFactory bfact;
+    Box b = bfact.getABox(5);
+    Box b = new Box(5); //not possible
+    cout<<b.getW();
+    return 0;
+}
+```
+
+## Virtual Constructor vs Virtual Destructor
+
+- way to achive runtime polymorphism
+
+How Virtual works
+
+1. VTables Formed for every class having at least one virtual function and for its derived classes.
+2. It is static arrays, hence one instance for a class.
+3. VPtr (a hidden member pointer) is added by compiler to classes with virtual and its derived classes.
+4. Depending upon the object type VPtr is bonded to a VTable.
+
+VTabIes are created at compile time.
+When object of a particular type is created at runtime. There will be a VPtr which will be initialised to point to a static VTable at the time of construction.
+
+### Can we make virtual constructor
+
+NO.
+Constructor cannot be virtual, because when constructor of a class is executed there is no virtual table in the memory, means no virtual pointer defined yet. So, the constructor should always be non-virtual.
+A virtual call is a mechanism to get work given partial information. In particular virtual allows us to call a function knowing only any Interfaces and not the exact type of object. To create an object you need complete information. In particular, you need to know the exact
+type of what you want to create. Consequently, a "call to a constructor" cannot be virtual.
+
+### Can we make virtual dtor?
+
+1. Yes.
+2. It is really important to handle proper destruction of Derived classes.
+
+```cpp
+class Base {
+    public:
+        Base(){
+            cout<<"base ctor";
+        } //ctor cannot be virtual because if object is not created virtual table will not be created.
+        virtual ~Base(){
+            cout<<"Base dtor";
+        } // dtor should be virtual this implies that derived class from base after code completetion will first call derived destructor as base class vptr points to and then Base class dtor will be called
+};
+class Derived: public Base {
+    int *a;
+    public:
+    Derived(){
+        a = new int[20];
+        cout<<"Derived ctor";
+    }
+    ~Derived() {
+        delete[] a;
+        cout<<"Derived dtor";
+    }
+};
+int main() {
+    Base *b = new Derived();
+    return 0;
+}
+// OUTPUT-
+// Base ctor
+// Derived ctor
+// Derived dtor
+// Base dtor
+```
