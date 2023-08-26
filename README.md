@@ -218,6 +218,14 @@ NA
 [Delete node at postion](/11_LinkedList/LINKEDLIST.md)  
 [Reverse Linked list using loops](/11_LinkedList/LINKEDLIST.md)  
 [Reverse linked list using recursion](/11_LinkedList/LINKEDLIST.md)  
+[find middle of Linked list](/11_LinkedList/LINKEDLIST.md)  
+[K group reverse Linked list](/11_LinkedList/LINKEDLIST.md)  
+[LL circular detection and deleting loop](/11_LinkedList/LINKEDLIST.md)  
+[LL is palindrome of not](/11_LinkedList/LINKEDLIST.md)  
+[Remove duplicates from sorted LL](/11_LinkedList/LINKEDLIST.md)  
+[Remove duplicates from unsorted LL](/11_LinkedList/LINKEDLIST.md)  
+[Sort 0's 1's and 2's in LL](/11_LinkedList/LINKEDLIST.md)  
+[Add two numbers represented by LL](/11_LinkedList/LINKEDLIST.md)  
 
 ## Doubly LinkedList
 
@@ -228,3 +236,16 @@ NA
 [Insert at tail](/11_LinkedList/DOUBLY_LINKEDLIST.md)  
 [Insert at position](/11_LinkedList/DOUBLY_LINKEDLIST.md)  
 [Delete node from position](/11_LinkedList/DOUBLY_LINKEDLIST.md)  
+
+### Assignment of LL
+
+[Merge 2 Sorted Linked List](/11_LinkedList/Assignment.md)  
+[Clone a Linked List with Random Pointer](/11_LinkedList/Assignment.md)  
+[Merge Sort in Linked list](/11_LinkedList/Assignment.md)  
+[Flatten a Linked List](/11_LinkedList/Assignment.md)  
+[Print kth node from end of Linked List](/11_LinkedList/Assignment.md)  
+[Intersection point of 2 Linked list](/11_LinkedList/Assignment.md)  
+[Rotate List (Leetcode)](/11_LinkedList/Assignment.md)  
+[Delete n nodes after m nodes (Leetcode)](/11_LinkedList/Assignment.md)  
+[Find min/max number between critical points (Leetcode)](/11_LinkedList/Assignment.md)  
+[Merge Node in between zeroes (Leetcode)](/11_LinkedList/Assignment.md)  
