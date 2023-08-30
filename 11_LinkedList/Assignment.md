@@ -387,12 +387,201 @@ public:
 
 ## rotate List (Leetcode)
 
-```cpp
+<https://leetcode.com/problems/rotate-list/>
 
+```cpp
+class Solution {
+public:
+    ListNode* rotateRight(ListNode* head, int k) {
+        if(head == NULL || k==0) return head;
+        //finding length of ll
+        ListNode* temp = head;
+        ListNode* lastNode = head;
+        int n = 0;
+        while(temp!=NULL){
+            if(temp->next == NULL) lastNode = temp;
+            temp = temp->next;
+            n++;
+        }
+        if(n == 1) return head;
+        // 1 2 4 5 6
+        // n = 5;
+        // k = 4 5 6 , % 4, 0 , 1
+        k = k % n;
+        if(k == 0) return head;
+        k = n - k - 1;
+        temp = head;
+        while(k--){
+            temp = temp->next;
+        }
+        ListNode* t1 = temp->next;
+        temp->next = NULL;
+        lastNode->next = head;
+        return t1;
+    }
+};
 ```
 
 ## Delete n nodes after m nodes (Leetcode)
 
+<https://practice.geeksforgeeks.org/problems/delete-n-nodes-after-m-nodes-of-a-linked-list/1>
+
+```cpp
+void linkdelete(struct Node  *head, int M, int N)
+    {
+        //Add code here   
+        if(head == NULL) return;
+        int t_m = M,t_n = N;
+        // cout<<head->data<<"head value"<<endl;
+        // if(head == NULL) return;
+        Node* it = head;
+        while(M-1>0){
+            if(it == NULL) return;
+            it = it->next;
+            M--;
+        }
+        
+        if(it == NULL) return;
+        
+        Node* mthNode = it;
+        it = mthNode->next;
+        while(N--){
+            if(it == NULL) break;
+            Node* temp = it;
+            it = it->next;
+            temp->next = NULL;
+            delete temp;
+        }
+        mthNode->next = it;
+        linkdelete(it,t_m,t_n);
+    }
+```
+
 ## Find min/max number between critical points (Leetcode)
 
+<https://leetcode.com/problems/find-the-minimum-and-maximum-number-of-nodes-between-critical-points/>
+
+```cpp
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    vector<int> nodesBetweenCriticalPoints(ListNode* head) {
+        vector<int> ans = {-1,-1};
+        ListNode* prev = head;
+        if(prev == NULL) return ans;
+        ListNode* curr = prev->next;
+        if(curr == NULL) return ans;
+        ListNode* nxt = curr->next;
+        if(nxt == NULL) return ans;
+        
+        int firstCP = -1;
+        int lastCP = -1;
+        int minDist = INT_MAX;
+        int i = 1; //starting from 1 index (0-indexed list - starting from 2nd node)
+
+        while(nxt !=NULL){
+            bool isCP = ((prev->val > curr->val && curr->val < nxt->val ) || (prev->val < curr->val && curr->val > nxt->val)) ? true : false;
+            if(isCP && firstCP == -1){
+                firstCP = i;
+                lastCP = i;
+            } 
+            else if(isCP) {
+                minDist = min(minDist,i - lastCP);
+                lastCP = i;
+            }
+            i++;
+            prev = prev->next;
+            curr = curr->next;
+            nxt = nxt->next;
+        }
+        if(lastCP == firstCP){
+            //only one CP
+            return ans;
+        } else {
+            ans[0] = minDist;
+            ans[1] = lastCP - firstCP;
+            return ans;
+        }
+    }
+};
+```
+
 ## Merge Node in between zeroes (Leetcode)
+
+<https://leetcode.com/problems/merge-nodes-in-between-zeros/>
+
+```cpp
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* mergeNodes(ListNode* head) {
+        // this approach modifying the given linked list only and returning
+        if(head == NULL) return head;
+        ListNode* slow = head, * fast = head->next, * newLastNode = 0;
+        int sum = 0;
+        while(fast){
+            if(fast->val != 0){
+                sum += fast->val;
+            } else {
+                slow->val = sum;
+                newLastNode = slow;
+                slow = slow->next;
+                sum = 0;
+            }
+            fast = fast->next;
+        }
+        newLastNode->next = NULL;
+        while(slow){
+            ListNode* temp = slow;
+            slow = slow->next;
+            temp->next = NULL;
+            delete temp;
+        }
+        return head;
+        // This approach creating a new list
+        // ListNode* curr = head->next;
+        // ListNode* newListHead = NULL;
+        // ListNode* newListTail = NULL;
+        // int sum = 0;
+        // while(curr!=NULL){
+        //     if(curr->val==0){
+        //         // cout<<curr->val<<" equal"<<endl;
+        //         ListNode* newNode = new ListNode(sum);
+        //         if(newListHead==NULL){
+        //             newListHead = newNode;
+        //             newListTail = newNode;
+        //         } else {
+        //             newListTail->next = newNode;
+        //             newListTail = newListTail->next;
+        //         }
+        //         sum = 0;
+        //         curr = curr->next;
+        //     } else {
+        //         // cout<<curr->val<<" not equal"<<endl;
+        //         sum += curr->val;
+        //         curr = curr->next;
+        //     }
+        // }
+        // return newListHead;
+    }
+    
+};
+```
