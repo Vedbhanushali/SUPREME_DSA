@@ -212,3 +212,282 @@ void printMiddle(stack<int> st,int &totalSize){
 int sz = st.size();
 printMiddle(st,sz)
 ```
+
+## Insert at bottom of stack (insert top of stack element to bottom)
+
+```cpp
+void solve(stack<int> &s,int target){
+    if(s.empty()){
+        s.push(target);
+        return;
+    }
+
+    int currentTop = s.top();
+    s.pop();
+    solve(s,target);
+    s.push(currentTop);
+}
+void insertAtBottom(stack<int> &s){
+    if(s.empty()){
+        cout<<"stack is empty can't insert at bottom";
+        return;
+    }
+    int target = s.top();
+    s.pop();
+    solve(s,target);
+}
+```
+
+## reverse a stack using only one stack
+
+```cpp
+void insertAtBottom(stack<int> &s,int target){
+    if(s.empty()){
+        s.push(target);
+        return;
+    }
+
+    int currentTop = s.top();
+    s.pop();
+    insertAtBottom(s,target);
+    s.push(currentTop);
+}
+void reverseStack(stack<int> &s){
+    //base case
+    if(s.empty()){
+        return;
+    }
+    int target = s.top();
+    s.pop();
+
+    reverseStack(s);
+    insertAtBottom(s,target);
+}
+```
+
+## Valid parenthesis
+
+<https://leetcode.com/problems/valid-parentheses/>
+
+```cpp
+bool isValid(string s) {
+        stack<char> st;  
+        for(auto i:s)  
+        {
+            if(i=='(' or i=='{' or i=='[') st.push(i); 
+            else {
+                if(st.empty() or (st.top()=='(' and i!=')') or (st.top()=='{' and i!='}') or (st.top()=='[' and i!=']')) return false;
+                st.pop();  
+            }
+        }
+        return st.empty();  //at last, it may possible that we left something into the stack unpair so return checking stack is empty or not..
+    }
+```
+
+## Sort a stack
+
+```cpp
+void insertSorted(stack<int> &s,int target){
+    if(s.empty()){
+        s.push(target);
+        return;
+    }
+    if(s.top() >= target){
+        s.push(target);
+        return;
+    }
+
+    int currTop = s.top();
+    s.pop();
+    insertSorted(s,target);
+    s.push(currTop);
+} 
+void sortStack(stack<int>&s){
+    if(s.empty()){
+        return;
+    }
+    int currTop = s.top();
+    s.pop();
+    sortStack(s);
+    insertSorted(s,currTop);
+}
+```
+
+## Remove redundant brackets
+
+```cpp
+```
+
+## Min stack
+
+<https://leetcode.com/problems/min-stack/>
+
+```cpp
+class MinStack {
+public:
+    vector< pair<int,int> > st;
+    MinStack() {
+        
+    }
+    
+    void push(int val) {
+        if(st.empty()){
+            pair<int,int> p = make_pair(val,val);
+            st.push_back(p);
+        } else {
+            pair<int,int> p;
+            p.first = val;
+            p.second = min(val,st.back().second);
+            st.push_back(p);
+        }
+    }
+    
+    void pop() {
+        st.pop_back();
+    }
+    
+    int top() {
+        return st.back().first;
+    }
+    
+    int getMin() {
+        return st.back().second;
+    }
+};
+
+/**
+ * Your MinStack object will be instantiated and called as such:
+ * MinStack* obj = new MinStack();
+ * obj->push(val);
+ * obj->pop();
+ * int param_3 = obj->top();
+ * int param_4 = obj->getMin();
+ */
+```
+
+## longest valid paratheses
+
+<https://leetcode.com/problems/longest-valid-parentheses/>
+
+approach - index based stack usage
+
+```cpp
+class Solution {
+public:
+    int longestValidParentheses(string s) {
+        stack<int> st;
+        int maxi = 0;
+        st.push(-1);
+        for(int i = 0;i<s.size();i++){
+            if(s[i] == '('){
+                st.push(i);
+            } else {
+                st.pop();
+                if(st.empty()){
+                    st.push(i);
+                } else {
+                    int len = i - st.top();
+                    maxi = max(len,maxi);
+                }
+            }
+        }
+        return maxi;
+    }
+};
+```
+
+## Next smaller element
+
+INPUT = 2 1 4 3  
+OUTPUT = 1 -1 3 -1
+
+```cpp
+vector<int> nextSmaller(vector<int> &v){
+    stack<int> s;
+    s.push(-1);
+
+    vector<int> ans(v.size());
+    for(int i = v.size()-1; i >=0 ;i--){
+        int curr = v[i];
+        while(s.top() >= curr){
+            s.pop();
+        }
+        ans[i] = s.top();
+        s.push(curr);
+    }
+    return ans;
+}
+```
+
+## Prev Smaller element
+
+INPUT = 2 1 4 3  
+OUTPUT = -1 -1 1 1
+
+```cpp
+vector<int> prevSmaller(vector<int> &v){
+    stack<int> s;
+    s.push(-1);
+
+    vector<int> ans(v.size());
+    for(int i = 0;i<v.size();i++){
+        int curr = v[i];
+        while(s.top() >= curr){
+            s.pop();
+        }
+        ans[i] = s.top();
+        s.push(curr);
+    }
+    return ans;
+}
+```
+
+## Largest rectangular area in histogram
+
+<https://leetcode.com/problems/largest-rectangle-in-histogram/>
+
+```cpp
+vector<int> prevSmaller(vector<int> &v){
+    stack<int> s;
+    s.push(-1);
+
+    vector<int> ans(v.size());
+    for(int i = 0;i<v.size();i++){
+        int curr = v[i];
+        while(s.top() != -1 && v[s.top()] >= curr){
+            s.pop();
+        }
+        ans[i] = s.top(); 
+        s.push(i);
+    }
+    return ans;
+}
+vector<int> nextSmaller(vector<int> &v){
+    stack<int> s;
+    s.push(-1);
+
+    vector<int> ans(v.size());
+    for(int i = v.size()-1; i >=0 ;i--){
+        int curr = v[i];
+        while(s.top() != -1 && input[s.top()] >= curr){
+            s.pop();
+        }
+        ans[i] = s.top() == -1 ? v.size() : s.top();
+        s.push(i);
+    }
+    return ans;
+}
+int largestRectangleArea(vector<int>& heights) {
+    vector<int> prev = prevSmaller(heights);
+    vector<int> next = nextSmaller(heights);
+
+    int MaxArea = 0;
+    for(int i = 0;i<heights.size();i++){
+        int len = heights[i];
+        int wid = next[i] - prev[i] - 1;
+        int area = len * width;
+        MaxArea = max(MaxArea, area);
+    }
+    return MaxArea;
+}
+```
