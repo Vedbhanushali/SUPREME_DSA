@@ -469,7 +469,7 @@ vector<int> nextSmaller(vector<int> &v){
     vector<int> ans(v.size());
     for(int i = v.size()-1; i >=0 ;i--){
         int curr = v[i];
-        while(s.top() != -1 && input[s.top()] >= curr){
+        while(s.top() != -1 && v[s.top()] >= curr){
             s.pop();
         }
         ans[i] = s.top() == -1 ? v.size() : s.top();
@@ -485,7 +485,7 @@ int largestRectangleArea(vector<int>& heights) {
     for(int i = 0;i<heights.size();i++){
         int len = heights[i];
         int wid = next[i] - prev[i] - 1;
-        int area = len * width;
+        int area = len * wid;
         MaxArea = max(MaxArea, area);
     }
     return MaxArea;

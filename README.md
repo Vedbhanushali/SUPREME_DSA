@@ -249,3 +249,36 @@ NA
 [Delete n nodes after m nodes (Leetcode)](/11_LinkedList/Assignment.md)  
 [Find min/max number between critical points (Leetcode)](/11_LinkedList/Assignment.md)  
 [Merge Node in between zeroes (Leetcode)](/11_LinkedList/Assignment.md)  
+
+## Stack
+
+[Stack operations](/12_Stack/README.md)  
+[Custom stack implementation (without using STL)](/12_Stack/README.md)  
+[Create 2 stack in one array](/12_Stack/README.md)  
+[reverse string using stack](/12_Stack/README.md)  
+[find middle element in stack](/12_Stack/README.md)  
+[Insert at bottom of stack](/12_Stack/README.md)  
+[reverse a stack using only one stack](/12_Stack/README.md)  
+[Valid parenthesis](/12_Stack/README.md)  
+[Sort a stack](/12_Stack/README.md)  
+[Remove redundant brackets](/12_Stack/README.md)  
+[Min stack (stack containg the minimum element in it)](/12_Stack/README.md)  
+[longest valid parantheses](/12_Stack/README.md)  
+[Next smaller element](/12_Stack/README.md)  
+[Prev Smaller element](/12_Stack/README.md)  
+[Largest rectangular area in histogram](/12_Stack/README.md)  
+
+### Assignment of Stack
+
+[Minimum Bracket Reversal](/12_Stack/Assignment.md)  
+[Remove All Adjacent Duplicates In String](/12_Stack/Assignment.md)  
+[Celebrity Problem](/12_Stack/Assignment.md)  
+[Next greater element in Linked List leetcode](/12_Stack/Assignment.md)  
+[N Stacks in an Array](/12_Stack/Assignment.md)  
+[Online Stock Span Leetcode](/12_Stack/Assignment.md)  
+[Check If Word Is Valid After Substitutions Leetcode](/12_Stack/Assignment.md)  
+[Decode Strings Leetcode](/12_Stack/Assignment.md)  
+[Car Fleet - I Leetcode](/12_Stack/Assignment.md)  
+[Car Fleet - 11 Leetcode](/12_Stack/Assignment.md)  
+[Simplify Path Leetcode](/12_Stack/Assignment.md)  
+[Max rectangle in Binary Matrix with all Is](/12_Stack/Assignment.md)  
