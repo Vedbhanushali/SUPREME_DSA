@@ -164,9 +164,9 @@ public:
 
 two additional array is required in algorithm
 
-- top size(n) (n- number of stack) it stores index of top element of ith stack  
+- top : size(n) (n- number of stack) it stores index of top element of ith stack  
 initial value of all elements is -1
-- next size(size) (size - size of arr)
+- next : size(size) (size - size of arr)
   - can point to next free space
   - can point to next element after top element
   - initial value of next elements is i+1 index except last which will be -1
