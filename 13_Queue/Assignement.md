@@ -335,5 +335,3 @@ int main(){
     return 0;
 }
 ```
-
-## Sum of min/max element of all subarray of size "k" [Similar: LC-239. Sliding Window Maximum]

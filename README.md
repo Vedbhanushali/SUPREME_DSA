@@ -282,3 +282,27 @@ NA
 [Car Fleet - 11 Leetcode](/12_Stack/Assignment.md)  
 [Simplify Path Leetcode](/12_Stack/Assignment.md)  
 [Max rectangle in Binary Matrix with all Is](/12_Stack/Assignment.md)  
+
+## Queue
+
+[operations](/13_Queue/README.md)  
+[custom implementation of Queue](/13_Queue/README.md)  
+[Circular Queue](/13_Queue/README.md)  
+[Input restricted Queue](/13_Queue/README.md)  
+[Output restricted Queue](/13_Queue/README.md)  
+[Doubly ended Queue(Deque)](/13_Queue/README.md)  
+[Circular Doubly ended Queue](/13_Queue/README.md)  
+[STL Deque](/13_Queue/README.md)  
+[Reverse a queue](/13_Queue/README.md)  
+[Reverse first k element of queue](/13_Queue/README.md)  
+[Interleave first and second half of Queue](/13_Queue/README.md)  
+[First -ve integer in every window of size k(sliding window + Queue)](/13_Queue/README.md)  
+[Non-repeated character in a string](/13_Queue/README.md)  
+[Gas Station](/13_Queue/README.md)  
+[Sliding window maximum(sliding window + Queue)](/13_Queue/README.md)  
+
+### Assignemnt of Queue
+
+[Implement Queue using stack](/13_Queue/Assignement.md)  
+[Implement Stack using Queue](/13_Queue/Assignement.md)  
+[Implement k Queue in an array](/13_Queue/Assignement.md)  
