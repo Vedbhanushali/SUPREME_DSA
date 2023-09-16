@@ -155,7 +155,7 @@ NA
 
 ### Assigments of D&C
 
-TODO
+NA
 
 ## Backtracking
 
@@ -172,7 +172,7 @@ TODO
 [count inversion](/9_backtracking/Assignment.md)  
 [inplace mergesort](/8_Divide_and_conquor/README.md)  
 [max sub array sum](/9_backtracking/Assignment.md)  
-[quicksort end element as pivot](/8_Divide_and_conquor/README.md)  best way (short)
+[quicksort end element as pivot  best way (short)](/8_Divide_and_conquor/README.md)
 [combination sum](/9_backtracking/Assignment.md)  
 [combination sum II](/9_backtracking/Assignment.md)  
 [permutation II](/9_backtracking/Assignment.md)  
