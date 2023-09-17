@@ -306,3 +306,7 @@ NA
 [Implement Queue using stack](/13_Queue/Assignement.md)  
 [Implement Stack using Queue](/13_Queue/Assignement.md)  
 [Implement k Queue in an array](/13_Queue/Assignement.md)  
+
+LICENSE
+
+[MIT LICENSE](/LICENSE)
