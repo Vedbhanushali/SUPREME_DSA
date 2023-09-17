@@ -1,6 +1,6 @@
 # SUPREME_DSA
 
-github repository of love babbar DSA challanges
+github repository of DSA challanges
 
 ## 1. Basics of programming
 
