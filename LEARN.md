@@ -5,7 +5,7 @@ This repository contains my solutions to various problems in C++.
 ## Clone the repository to your local machine using
 
 ```
-git clone https://github.com/bibhuti9/DSA-leetCode-JavaScript-Solution.git
+git clone https://github.com/Vedbhanushali/SUPREME_DSA
 ```
   
 
