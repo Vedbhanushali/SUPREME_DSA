@@ -310,10 +310,386 @@ public:
 
 HW
 
-## Check if two tree are identical or not //TODO
+## Check if two tree are identical or not
 
-## check if two trees are mirror images of each other or not //TODO
+<https://leetcode.com/problems/same-tree/>
 
-## balanced binary tree //TODO
+```cpp
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    bool isSameTree(TreeNode* p, TreeNode* q) {
+            if(p == NULL && q!=NULL) return false;
+            if(p != NULL && q==NULL) return false;
+            if(p == NULL && q == NULL) return true;
 
-property of any node - height absolute diff <=1
+            //NLR
+            if(p->val != q->val) return false;
+            return isSameTree(p->left,q->left) && isSameTree(p->right,q->right);
+        
+    }
+};
+```
+
+## check if two trees are mirror images of each other or not
+
+<https://leetcode.com/problems/symmetric-tree/>
+
+```cpp
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    bool check(TreeNode* p,TreeNode* q){
+        if(p == NULL && q!=NULL) return false;
+        if(p != NULL && q==NULL) return false;
+        if(p == NULL && q == NULL) return true;
+        //NLR
+        if(p->val != q->val) return false;
+        return check(p->left,q->right) && check(p->right,q->left);
+    }
+    bool isSymmetric(TreeNode* root) {
+        return check(root->left,root->right);
+    }
+};
+```
+
+## Check if binary tree is balanced binary tree
+
+<https://leetcode.com/problems/balanced-binary-tree/>
+
+property of any node - height absolute diff <=1  
+each node abs(left subtree height - right subtree height) <=1
+
+```cpp
+int height(TreeNode* root){
+    if(root == NULL) return 0;
+
+    int l = height(root->left);
+    int r = height(root->right);
+    return 1 + max(l,r);
+}
+bool isBalanced(TreeNode* root){
+
+    //base case
+    if(root == NULL) return true;
+
+    //1 case
+    int leftHeight = height(root->left);
+    int rightHeight = height(root->right);
+    int diff = abs(leftHeight-rightHeight);
+
+    bool ans = (diff<=1);
+
+    //recustion
+    bool leftans = isBalanced(root->left);
+    bool rightans = isBalanced(root->right);
+
+    if(ans && leftans && rightans){
+        return true;
+    } else {
+        return false;
+    }
+
+}
+```
+
+## Check whether BT is sum tree or not / convert BST into sum tree
+
+```cpp
+int convertIntoSumTree(TreeNode* root){
+    if(root == NULL) return 0;
+
+    int leftans = convertIntoSumTree(root->left);
+    int rightans = convertIntoSumTree(root->right);
+    root->data = leftans + root->data + rightans;
+    return root->data;
+}
+```
+
+## Lowest common Ancestor
+
+<https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/>
+
+```cpp
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        
+        if(root == NULL) return NULL;
+
+        if(root->val == p->val) return p;
+        if(root->val == q->val) return q;
+
+        TreeNode* leftans = lowestCommonAncestor(root->left,p,q);
+        TreeNode* rightans = lowestCommonAncestor(root->right,p,q);
+
+        if(leftans == NULL && rightans == NULL) return NULL;
+        else if(leftans != NULL && rightans == NULL) return leftans;
+        else if(leftans == NULL && rightans !=NULL) return rightans;
+        else{
+            return root;
+        }
+    }
+};
+```
+
+## Kth ancestor
+
+find p
+k step up till (k--) k == 0 ans is found
+
+```cpp
+bool kthAncestor(Node* root,int &k,Node* p){
+
+    if(root == NULL){
+        return false;
+    }
+
+    if(root->val == p->val) return true;
+
+    bool leftAns = kthAncestor(root->left,k,p);
+    bool rightAns = lthAncestor(root->right,k,p);
+
+    if(leftAns || rightAns) k--;
+
+    if(k == 0) {
+        //yahi par faste hai
+        k = -1;
+        // k pass by referece hai to agar ans mil gaya hai to 
+        // vapas na maile isliye isko negative kar diya
+        cout<<"Answer is :"<<root->data;
+    }
+
+    return leftAns || rightAns;
+}
+```
+
+## Path Sum
+
+<https://leetcode.com/problems/path-sum/>
+
+```cpp
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    bool solve(TreeNode* root,int t,int sum){
+        if(root == NULL) return false;
+        if(sum+root->val == t && !root->left && !root->right) return true;
+        //left search and right search
+        bool left = solve(root->left,t,sum+root->val);
+        if(left) return true;
+        bool right = solve(root->right,t,sum+root->val);
+        return right;
+    }
+    bool hasPathSum(TreeNode* root, int targetSum) {
+        return solve(root,targetSum,0);
+    }
+};
+```
+
+## Path Sum II
+
+<https://leetcode.com/problems/path-sum-ii/>
+
+```cpp
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    void solve(TreeNode* root,int t,int sum,vector<int> &curr,vector<vector<int>> &ans){
+        if(root == NULL) return;
+        
+        
+        curr.emplace_back(root->val);
+        if(sum+root->val == t && !root->left && !root->right){
+            //ans
+            ans.emplace_back(curr);
+        }
+        //left search and right search
+        solve(root->left,t,sum+root->val,curr,ans);
+        solve(root->right,t,sum+root->val,curr,ans);
+        curr.pop_back();
+    }
+    vector<vector<int>> pathSum(TreeNode* root, int targetSum) {
+        vector<vector<int>> answer;
+        vector<int> curr;
+        solve(root,targetSum,0,curr,answer);
+        return answer;
+    }
+};
+```
+
+## Sum of longest bloodline TODO
+
+## build tree from inorder and preorder traversal
+
+and
+build tree from inorder and postorder traversal
+
+```cpp
+//this function can be optimized using hashMap key as element and value as index of element of inrder
+int findposition(int inorder[],int size,int element){
+    int index = -1;
+    for(int i=0;i<size;i++){
+        if(element == inorder[i]) index = i;
+    }
+
+    return index;
+}
+Node* buildTreeFromInorderPreorder(int inorder[],int preorder[], int size,int &preIndex,int inorderStart,int inorderEnd){
+    //base case
+    if(preIndex >= size || inorderStart > inorderEnd){
+        return NULL;
+    }
+
+    int element = preorder[preIndex++];
+    Node* root = new Node(element);
+    int pos = findposition(inorder,size,element);
+
+    root->left = buildTreeFromInorderPreorder(inorder,preorder,size,preIndex,inorderStart,pos-1);
+    root->right = buildTreeFromInorderPreorder(inorder,preorder,size,preIndex,pos+1,inorderEnd);
+
+    return root;
+}
+Node* buildTreeFromInorderPostOrder(int inorder[],int postOrder[],int size,int &postIndex,int inorderStart,int inorderEnd){
+    if(postIndex < 0 || inorderStart > inorderEnd){
+        return NULL;
+    }
+
+    int element = postIndex[postIndex];
+    postIndex--;
+    Node* root = new Node(element);
+    int pos = findposition(inorder,size,element);
+
+    root->right = buildTreeFromInorderPostOrder(inorder,preorder,size,preIndex,pos+1,inorderEnd);
+    root->left = buildTreeFromInorderPostOrder(inorder,preorder,size,preIndex,inorderStart,pos-1);
+
+    return root;
+}
+```
+
+## Top View of binary Tree
+
+```cpp
+void printTopView(Node* root){
+    if(root == NULL) return;
+
+    //create a map for storing horizontal distance of topnodes
+    map<int,int> topNode;
+
+    //level order;
+    //we will store a pair consisting of node and horizontal distance
+    queue<pair<Node* ,int>> q;
+    q.push(make_pair(root,0));
+
+    while(!q.empty()){
+        pair<Node*,int> temp = q.front();
+        q.pop();
+
+        Node* frontNode = temp.first;
+        int HD = temp.second;
+
+        if(topNode.find[hd]==topNode.end()){ //not found hd
+            topNode[hd] = frontNode->data;
+        }
+        
+        if(frontNode->left)
+            q.push(make_pair(frontNode->left,HD-1));
+        if(frontNode->right)
+            q.push(make_pair(frontNode->right,HD+1));
+    }
+
+    //ans in topNode map
+    cout<<"Answer is"<<endl;
+    for(auto i:topNode){
+        cout<<i.first<<" "<<i.second<<endl;
+    }
+}
+```
+
+## Bottom View of Binary Tree
+
+```cpp
+void printBotto,View(Node* root){
+    if(root == NULL) return;
+
+    //create a map for storing horizontal distance of topnodes
+    map<int,int> topNode;
+
+    //level order;
+    //we will store a pair consisting of node and horizontal distance
+    queue<pair<Node* ,int>> q;
+    q.push(make_pair(root,0));
+
+    while(!q.empty()){
+        pair<Node*,int> temp = q.front();
+        q.pop();
+
+        Node* frontNode = temp.first;
+        int HD = temp.second;
+
+        
+        topNode[hd] = frontNode->data;
+        
+        
+        if(frontNode->left)
+            q.push(make_pair(frontNode->left,HD-1));
+        if(frontNode->right)
+            q.push(make_pair(frontNode->right,HD+1));
+    }
+
+    //ans in topNode map
+    cout<<"Answer is"<<endl;
+    for(auto i:topNode){
+        cout<<i.first<<" "<<i.second<<endl;
+    }
+}
+```
