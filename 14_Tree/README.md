@@ -155,6 +155,7 @@ void levelOrderTraversalNewLine(Node* root){
         }
         
     }
+}
 ```
 
 ## Inorder Traversal - LNR
@@ -271,7 +272,7 @@ public:
 
 <https://leetcode.com/problems/diameter-of-binary-tree/>
 
-```
+```cpp
 /**
  * Definition for a binary tree node.
  * struct TreeNode {
@@ -691,5 +692,114 @@ void printBotto,View(Node* root){
     for(auto i:topNode){
         cout<<i.first<<" "<<i.second<<endl;
     }
+}
+```
+
+## Left View of Binary Tree
+
+new level ans store / if ans exist for a level do not update for preorder traversal LNR.
+
+approaches -
+
+- using map storing if ans not exist then only storing for that level for inorder traversal LNR
+- using level order traversal first element of level
+- using a vector passed its length and level matching condition inorder traversal LNR
+
+```cpp
+void printLeftView(Node* root,vector<int>& ans,int level){
+    //base case
+    if(!root){
+        return;
+    }
+
+    if(level == ans.size()){
+        ans.emplace_back(root->data);
+    }
+
+    //left
+    printLeftView(root->left,ans,level+1);
+    //right
+    printLeftView(root->right,ans,level+1);
+}
+```
+
+## Right View
+
+new level ans store / if ans exist for a level do not update for traversal - **RNL**.
+
+approaches
+
+- using map storing if ans not exist then only storing for that level for traversal RNL
+- using level order traversal last element of level
+- using a vector passed its length and level matching condition for traversal RNL
+
+```cpp
+void printRightView(Node* root,vector<int>& ans,int level){
+    //base case
+    if(!root){
+        return;
+    }
+
+    if(level == ans.size()){
+        ans.emplace_back(root->data);
+    }
+
+    //right
+    printRightView(root->right,ans,level+1);
+    //left
+    printRightView(root->left,ans,level+1);
+}
+```
+
+## Boundary Traversal
+
+approach
+
+- all left nodes from root till leaf - not left view
+- all leaf nodes
+- all right nodes from root till leaf - not right view
+
+```cpp
+void printLeftNodes(Node* root){
+    if(root == NULL) return;
+    //excluding leftest leaf node for duplicate reason
+    if(root->left == NULL && root->right == NULL) return;
+    cout<<root->data<<" ";
+    if(root->left != NULL){
+        printLeftNodes(root->left);
+    } else {
+        printLeftNodes(root->right);
+    }
+    
+}
+void printRightNodes(Node* root){
+    if(root == NULL) return;
+    if(root->left == NULL && root->right == NULL) return;
+    if(root->right != NULL){
+        printRightNodes(root->right);
+    } else {
+        printRightNodes(root->left);
+    }
+    cout<<root->data<<" ";
+}
+void printLeafNodes(Node* root){
+    if(root == NULL) return;
+    if(root->left == NULL && root->right == NULL) {
+        cout<<root->data<<" ";
+        return;
+    }
+    printLeafNodes(root->left);
+    printLeafNodes(root->right);    
+    
+} 
+
+void boundaryTraversal(Node* root){
+    if(root == NULL){
+        return;
+    }
+    cout<<root->data;
+    printLeftNodes(root->left);
+    printLeafNodes(root);
+    printRightNodes(root->right);
 }
 ```
