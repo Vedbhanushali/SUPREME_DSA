@@ -336,6 +336,24 @@ NA
 [right view of tree](/14_Tree/README.md)  
 [boundary view of tree](/14_Tree/README.md)  
 
-LICENSE
+### Assignment of Tree
+
+[Fast way to find diameter of tree](/14_Tree/Assignment.md)  
+[Fast way to determing that binary tree is balanced or not](/14_Tree/Assignment.md)  
+[Check 2 trees are identical or not](/14_Tree/Assignment.md)  
+[Check 2 trees are mirror of each other or not](/14_Tree/Assignment.md)  
+[Diagonal traversal of a binary tree](/14_Tree/Assignment.md)  
+[Zig-Zag traversal of a binary tree](/14_Tree/Assignment.md)  
+[Transform to Sum tree.](/14_Tree/Assignment.md)  
+[Vertical traversal of a binary tree.](/14_Tree/Assignment.md)  
+[Morris traversal of a binary tree](/14_Tree/Assignment.md)  
+[Sum of longest bloodline of a tree](/14_Tree/Assignment.md)  
+[K-sum path in a binary tree](/14_Tree/Assignment.md)  
+[Max sum of non-adjacent nodes in binary tree](/14_Tree/Assignment.md)  
+[Max time to burn a binary tree](/14_Tree/Assignment.md)  
+[Flatten a Binary tree into Linked List](/14_Tree/Assignment.md)  
+[Check if a Binary Tree contains duplicate subtrees of size 2 or more](/14_Tree/Assignment.md)  
+
+## LICENSE
 
 [MIT LICENSE](/LICENSE)
