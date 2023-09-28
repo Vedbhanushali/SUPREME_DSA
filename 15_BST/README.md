@@ -121,3 +121,22 @@ int maxVal(Node* root){
 ```
 
 ## Inorder Predeccessor / Successor
+
+Inorder Predeccessor of root is max of root->left  
+Inorder Successor of root is min of root->right  
+
+Inorder traversal of BST IP - 1 2 4 5 7 10  
+for 4 - 2 is predecessor
+for 4 - 5 is successor  
+
+In case there is not left subtree for predeccessor then calculate inorder traversal and find the predeccessor
+
+In case there is not right subtree for Successor then calculate inorder traversal and find the Successor
+
+## Deletion in BST
+
+three cases
+
+- root node does not have any children root->left == NULL and root->right == NULL then delete root nodeby sending NULL to its parent node;
+- root node  have one children either root->left == NULL or root->right == NULL then delete root nodeby sending not null child of root to its parent node;
+- root node  have two children either root->left != NULL and root->right != NULL then delete root nodeby replacing root data with root's predecessor or successor;
