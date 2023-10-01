@@ -394,3 +394,153 @@ public:
     }
 };
 ```
+
+## Convert BST into sorted doubly linked list
+
+RNL
+
+```cpp
+convertIntoSortedDLL(Node* root,Node* &head){
+    //base case
+    if(root == NULL){
+        return;
+    }
+
+    //right subtree into LL
+    convertIntoSortedDLL(root->right,head);
+
+    //root node attaching with right node
+    root->right = head;
+    
+    if(head != NULL){
+        head -> left = root;
+    }
+
+    head = root;
+
+    convertIntoSortedDLL(root->left,head);
+
+}
+```
+
+## Sorted doubly LL into BST
+
+```cpp
+Node* sortedLinkedListIntoBST(Node* &head,int n){
+    if(n <= 0 || head == NULL){
+        return NULL;
+    }
+
+    Node* leftsubtree = sortedLinkedListIntoBST(head,n/2);
+
+    Node* root = head;
+    root->left = leftsubtree;
+
+    head = head->right;
+
+    root->right = sortedLinkedListIntoBST(head,n-n/2-1);
+    return root;
+}
+```
+
+## Convert Sorted List to Binary Search Tree
+
+<https://leetcode.com/problems/convert-sorted-list-to-binary-search-tree/>
+
+```cpp
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+
+    TreeNode* sortedListToBST(ListNode* head) {
+        if(head == NULL) return NULL;
+        ListNode* slow = head;
+        ListNode* prev = NULL;
+        ListNode* fast = head;
+        while(fast){
+            fast = fast->next;
+            if(fast){
+                fast = fast->next;
+                prev = slow;
+                slow = slow->next;
+            }
+        }
+        TreeNode* root = new TreeNode(slow->val);
+        if(head->next == NULL) return root;
+        prev->next = NULL;
+        root->left = sortedListToBST(head);
+        root->right = sortedListToBST(slow->next);
+        return root;
+    }
+};
+```
+
+## Find larget BST in binary Tree
+
+```cpp
+class NodeData{
+    public:
+    int size;
+    int minVal;
+    int maxVal;
+    bool isValid;
+    NodeData(){
+
+    }
+    NodeData(int size,int maxVal,int minVal,int isValid){
+        this->size = size;
+        this->maxVal = max;
+        this->minVal = min;
+        this->isValid = isValid;
+    }
+};
+NodeData findLargestBST(Node* root,int &ans){
+    if(root == NULL){
+        NodeData temp(0,INT_MIN,INT_MAX,true);//this is because when comparing for leaf node max should be min and vice versa
+        return temp;
+    }
+
+    NodeData leftAns = findLargestBST(root->left,ans);
+    NodeData rightAns = findLargestBST(root->right,ans);
+    NodeData currNode;
+    currNode.size = leftAns.size + rightAns.size + 1;
+    currNode.minVal = min(root->data,leftAns.minVal);
+    currNode.maxVal = max(root->data,rightAns.maxVal);
+
+    if(leftAns.isValid && rightAns.isValid && (root->data > leftAns.maxVal && root->data <rightAns.minVal)){
+        currNode.isValid = true;
+        ans = max(ans,currNode.size)
+    } else {
+        currNode.isValid = false;
+    }
+    return currNode;
+
+}
+```
+
+## Merge 2 BST
+
+approach
+sorted BST to LL
+merget 2 LL
+convert LL to BST
