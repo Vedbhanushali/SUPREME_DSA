@@ -606,12 +606,82 @@ bool isDeadEnd(Node *root)
 }
 ```
 
-## Merge two BST
+## Flatten BST to sorted list
+
+approach -
+
+1. perform inorder on BST and store int in vector, now construct LL from it. TC: O(n) and SC - O(n)
+2. perform inorder on BST and store BST Node in vector, not vec[i]->left = NULL and vec[i]->right = vec[i+1] node. TC: O(n) and SC: O(n)
+3. flatten using inorder traversal on go using a dummy/prev node which will act as predecessor.
+
+```cpp
+void in(Node* root,Node* &prev){
+    if(root == NULL) return NULL;
+    in(root->left,prev);
+    prev->left = NULL;
+    prev->right = root;
+    prev = root;
+    in(root->right,prev);
+}
+Node* flatten(Node* root){
+    Node* dummy = new Node(-1);
+    Node* prev = dummy;
+    in(root,prev);
+    //prev is now last node
+    prev->left = NULL;
+    prev->right = NULL;
+    // after dummy node LL is available
+    return dummy->next;
+}
+```
 
 ## Count BST nodes that lie in a given range
+
+approach -
+
+1. perfrom inorder or any traversal and count number which are in range of low and high, TC:O(n)
+2. using BST property will decide whether will find nodes in range of low and high and caluclate code is below
+
+```cpp
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+    int solve(TreeNode* root, int low, int high){
+        if(root == NULL){
+            return 0;
+        }
+        int ans = 0;
+       if(root->val >= low && root->val <= high){
+           ans += root->val;
+           ans += solve(root->left,low,high);
+           ans += solve(root->right,low,high);
+       }
+      else if(root->val > high){
+           ans += solve(root->left,low,high);
+       }
+       else{
+           ans += solve(root->right,low,high);
+       }
+       return ans;
+    }
+public:
+    int rangeSumBST(TreeNode* root, int low, int high) {
+        return solve(root,low,high);
+    }
+};
+```
+
+## Merge two BST
 
 ## Replace every element with the least greater element on its right
 
 ## Check preorder is valid or not
-
-## Flatten BST to sorted list
