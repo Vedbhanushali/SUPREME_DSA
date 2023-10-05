@@ -354,6 +354,19 @@ NA
 [Flatten a Binary tree into Linked List](/14_Tree/Assignment.md)  
 [Check if a Binary Tree contains duplicate subtrees of size 2 or more](/14_Tree/Assignment.md)  
 
+## BST
+
+### Assignment of BST
+
+## Heap
+
+[Heap](/16_Heap/README.md)  
+[Max heap](/16_Heap/README.md)  
+[Insertion in max Heap](/16_Heap/README.md)  
+[Deletion in max heap](/16_Heap/README.md)  
+[Heapify](/16_Heap/README.md)  
+[Heap Sort](/16_Heap/README.md)  
+
 ## LICENSE
 
 [MIT LICENSE](/LICENSE)

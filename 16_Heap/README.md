@@ -135,6 +135,7 @@ class Heap{
 Build a max heap from arr
 
 - no need to heapify leaf nodes if number of nodes - n then [(n/2)+1 , n ] this are leaf nodes ex, if n = 5 then (3,4,5) are leaf nodes 1 based indexing
+TC - O(n) //TODO find why looks like nlogn (n for traversing arry and logn for heapify)
 
 ```cpp
 void heapify(int arr[],int &n,int i){
@@ -154,6 +155,31 @@ void heapify(int arr[],int &n,int i){
         swap(arr[largest],arr[index]);
         index = largest;
         heapify(arr,n,index)
+    }
+}
+void buildHeap(int arr[],int n){
+    for(int i = n/2 ;i>0;i--){
+        heapify(arr,n,i);
+    }
+}
+```
+
+## Heap sort
+
+TC - O(n logn)
+algo  
+
+1. first element and last element swap, (first/top element is maximum so will consider it and decrease the size of heap)
+2. heapify
+
+```cpp
+void heapSort(int arr[],int n){
+    while(n != 1){
+        swap(arr[1],arr[n]); //first and last
+        n--;
+
+        //heapify
+        heapify(arr,n,1);
     }
 }
 ```
