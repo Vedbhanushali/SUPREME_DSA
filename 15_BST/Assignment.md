@@ -680,8 +680,10 @@ public:
 };
 ```
 
-## Merge two BST
-
 ## Replace every element with the least greater element on its right
+
+approach - will traverse array from right -> left so that when we will have already visited previous nodes, and will add those data in BST, while adding if we move left of any node then it will becomes its least greater element of (inorder successor), so last node from which we moved left is answer.
+
+## Merge two BST
 
 ## Check preorder is valid or not
