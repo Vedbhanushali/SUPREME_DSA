@@ -1,4 +1,4 @@
-# Assignment
+# Practice Questions
 
 ## Count inversion
 

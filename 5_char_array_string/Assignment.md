@@ -1,4 +1,4 @@
-# Assignment of Char array and string
+# Practice Questions of Char array and string
 
 ## valid Anagram
 

@@ -18,7 +18,7 @@ github repository of DSA challanges
 [Pascal Triangle](/3_Array/README.md)  
 [CODE SNIPPETS (swapping,reverse array)](/3_Array/README.md)
 
-### Array Assignment questions
+### Array Practice Questions
 
 [sort colors](/3_Array/Assignment.md)  
 [move all -ve no the left side of array](/3_Array/Assignment.md)  
@@ -57,7 +57,7 @@ github repository of DSA challanges
 [Insertion sort](/4_searching_and_sorting/sorting.md)  
 [STL sort](/4_searching_and_sorting/sorting.md)
 
-### Assignment of searching and sorting
+### Practice Questions of searching and sorting
 
 [K-Diff Pairs In An Array](/4_searching_and_sorting/Assignment.md)  
 [Find K-Closest Element](/4_searching_and_sorting/Assignment.md)  
@@ -79,7 +79,7 @@ github repository of DSA challanges
 [minimum time difference](./5_char_array_string/README.md)  
 [palindromic substring](./5_char_array_string/README.md)
 
-### Assignments of strings
+### Practice Questions of strings
 
 [valid anagram](./5_char_array_string/Assignment.md)  
 [reverse only letters](./5_char_array_string/Assignment.md)  
@@ -110,10 +110,6 @@ github repository of DSA challanges
 [fermat's theorem](/6_pointers_maths/README.md)  
 [probability concepts](/6_pointers_maths/README.md)
 
-### Assigments
-
-NA
-
 ## Recursion
 
 [print 1 to n](/7_Recurssion/README.md)  
@@ -131,7 +127,7 @@ NA
 [Cut into segement](/7_Recurssion/README.md)  
 [Maximum sum of adjacent elements](/7_Recurssion/README.md)  
 
-### Assigments of recursion
+### Practice Questions of recursion
 
 [Last occurrence of a char](/7_Recurssion/Assignment.md)  
 [Reverse a string RE](/7_Recurssion/Assignment.md)  
@@ -153,10 +149,6 @@ NA
 [In place Merge sort](/8_Divide_and_conquor/README.md)  
 [quick sort](/8_Divide_and_conquor/README.md)  
 
-### Assigments of D&C
-
-NA
-
 ## Backtracking
 
 [permutation of string](/9_backtracking/README.md)  
@@ -167,7 +159,7 @@ NA
 [generate paranthesis](/9_backtracking/README.md)  
 [phonekeypad problem](/9_backtracking/README.md)  
 
-### Assigments of Backtracking
+### Practice Questions of Backtracking
 
 [count inversion](/9_backtracking/Assignment.md)  
 [inplace mergesort](/8_Divide_and_conquor/README.md)  
@@ -204,10 +196,6 @@ NA
 [private constructor](/10_OPPS/README.md)  
 [Virtual constructor vs virtual destructor](/10_OPPS/README.md)  
 
-### Assigments of OOP
-
-NA
-
 ## LinkedList
 
 [Single LinkedList structure](/11_LinkedList/LINKEDLIST.md)  
@@ -237,7 +225,7 @@ NA
 [Insert at position](/11_LinkedList/DOUBLY_LINKEDLIST.md)  
 [Delete node from position](/11_LinkedList/DOUBLY_LINKEDLIST.md)  
 
-### Assignment of LL
+### Practice Questions of LL
 
 [Merge 2 Sorted Linked List](/11_LinkedList/Assignment.md)  
 [Clone a Linked List with Random Pointer](/11_LinkedList/Assignment.md)  
@@ -268,7 +256,7 @@ NA
 [Prev Smaller element](/12_Stack/README.md)  
 [Largest rectangular area in histogram](/12_Stack/README.md)  
 
-### Assignment of Stack
+### Practice Questions of Stack
 
 [Minimum Bracket Reversal](/12_Stack/Assignment.md)  
 [Remove All Adjacent Duplicates In String](/12_Stack/Assignment.md)  
@@ -301,7 +289,7 @@ NA
 [Gas Station](/13_Queue/README.md)  
 [Sliding window maximum(sliding window + Queue)](/13_Queue/README.md)  
 
-### Assignemnt of Queue
+### Practice Questions of Queue
 
 [Implement Queue using stack](/13_Queue/Assignement.md)  
 [Implement Stack using Queue](/13_Queue/Assignement.md)  
@@ -336,7 +324,7 @@ NA
 [right view of tree](/14_Tree/README.md)  
 [boundary view of tree](/14_Tree/README.md)  
 
-### Assignment of Tree
+### Practice Questions of Tree
 
 [Fast way to find diameter of tree](/14_Tree/Assignment.md)  
 [Fast way to determing that binary tree is balanced or not](/14_Tree/Assignment.md)  
@@ -356,7 +344,7 @@ NA
 
 ## BST
 
-### Assignment of BST
+### Practice Questions of BST
 
 ## Heap
 

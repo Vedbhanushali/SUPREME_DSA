@@ -1,4 +1,4 @@
-# Assignment of Tree
+# Practice Questions of Tree
 
 ## Fast way to find Diameter of a tree
 

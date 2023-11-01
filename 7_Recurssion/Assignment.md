@@ -1,4 +1,4 @@
-# Assignment
+# Practice Questions
 
 ## Last occurrence of a char
 

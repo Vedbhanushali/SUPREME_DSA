@@ -1,4 +1,4 @@
-# Assignment of Linked List
+# Practice Questions of Linked List
 
 ## Print kth node from end of Linked List
 

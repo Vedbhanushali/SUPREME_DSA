@@ -1,4 +1,4 @@
-# Assignment of Queue
+# Practice Questions of Queue
 
 ## Implement Queue using Stack
 

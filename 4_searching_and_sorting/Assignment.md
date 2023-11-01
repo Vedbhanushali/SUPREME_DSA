@@ -1,4 +1,4 @@
-# Assignment
+# Practice Questions
 
 ## K-Diff Pairs In An Array
 

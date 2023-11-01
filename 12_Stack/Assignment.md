@@ -1,4 +1,4 @@
-# Assignment
+# Practice Questions
 
 ## Remove All Adjacent Duplicates In String
 
