@@ -67,3 +67,40 @@ sort(arr,arr+n);
 //vec is vector
 sort(vect.begin(),vect.end());
 ```
+
+### custom comparator
+
+```cpp
+bool comp(pair<int,int>& a,pair<int,int>& b){
+    return a.second < b.second; //sorting ascending order based on pair second value
+}
+// custom Comparator logic of a < b : mean ascending and  a > b mean descending order
+--------------------- main fun
+vector<pair<int,int>> vec = {{1,2},{3,3},{4,5}};
+
+//by default in custom is not provided sorting will applied on first element of pair
+sort(vec.begin(),vec.end());
+
+//sorting based on second pair element
+sort(vec.begin(),vec.end(),comp);
+```
+
+```cpp
+//string length sorting
+bool comp(string &a,string &b){
+    retrun a.size() < b.size();
+}
+--------------main fun
+vector<string> vect = {"ved","dev","server"};
+sort(vect.begin(),vect.end(),comp);
+```
+
+### sort in descending order
+
+```cpp
+int arr[] = { 1, 5, 8, 9, 6, 7, 3, 4, 2, 0 };
+int n = sizeof(arr) / sizeof(arr[0]);
+sort(arr, arr + n, greater<int>());
+```
+
+
