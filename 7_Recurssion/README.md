@@ -175,7 +175,7 @@ void printSubsequence(string str,string output,int i);{
     printSubsequence(str,output,i+1);
     //include call
     output.push_back(str[i])
-    printSubsequence(str,output,i);
+    printSubsequence(str,output,i+1);
 }
 int main(){
     string str = "abc";
