@@ -270,6 +270,7 @@ github repository of DSA challanges
 [Car Fleet - 11 Leetcode](/12_Stack/Assignment.md)  
 [Simplify Path Leetcode](/12_Stack/Assignment.md)  
 [Max rectangle in Binary Matrix with all Is](/12_Stack/Assignment.md)  
+[Trapping rain Water](/12_Stack/Assignment.md)  
 
 ## Queue
 
