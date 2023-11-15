@@ -619,3 +619,81 @@ public:
     }
 };
 ```
+## Trapping rain Water 
+
+https://leetcode.com/problems/trapping-rain-water/
+
+application of min stack and max stack
+
+```cpp
+class Solution {
+public:
+vector<int> minStack(vector<int>& v){
+    vector< pair<int,int> > st;
+    
+    vector<int> ans(v.size());
+    for(int i = 0;i<v.size();i++){
+        int curr = v[i];
+        if(st.empty()){
+            pair<int,int> p = make_pair(curr,curr);
+            st.push_back(p);
+        } else {
+            pair<int,int> p;
+            p.first = curr;
+            p.second = max(curr,st.back().second);
+            st.push_back(p);
+        }
+        ans[i] = st.back().second;
+    }
+    return ans;
+}
+vector<int> maxStack(vector<int>& v){
+    vector< pair<int,int> > st;
+     vector<int> ans(v.size());
+     for(int i = v.size()-1;i>=0;i--){
+        int curr = v[i];
+        if(st.empty()){
+            pair<int,int> p = make_pair(curr,curr);
+            st.push_back(p);
+        } else {
+            pair<int,int> p;
+            p.first = curr;
+            p.second = max(curr,st.back().second);
+            st.push_back(p);
+        }
+        ans[i] = st.back().second;
+    }
+    return ans;
+}
+    int trap(vector<int>& height) {
+        vector<int> prev = minStack(height);
+        vector<int> next = maxStack(height);
+        /* debugging helper */
+        // cout<<"0 ";
+        // for(int i=1;i<height.size()-1;i++){
+        //     int curr = height[i];
+        //     if(prev[i-1] == 0 || next[i+1] == 0){
+        //         cout<<"0 ";
+        //     } else {
+        //         // cout<<abs(prev[i-1] - next[i+1])<<" ";
+        //         if(prev[i-1]>curr && next[i+1]>curr)
+        //         cout<<min(prev[i-1],next[i+1])-curr<<" ";
+        //         else cout<<"0 ";
+        //     }
+        // }cout<<"0 "<<endl;
+        // for(auto i:prev){
+        //     cout<<i<<" "; 
+        // } cout<<endl;
+        // for(auto i:next){
+        //     cout<<i<<" "; 
+        // } cout<<endl;
+        int ans = 0;
+        for(int i=1;i<height.size()-1;i++){
+            int curr = height[i];
+            if(prev[i-1]>curr && next[i+1]>curr)
+                ans += min(prev[i-1],next[i+1])-curr; 
+        }
+        return ans;
+    }
+};
+```
