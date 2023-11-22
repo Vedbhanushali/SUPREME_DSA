@@ -68,7 +68,7 @@ github repository of DSA challanges
 [Painters Partition Problem](/4_searching_and_sorting/Assignment.md#painters-partition-problem)  
 [Aggresive Cows](/4_searching_and_sorting/Assignment.md#aggresive-cows)  
 [EKO SPOJ](/4_searching_and_sorting/Assignment.md#eko-spoj)  
-[PRATA](/4_searching_and_sorting/Assignment.md#prata)
+[PRATA](/4_searching_and_sorting/Assignment.md#prata)  
 [Median or row wise sorted matrix](/4_searching_and_sorting/Assignment.md#Median-of-row-wise-sorted-matrix)
 
 ## 4. Char arrays and string
