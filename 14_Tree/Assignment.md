@@ -1116,3 +1116,60 @@ int main() {
   return 0;
 }
 ```
+
+##  Serialize and Deserialize Binary Tree
+
+<https://leetcode.com/problems/serialize-and-deserialize-binary-tree/description/>
+
+build tree and create tree order vector
+
+### code -
+```cpp
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Codec {
+public:
+    int NIL = -10001;
+    void Inorder(TreeNode* root,vector<int>&ans){
+        if(root == NULL) {
+            ans.emplace_back(NIL);
+            return;
+        }
+        ans.emplace_back(root->val);
+        Inorder(root->left,ans);
+        Inorder(root->right,ans);
+    }
+    // Encodes a tree to a single string.
+    vector<int> serialize(TreeNode* root) {
+        vector<int> ans;
+        Inorder(root,ans);
+        return ans;
+    }
+
+    // Decodes your encoded data to tree.
+    TreeNode* buildTree(vector<int>&data,int &i){
+        if(i >= data.size() || data[i] == NIL) return NULL;
+        int curr = data[i];
+        TreeNode* root = new TreeNode(data[i]);
+        i++;
+        root->left = buildTree(data,i);
+        i++;
+        root->right = buildTree(data,i);
+        return root;
+    }
+    TreeNode* deserialize(vector<int> data) {
+        int i = 0;
+        return buildTree(data,i);
+    }
+};
+
+// Your Codec object will be instantiated and called as such:
+// Codec ser, deser;
+// TreeNode* ans = deser.deserialize(ser.serialize(root));
