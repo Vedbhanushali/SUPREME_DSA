@@ -344,7 +344,8 @@ github repository of DSA challanges
 [Max time to burn a binary tree](/14_Tree/Assignment.md#max-time-to-burn-a-binary-tree)  
 [Flatten a Binary tree into Linked List](/14_Tree/Assignment.md#flatten-a-binary-tree-into-linked-list)  
 [Check if a Binary Tree contains duplicate subtrees of size 2 or more](/14_Tree/Assignment.md#check-if-a-binary-tree-contains-duplicate-subtrees-of-size-2-or-more)   
-[Check for Children Sum Property in a Binary Tree](/14_Tree/Assignment.md#check-for-children-sum-property-in-a-binary-tree)  
+[Check for Children Sum Property in a Binary Tree](/14_Tree/Assignment.md#check-for-children-sum-property-in-a-binary-tree) 
+  [Serialize and Deserialize Binary Tree](/14_Tree/Assignment.md#serialize-and-deserialize-binary-tree)   
 
 ## BST
 
