@@ -344,7 +344,7 @@ public:
 };
 ```
 
-## Convert a BST into balanced BST
+## Convert a BST into balanced BST (TODO)
 
 ## 2 SUM in BST
 
@@ -540,7 +540,48 @@ NodeData findLargestBST(Node* root,int &ans){
 
 ## Merge 2 BST
 
+<https://www.geeksforgeeks.org/problems/merge-two-bst-s/1>
+
 approach
-sorted BST to LL
-merget 2 LL
-convert LL to BST
+
+1. convert BST to sorted array using inorder traversal and not merge two sorted array using two pointer appraoch
+2. Inorder traversal using stack and keeping two pointers and merge and make ans vector on the go.
+approach similar to brothers from different root
+
+```cpp
+class Solution
+{
+    public:
+    //Function to return a list of integers denoting the node 
+    //values of both the BST in a sorted order.
+    vector<int> merge(Node *root1, Node *root2)
+    {
+       //Your code here
+       vector<int> ans;
+       stack<Node*> sa,sb;
+        Node* a = root1;
+        Node* b = root2;
+       while(a || b || (!sa.empty()) || (!sb.empty()) ){
+           while(a){
+               sa.push(a);
+               a = a->left;
+           }
+           while(b) {
+               sb.push(b);
+               b = b->left;
+           }
+           if( sb.empty() || ( !sa.empty() && sa.top()->data <= sb.top()->data) ){
+               auto saTop = sa.top(); sa.pop();
+               ans.emplace_back(saTop->data); 
+               a = saTop->right;
+           } else {
+               //mean insert b is present
+               auto sbTop = sb.top(); sb.pop();
+               ans.emplace_back(sbTop->data);
+               b = sbTop->right;
+           }
+       }
+       return ans;
+    }
+};
+```

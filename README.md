@@ -343,13 +343,41 @@ github repository of DSA challanges
 [Max sum of non-adjacent nodes in binary tree](/14_Tree/Assignment.md#max-sum-of-non-adjacent-nodes-in-binary-tree)  
 [Max time to burn a binary tree](/14_Tree/Assignment.md#max-time-to-burn-a-binary-tree)  
 [Flatten a Binary tree into Linked List](/14_Tree/Assignment.md#flatten-a-binary-tree-into-linked-list)  
-[Check if a Binary Tree contains duplicate subtrees of size 2 or more](/14_Tree/Assignment.md#check-if-a-binary-tree-contains-duplicate-subtrees-of-size-2-or-more)   
-[Check for Children Sum Property in a Binary Tree](/14_Tree/Assignment.md#check-for-children-sum-property-in-a-binary-tree) 
-  [Serialize and Deserialize Binary Tree](/14_Tree/Assignment.md#serialize-and-deserialize-binary-tree)   
+[Check if a Binary Tree contains duplicate subtrees of size 2 or more](/14_Tree/Assignment.md#check-if-a-binary-tree-contains-duplicate-subtrees-of-size-2-or-more)  
+[Check for Children Sum Property in a Binary Tree](/14_Tree/Assignment.md#check-for-children-sum-property-in-a-binary-tree)  
+[Serialize and Deserialize Binary Tree](/14_Tree/Assignmentmd#serialize-and-deserialize-binary-tree)  
 
 ## BST
 
+[BST creation](/15_BST/README.md#bst-creation)  
+[Searching in BST](/15_BST/README.md#searching-in-bst)  
+[Minimum and Maximum value in BST](/15_BST/README.md#minimum-and-maximum-value-in-bst)  
+[Inorder predeccessor/successor](/15_BST/README.md#inorder-of-bst)  
+[Deletion in BST](/15_BST/README.md#deletion-in-bst)  
+[Validate BST](/15_BST/README.md#validate-bst)  
+[Lowest Common Ancestor](/15_BST/README.md#lowest-common-ancestor)  
+[Kth smallest Element in a BST](/15_BST/README.md#kth-smallest-element-in-a-bst)  
+[Create BST from Inorder Traversal](/15_BST/README.md#create-bst-from-inorder-traversal)  
+[Convert a BST into balanced BST](/15_BST/README.md#convert-a-bst-into-balanced-bst-todo)  
+[2 sum in BST](/15_BST/README.md#2-sum-in-bst)  
+[Convert BST into sorted doubly linked list](/15_BST/README.md#convert-bst-into-sorted-doubly-linked-list)  
+[Sorted doubly LL into BST](/15_BST/README.md#sorted-doubly-ll-into-bst)  
+[Convert sorted List to BST](/15_BST/README.md#convert-sorted-list-to-binary-search-tree)  
+[Find largest BST in binary tree](/15_BST/README.md#find-larget-bst-in-binary-tree)  
+[Merge 2 BST](/15_BST/README.md#merge-2-bst)  
+
 ### Practice Questions of BST
+
+[Find inorder successor and inorder predecessor in a BST](/15_BST/Assignment.md#find-inorder-successor-and-inorder-predecessor-in-a-bst)  
+[Construct BST from preorder traversal](/15_BST/Assignment.md#construct-bst-from-preorder-traversal)  
+[Count pairs from 2 BST whose sum is eqaul to given value 'X'](/15_BST/Assignment.md#count-pairs-from-2-bst-whose-sum-is-equal-to-given-value-x)  
+[Convert a normal BST into balanced BST](/15_BST/Assignment.md#convert-a-normal-bst-into-a-balanced-bst)  
+[Find the median of BST in O(n) time and O(1) space](/15_BST/Assignment.md#find-the-median-of-bst-in-on-time-and-01-space)  
+[Check whether BST contains Dead end](/15_BST/Assignment.md#check-whether-bst-contains-dead-end)  
+[Flatten BST to sorted list](/15_BST/Assignment.md#flatten-bst-to-sorted-list)  
+[Count BST nodes that lie in a given range](/15_BST/Assignment.md#count-bst-nodes-that-lie-in-a-given-range)  
+[Replace every element with least greater element on its right.](/15_BST/Assignment.md#replace-every-element-with-the-least-greater-element-on-its-right)  
+[Valid BST from preorder](/15_BST/Assignment.md#valid-bst-from-preorder)  
 
 ## Heap
 
