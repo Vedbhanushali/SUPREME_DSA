@@ -175,6 +175,7 @@ algo
 ```cpp
 void heapSort(int arr[],int n){
     while(n != 1){
+        // cout<<arr[1]<<endl;
         swap(arr[1],arr[n]); //first and last
         n--;
 
@@ -182,4 +183,318 @@ void heapSort(int arr[],int n){
         heapify(arr,n,1);
     }
 }
+```
+
+## STL heap
+
+```cpp
+#include<iostream>
+#include<queue>
+using namespace std;
+class comp {
+    public:
+    bool operator()(ListNode* a,ListNode* b){
+        return a->val > b->val;
+    }
+}
+int main(){
+     //MAX heap
+    priority_queue<int> pq;
+    //insertion
+    pq.push(1);
+    pq.push(9);
+    pq.push(3);
+
+    //view
+    cout<<pq.top(); //9
+
+    //deletion
+    pq.pop();
+
+    pq.top(); // 3
+
+    //size
+    pq.size();
+    pq.empty(); //check empty
+
+
+    //MIN heap 
+    priority_queue<int,vector<int>,greater<int> > pq;
+
+
+    // CUSTOM comparator
+    priority_queue<ListNode*,vector<ListNode*>,comp) minHeap;
+    return 0;
+}
+```
+
+## kth smallest number in arr
+
+approach create max heap and popping k elments will give kth smallest element
+
+when solving using min heap space complexity will increase
+n size heap  and require k pop
+TC - O(n)
+
+when solving using max heap will only require k size heap as will only insert when heap top element is smaller, this way heap of k size will contain k smallest elements and top element will be kth smallest as it is max heap
+TC - O(nlogk)
+SC - O(k)
+
+```cpp
+int getKthSmallestElement(int arr[],int n,int k){
+    priority_queue<int> pq;
+    for(int i=0;i<k;i++){
+        pq.push(arr[i]);
+    }
+    for(int i=k;i<n;i++){
+        if(pq.top() > arr[i]){
+            pq.pop();
+            pq.push(arr[i]);
+        }
+    }
+    return pq.top();
+}
+int getKthGreatestElement(int arr[],int n,int k){
+    //MIN heap
+    priority_queue<int,vector<int>,greater<int>> pq;
+    for(int i=0;i<k;i++){
+        pq.push(arr[i]);
+    }
+    for(int i=k;i<n;i++){
+        //all k greatest will be inside pq
+        if(pq.top() < arr[i]){
+            pq.pop();
+            pq.push(arr[i]);
+        }
+    }
+    //out of all greatest mini is at top that would be kth greatest element  
+    //ex 10 9 8 7 3 (3 is 5th greatest element) and would at top
+    return pq.top();
+}
+int main(){
+    int arr[] = {2,3,5,6,7};
+    int n = 5;
+    int k = 3;
+    int ans = getKthSmallestElement(arr,n,k);
+}
+```
+
+## Merge 2 Max - heap
+
+approach
+
+1. merge two heap arrays and build heap (heapify and create heap)  
+TC - O(m+n)
+
+2. push heap2 in heap1  
+n = heap1 size  
+m = heap2 size  
+TC - O(mlogm)  
+
+## Find if Complete Binary tree is heap or not
+
+parent is greater than both child
+
+```cpp
+pair<bool,int> solve(Node* root){
+    if(root == NULL) {
+        pair<bool,int> p = make_pair(true,INT_MIN);
+        return p;
+    }
+    if(root->left == NULL && root->right == NULL){
+        pair<bool,int> p = make_pair(true,root->data);
+        return p;
+    }
+    pair<bool,int> leftAns = solve(root->left);
+    pair<bool,int> rightAns = solve(root->right);
+    if(leftAns.first && rightAns.first && leftAns.second < root->data && rightAns.second < root->data){
+        pair<bool,int> p = make_pair(true,root->data);
+        return p;
+    } else {
+        pair<bool,int> p = make_pair(false,root->data);
+        return p;
+    }
+}
+int main(){
+    return solve(root).first;
+}
+```
+
+## convert BST into max heap
+
+approach -
+
+1. same way as build heap method will build from just nodes which are not leaf node bottom to top heapify.
+2. convert BST into inorder (sorted list) not this sorted list when insert into same BST in post order will give max heap
+
+## Check given tree is CBT (complete binary tree) or not
+
+using level order when nodes index is greater then total number of nodes mean in leaf nodes there are null between nodes in that level so not completely left filled so it will not be CBT
+
+## Merge K - sorted array
+
+```cpp
+class info{
+    public:
+    int data;
+    int row;
+    int col;
+    info(int val,int r,int c){
+        data = val;
+        row = r;
+        col =c;
+    }
+}
+bool compare(info* a,info *b){
+    return a->data > b->data;
+}
+vector<int> mergeKSortedArrays(int arr[][4],int k,int n){
+    priority_queue<info*,vector<info*>,compare> minHeap;
+
+    //har array ka first element insert karo
+    for(int i=0;i<k;i++){
+        info* temp = new info(arrp[i][0],i,0);
+        minHeap.push(temp);
+    }
+    vector<int> ans;
+    while(!minHeap.empty()){
+        info* temp = minHeap.top();
+        int topElement = temp->data;
+        int topRow = temp->row;
+        int topCol = temp->col;
+        minHeap.pop();
+
+        ans.push_back(topElement);
+        if(topCol + 1 < n){
+            info* newInfo = new info(arr[topRow][topCol+1],topRow,topCol+1);
+            minHeap.push(newInfo);
+        }
+    }
+}
+```
+
+## Merge K sorted LL
+
+<https://leetcode.com/problems/merge-k-sorted-lists/>
+
+```cpp
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class comp {
+    public:
+    bool operator()(ListNode* a,ListNode* b){
+        return a->val > b->val;
+    }
+};
+class Solution {
+public:
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        priority_queue < ListNode*,vector<ListNode*>,comp> minHeap;
+        for(auto i:lists){
+            if(i)
+                minHeap.push(i);
+        }
+        ListNode* head = NULL;
+        ListNode* tail = NULL;
+        while(!minHeap.empty()){
+            ListNode* topElement = minHeap.top();
+            minHeap.pop();
+
+            //insertion in ans
+            if(head == NULL){
+                head = topElement;
+                tail = topElement;
+            } else {
+                tail->next = topElement;
+                tail = tail->next;
+            }
+
+            //add next node in heap
+            if(tail->next){
+                minHeap.push(tail->next);
+            }
+        }
+        return head;
+    }
+};
+```
+
+## Smallest range covering element from k lists
+
+approach -
+we have to one element from each LL if range is made of min and max of element than all elment will be in that range  
+and we also have to minimize this range of [min,max] so achieve it need to increase min from LL (can't do max as going next will give higher value in sorted LL)
+
+```cpp
+class node{
+    public:
+    int data;
+    int row;
+    int col;
+    node(int d,int r,int c){
+        data = d;
+        row = r;
+        col = c;
+    }
+};
+class comp{
+    public:
+    bool operator()(node* a,node *b){
+        return a->data > b->data;
+    }
+};
+class Solution {
+public:
+    vector<int> smallestRange(vector<vector<int>>& nums) {
+        int maxi = INT_MIN;
+        int mini = INT_MAX;
+        priority_queue<node*,vector<node*>,comp> minHeap;
+        int k = nums.size();
+        for(int i=0;i<k;i++){
+            int element = nums[i][0]; 
+            maxi = max(maxi,element);
+            mini = min(mini,element);
+            minHeap.push(new node(element,i,0));
+        }
+        int ansStart = mini;
+        int ansEnd = maxi;
+        while(!minHeap.empty()){
+            node* top = minHeap.top();
+            int topElement = top->data;
+            int topRow = top->row;
+            int topCol = top->col;
+            minHeap.pop();
+
+            //mini updated
+            mini = topElement;
+
+            //check for answer
+            if(maxi - mini < ansEnd - ansStart){
+                ansStart = mini;
+                ansEnd = maxi;
+            }
+
+            //check for new element in same list
+            if(topCol+1 < nums[topRow].size()){
+                /* -------------------------------IMPR--------------------*/
+                //update maxi also
+                maxi = max(maxi,nums[topRow][topCol+1]);
+                node* newNode = new node(nums[topRow][topCol+1],topRow,topCol+1);
+                minHeap.push(newNode);
+            } else {
+                //there is no element in list
+                break;
+            }
+        }
+        return {ansStart,ansEnd};
+    }
+};
 ```
