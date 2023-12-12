@@ -228,7 +228,7 @@ int main(){
 }
 ```
 
-## kth smallest number in arr
+## kth smallest number in array
 
 approach create max heap and popping k elments will give kth smallest element
 
@@ -497,4 +497,254 @@ public:
         return {ansStart,ansEnd};
     }
 };
+```
+
+## Remove stones to minimize the total
+
+<https://leetcode.com/problems/remove-stones-to-minimize-the-total/description/>
+
+```cpp
+class Solution {
+public:
+    int minStoneSum(vector<int>& piles, int k) {
+        priority_queue<int> maxHeap;
+        for(auto i:piles){
+            maxHeap.push(i);
+        }
+        while(k--){
+            int top = maxHeap.top();
+            maxHeap.pop();
+            top = top - top/2;
+            maxHeap.push(top);
+        }
+        int ans = 0;
+        while(!maxHeap.empty()){
+            ans += maxHeap.top(); maxHeap.pop();
+        }
+        return ans;
+
+    }
+};
+```
+
+## make_heap and heapify stl TODO
+
+```cpp
+vector<int> v = {3,5,6,7,3,9}
+make_heap(v.begin(),v.end());
+```
+
+## Reorganize string
+
+Given a string s, rearrange the characters of s so that any two adjacent characters are not the same.
+
+Return any possible rearrangement of s or return "" if not possible.
+
+<https://leetcode.com/problems/reorganize-string/>
+
+```cpp
+class Solution {
+public:
+    string reorganizeString(string s) {
+        //create mapping
+        int freq[26] = {0};
+        for(int i=0;i<s.size();i++){
+            char ch = s[i];
+            freq[ch-'a']++;
+        }
+
+        //max heap creation
+        priority_queue<node,vector<node>, compare> maxHeap;
+        for(int i=0;i<26;i++){
+            if(freq[i]!=0){
+                node temp('a'+i,freq[i]);
+                maxHeap.push(temp);
+            }
+        }
+        string ans = "";
+
+        while(maxHeap.size() > 1){
+            //because taking out two elements
+            node first = maxHeap.top();
+            maxHeap.pop();
+            node second = maxHeap.top();
+            maxHeap.pop();
+            ans += first.data;
+            ans += second.data;
+            first.count--;
+            second.count--;
+            if(first.count != 0) maxHeap.push(first);
+            if(second.count != 0) maxHeap.push(second);
+        }
+        if(!maxHeap.empty()){
+            // ans += (maxHeap.top()).data;
+            node temp = maxHeap.top();
+            maxHeap.pop();
+           if(temp.count > 1){
+               return "";
+           } else {
+               ans += temp.data;
+           }
+        }
+        return ans;
+    }
+};
+```
+
+## Longest Happy string
+
+<https://leetcode.com/problems/longest-happy-string/>
+
+```cpp
+class node {
+    public:
+    char data;
+    int count;
+    node(char d,int c){
+        data = d;
+        count = c;
+    }
+};
+class compare {
+    public:
+    bool operator()(node a,node b){
+        return a.count < b.count;
+    }
+};
+class Solution {
+public:
+    string longestDiverseString(int a, int b, int c) {
+        priority_queue<node,vector<node>, compare> maxHeap;
+        if(a>0) { 
+            node t('a',a);
+            maxHeap.push(t);
+        }
+        if(b>0){ 
+            node t('b',b);
+            maxHeap.push(t);
+        }
+        if(c>0){ 
+            node t('c',c);
+            maxHeap.push(t);
+        }
+        // cout<<maxHeap.top().data<<" "<<maxHeap.top().count;
+        string ans = "";
+        while(maxHeap.size() > 1){
+            node first = maxHeap.top();
+            maxHeap.pop();
+            node second = maxHeap.top();
+            maxHeap.pop();
+
+            if(first.count >= 2){
+                ans += first.data;
+                ans += first.data;
+                first.count -= 2;
+            } else {
+                ans += first.data;
+                first.count--; //0
+            }
+
+            //is condition par fas ta hai IMP second.count >= first.count then only use two
+            if(second.count >= 2 && second.count >= first.count){
+                ans += second.data;
+                ans += second.data;
+                second.count -= 2;
+            } else {
+                ans += second.data;
+                second.count--; //0
+            }
+
+            if(first.count > 0){
+                maxHeap.push(first);
+            }
+            if(second.count > 0){
+                maxHeap.push(second);
+            }
+        } 
+        // cout<<ans;
+        if(maxHeap.size() == 1) {
+            //still one element present
+            node temp = maxHeap.top();
+            maxHeap.pop();
+            if(temp.count >= 2){
+                ans += temp.data;
+                ans += temp.data;
+                temp.count -=2;
+            } else {
+                ans += temp.data;
+                temp.count--;
+            }
+        }
+        return ans;
+    }
+};
+```
+
+## Find Median from Data Stream
+
+<https://leetcode.com/problems/find-median-from-data-stream/>
+
+here median is (median after sorting the all the data)
+
+approach -
+
+1. storing data in vector and and when asked sort the vector and return the median
+
+2. will use two heaps (max and min) max heap will contain all elments smaller than median and min will contain elements bigger than median. here three cases
+    1. minHeap.size() == maxHeap.size()
+    then medain is avg(maxTop , minTop)
+    2. maxHeap.size() == minHeap.size()+1
+    mean there is one element more in maxHeap then minHeap so medain is in maxHeap
+    3. maxHeap.size() + 1 = minHeap.size()
+    mean there is one elment extra in minHeap then maxHeap so medain is in minHeap
+    Insertion of element
+        1. if maxHeap.size() == minHeap.size() then find median and insert element if smaller than medain then insert in left side and bigger than medain then insert in right side
+        2. now leftside (size) and rightside (size+1) so median is top of minHeap and when element is smaller than median then insert in maxHeap but when bigger than median then insert in minHeap will make leftside (size) and rightside (size+1) so to balance our earlier case of finding median pop form minHeap and insert in maxHeap and insert new element in minHeap.
+        3. vice versa of above
+
+```cpp
+void callMedian(int &median,priority_queue<int>&maxHeap,priority_queue<int,vector<int>,greater<int>>&minHeap,int &element){  
+    if(minHeap.size() == maxHeap.size()){
+        if(element > median){
+            minHeap.push(element);
+            median = minHeap.top();
+        } else {
+            maxHeap.push(element);
+            medain = maxHeap.top();
+        }
+    } else if(maxHeap.size() > minHeap.size(){
+        if(median < element){
+            minHeap.push(element);
+            median = (minHeap.top()+maxHeap.top()) / 2;
+        } else {
+            minHeap.push(maxHeap.top());
+            maxHeap.pop();
+            maxHeap.push(element);
+            medain = (minHeap.top()+maxHeap.top()) / 2;
+        }
+    } else if(maxHeap.size() < minHeap.size()) {
+        if(element > median){
+            maxHeap.push(minHeap.top());
+            minHeap.pop();
+            minHeap.push(element);
+            median = (minHeap.top()+maxHeap.top()) / 2;
+        } else {
+            maxHeap.push(element);
+            median = (minHeap.top()+maxHeap.top()) / 2;
+        }
+    }
+}
+int main(){
+    int arr[6] = {5,7,2,9,3,8};
+    int n = 6;
+    int median = 0;
+    priority_queue<int> maxHeap;
+    priority_queue<int,vector<int>,greater<int>> minHeap;
+    for(int i=0;i<n;i++){
+        int element = arr[i];
+        callMedian(median,maxHeap,minHeap,element);
+        cout<<median;
+    }
+    return 0;
+}
 ```

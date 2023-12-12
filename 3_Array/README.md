@@ -75,3 +75,11 @@ while(start<end){
     end--;
 }
 ```
+
+## merge two vectors
+
+```cpp
+// given a and b vector
+vector<int> c(a.begin(),a.end());
+c.insert(c.end(),b.begin(),b.end());
+```

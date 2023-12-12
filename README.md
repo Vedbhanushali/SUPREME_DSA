@@ -17,6 +17,7 @@ github repository of DSA challanges
 [Sort zero's & one's (Dutch national flag problem)](/3_Array/README.md#sort-zeros--ones-dutch-national-flag-problem)  
 [Pascal Triangle](/3_Array/README.md#pascal-triangle)  
 [CODE SNIPPETS (swapping,reverse array)](/3_Array/README.md#code-snippets)
+[Vector merge two vectors in new vector](/3_Array/README.md#merge-two-vectors)
 
 ### Array Practice Questions
 
@@ -387,6 +388,30 @@ github repository of DSA challanges
 [Deletion in max heap](/16_Heap/README.md#deletion-in-max-heap)  
 [Heapify](/16_Heap/README.md#heapify)  
 [Heap Sort](/16_Heap/README.md#heap-sort)  
+[stl heap](/16_Heap/README.md#stl-heap)  
+[kth smallest number in array](/16_Heap/README.md#kth-smallest-number-in-array)  
+[merge 2 max heap](/16_Heap/README.md#merge-2-max---heap)  
+[find if complete binary tree is heap or not](/16_Heap/README.md#find-if-complete-binary-tree-is-heap-or-not)  
+[convert bst into max heap](/16_Heap/README.md#convert-bst-into-max-heap)  
+[check given tree is CBT](/16_Heap/README.md#check-given-tree-is-cbt-complete-binary-tree-or-not)  
+[merge k sorted array](/16_Heap/README.md#merge-k---sorted-array)  
+[merge k sorted LL](/16_Heap/README.md#merge-k-sorted-ll)  
+[smallest range covering element from k lists](/16_Heap/README.md#smallest-range-covering-element-from-k-lists)  
+[remove stones to minimize the total](/16_Heap/README.md#remove-stones-to-minimize-the-total)  
+[make heap and heapify stl](/16_Heap/README.md#make_heap-and-heapify-stl-todo)  
+[reorganize string](/16_Heap/README.md#reorganize-string)  
+[longest happy string](/16_Heap/README.md#longest-happy-string)  
+[find median from data stream](/16_Heap/README.md#find-median-from-data-stream)  
+
+### Practice questions of heap
+
+[Check if tree is a heap](/16_Heap/Assignment.md#check-if-tree-is-a-heap)  
+[Merge 2 max heaps](/16_Heap/Assignment.md#merge-2-max-heaps)  
+[K closest point to origin](/16_Heap/Assignment.md#k-closest-point-to-origin)  
+[Sliding window maximum](/16_Heap/Assignment.md#sliding-window-maximum)  
+[Get biggest three rhombus sums in a grid](/16_Heap/Assignment.md#get-biggest-three-rhombus-sums-in-a-grid)  
+[Min diff in sum after element removal](/16_Heap/Assignment.md#min-diff-in-sum-after-element-removal)  
+[Min number of refuelling stops](/16_Heap/Assignment.md#min-number-of-refuelling-stops)  
 
 ## LICENSE
 
