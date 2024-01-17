@@ -413,6 +413,69 @@ github repository of DSA challanges
 [Min diff in sum after element removal](/16_Heap/Assignment.md#min-diff-in-sum-after-element-removal)  
 [Min number of refuelling stops](/16_Heap/Assignment.md#min-number-of-refuelling-stops)  
 
+## Maps and Tries
+
+[HashMap](/17_Maps/README.md#hashmap)  
+[HashMap stl](/17_Maps/README.md#hashmap-stl)  
+[Implementation](/17_Maps/README.md#implementation)  
+[Custom hashMap implementation](/17_Maps/README.md#custom-hashmap-implementation)  
+[Using bucket array](/17_Maps/README.md#using-bucket-array)  
+[Good hash function](/17_Maps/README.md#good-hash-function)  
+[Find freq of characters in string](/17_Maps/README.md#find-freq-of-characters-in-string)  
+[Check circular LL](/17_Maps/README.md#check-circular-ll)  
+[Tries](/17_Maps/README.md#tries)  
+[Trie structure](/17_Maps/README.md#trie-structure)  
+[Longest common prefix](/17_Maps/README.md#longest-common-prefix)  
+[Implement dictornary](/17_Maps/README.md#implement-dictonary)  
+
+### Practice question for Map & Tries
+
+[Array subste of another array](/17_Maps/Assignment.md#array-subset-of-another-array)  
+[Union of two linked list](/17_Maps/Assignment.md#union-of-two-linked-list)  
+[Intersection of two linked list](/17_Maps/Assignment.md#intersection-of-two-linked-list)  
+[Sum equal to sum](/17_Maps/Assignment.md#sum-equal-to-sum)  
+[Largest subarray with 0 sum](/17_Maps/Assignment.md#largest-subarray-with-0-sum)  
+[Implement trie prefix tree](/17_Maps/Assignment.md#implement-trie-prefix-tree)  
+[Replace words](/17_Maps/Assignment.md#replace-words)  
+[Top K frequent words](/17_Maps/Assignment.md#top-k-frequent-words)  
+[Camelcase matching](/17_Maps/Assignment.md#camelcase-matching)  
+[Palindrome pairs](/17_Maps/Assignment.md#palindrome-pairs)
+
+## DP
+
+## Graph
+
+## Greedy
+
+[Arrival time of train](/20_Greedy/README.md#arrival-time-of-train)
+[Lollipop](/20_Greedy/README.md#lollipop)
+[DEFKIN](/20_Greedy/README.md#defkin)
+[Min cost of ropes](/20_Greedy/README.md#min-cost-of-ropes)
+[Huffman encoding](/20_Greedy/README.md#huffman-encoding)
+[Fractional knapsack](/20_Greedy/README.md#fractional-knapsack)
+[Chocolate Distribution](/20_Greedy/README.md#chocolate-distribution)
+
+## Sliding Window
+
+## Bit Manipulation
+
+[Odd/even checking](/22_Bit_Manipulation/README.md#oddeven-checking)
+[Bit masking](/22_Bit_Manipulation/README.md#bit-masking)
+[Change ith bit](/22_Bit_Manipulation/README.md#change-ith-bit)
+[Single number XOR logic duplication](/22_Bit_Manipulation/README.md#single-number)
+[Clear last ith bits](/22_Bit_Manipulation/README.md#clear-last-i-bits)
+[Check power of 2](/22_Bit_Manipulation/README.md#check-power-of-2)
+[Count set bits](/22_Bit_Manipulation/README.md#count-set-bits)
+[Fast exponential](/22_Bit_Manipulation/README.md#fast-exponential)
+[Clear range of bits](/22_Bit_Manipulation/README.md#clear-range-of-bits)
+[subsequence using bit masking](/22_Bit_Manipulation/README.md#subsequence-using-bitmasking)
+
+## Placment Guidance
+
+[Interview Dos and Don'ts](/PLACEMENT_STUFF/Interview__Dos_and_Donts_love_babbar.pdf)
+[Placement opportunities](/PLACEMENT_STUFF/Lets_talk_about_Placement_Opportunities_with_love_babber.pdf)
+[Resume Review](/PLACEMENT_STUFF/Lets_talk_about_RESUME_witth_love_babbar.pdf)
+
 ## LICENSE
 
 [MIT LICENSE](/LICENSE)
