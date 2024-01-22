@@ -457,6 +457,12 @@ github repository of DSA challanges
 
 ## Sliding Window
 
+[Fixed size window](/21_sliding_window/README.md#fixed-size-windows)  
+[Varaible size window](/21_sliding_window/README.md#variable-size-window)  
+[Two pointer approach](/21_sliding_window/README.md#two-pointer-approach)  
+[Optimized window](/21_sliding_window/README.md#optimized-window)  
+[Smallest window in a string containing all the characters of another string](/21_sliding_window/README.md#smallest-window-in-a-string-containing-all-the-characters-of-another-string)  
+
 ## Bit Manipulation
 
 [Odd/even checking](/22_Bit_Manipulation/README.md#oddeven-checking)  
