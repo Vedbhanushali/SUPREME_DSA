@@ -42,6 +42,7 @@ int recSolve(int n){
         return n;
     }
     int ans = recSolve(n-1) + recSolve(n-1);
+    return ans;
 }
 //recursion + memoization
 int topDownSolve(int n,vector<int>&dp){
@@ -341,7 +342,7 @@ int solveRec(vector<int>&weight,vector<int> &value,int index,int &W ){
 
     //include
     int include = 0;
-    if(value[index] <=W ){
+    if(weight[index] <=W ){
         include = value[index] + solveRec(weight,value,index-1,W-weight[index]);
     }
     //exclude
@@ -808,3 +809,179 @@ public:
 ## Unique binary search tree
 
 TODO
+
+## DP on string
+
+### longest common subsequence
+
+<https://leetcode.com/problems/longest-common-subsequence/>
+
+```cpp
+class Solution {
+public:
+    int solveRec(string &a,string &b,int i,int j){
+        if( i >= a.length() || j >= b.length()) return 0;
+
+        int ans = 0;
+        if(a[i] == b[j]) {
+            ans = 1 + solveRec(a,b,i+1,j+1);
+        } else {
+            ans =  0 + max(solveRec(a,b,i+1,j),solveRec(a,b,i,j+1));
+        }
+        return ans;
+    }
+    int solveMem(string &a,string &b,int i,int j, vector<vector<int> > &dp){
+
+        if( i >= a.length() || j >= b.length()) return 0;
+        if(dp[i][j] != -1) return dp[i][j];
+
+        int ans = 0;
+        if(a[i] == b[j]) {
+            ans = 1 + solveMem(a,b,i+1,j+1,dp);
+        } else {
+            ans =  0 + max(solveMem(a,b,i+1,j,dp),solveMem(a,b,i,j+1,dp));
+        }
+        dp[i][j] = ans;
+        return dp[i][j];
+    }
+    int solveTab(string &a,string &b){
+        int n = a.size();
+        int m = b.size();
+        vector<vector<int> > dp(n+1,vector<int> (m+1,0));
+        int i = n - 1;
+        int j = m - 1;
+        for(int i=n-1;i>=0;i--){
+            for(int j=m-1;j>=0;j--){
+                int ans = 0;
+                if(a[i] == b[j]) {
+                    ans = 1 + dp[i+1][j+1];
+                } else {
+                    ans =  0 + max(dp[i+1][j],dp[i][j+1]);
+                }
+                dp[i][j] = ans;
+            }
+        }
+            
+        return dp[0][0];
+    }
+    int longestCommonSubsequence(string text1, string text2) {
+        // int i = 0;
+        // int j = 0;
+        // return solveRec(text1,text2,i,j);
+        // int n = text1.size();
+        // int m = text2.size();
+        // vector<vector<int> > dp(n+1,vector<int> (m+1,-1));
+        // return solveMem(text1,text2,0,0,dp);
+
+        return solveTab(text1,text2);
+    }
+};
+```
+
+## Find longest increasing subsequence
+
+<https://leetcode.com/problems/longest-increasing-subsequence/>
+
+```cpp
+class Solution {
+public:
+    int solve(vector<int>& nums,vector<int> &answer,int index){
+        if(index >= nums.size()) return answer.size();
+        int include = 0;
+        int exclude = 0;
+        if(answer.size()==0 || answer[answer.size()-1] < nums[index]){
+            //increasing
+            //two case
+            //include
+            answer.emplace_back(nums[index]);
+            include = solve(nums,answer,index+1);
+            answer.pop_back();
+
+            //exclude case
+            exclude = solve(nums,answer,index+1);
+        } else {
+            //smaller than considered so exclude
+            exclude = solve(nums,answer,index+1);
+        }
+        return max(include,exclude);
+    }
+    int solveRec(vector<int> &nums,int prev,int curr) {
+        if(curr >= nums.size()) return 0;
+
+        int include = 0;
+        int exclude = 0;
+        if(prev == -1 || nums[prev] < nums[curr]){
+            include = 1 + solveRec(nums,curr,curr+1);
+            exclude = 0 + solveRec(nums,prev,curr+1);
+        } else {
+            exclude = 0 + solveRec(nums,prev,curr+1);
+        }
+        return max(include,exclude);
+    }
+    int solveMem(vector<int> &nums,int prev,int curr,vector<vector<int>>&dp) {
+        if(curr >= nums.size()) return 0;
+        if(dp[prev+1][curr] != -1) return dp[prev+1][curr];
+        int include = 0;
+        int exclude = 0;
+        if(prev == -1 || nums[prev] < nums[curr]){
+            include = 1 + solveMem(nums,curr,curr+1,dp);
+            exclude = 0 + solveMem(nums,prev,curr+1,dp);
+        } else {
+            exclude = 0 + solveMem(nums,prev,curr+1,dp);
+        }
+        dp[prev+1][curr] = max(include,exclude);
+        return dp[prev+1][curr];
+    }
+    int solveTab(vector<int>& nums){
+        int n = nums.size();
+        vector<vector<int> >dp(n+2,vector<int>(n+2,0)); //0 coz finding max
+        for(int curr = n-1 ; curr >=0; curr--){
+            for(int prev = curr - 1; prev>= -1; prev--){
+                int include = 0;
+                int exclude = 0;
+                if(prev == -1 || nums[prev] < nums[curr]){
+                    include = 1 + dp[curr+1][curr+1];
+                    exclude = 0 + dp[curr+1][prev+1];
+                } else {
+                    exclude = 0 + dp[curr+1][prev+1];
+                }
+                dp[curr][prev+1] = max(include,exclude);
+            }
+        }
+        return dp[0][0];
+    }
+    int solveSpaceOpt(vector<int> nums){
+        int n = nums.size();
+       vector<int> currRow(n+1,0);
+       vector<int> nextRow(n+1,0);
+        for(int curr = n-1 ; curr >=0; curr--){
+            for(int prev = curr - 1; prev>= -1; prev--){
+                int include = 0;
+                int exclude = 0;
+                if(prev == -1 || nums[prev] < nums[curr]){
+                    include = 1 + nextRow[curr+1];
+                    exclude = 0 + nextRow[prev+1];
+                } else {
+                    exclude = 0 + nextRow[prev+1];
+                }
+                currRow[prev+1] = max(include,exclude);
+            }
+            //shift yahi galti hoti hai
+            nextRow = currRow; //going backwards
+        }
+        return currRow[0];
+    }
+    int lengthOfLIS(vector<int>& nums) {
+        // vector<int> answer;
+        // return solve(nums,answer,0);
+
+        int prev = -1; //prev and curr are indexes
+        int curr = 0;
+        // return solveRec(nums,prev,curr);
+        // vector<vector<int> >dp(nums.size()+2,vector<int>(nums.size()+2,-1));
+        // return solveMem(nums,prev,curr,dp);
+        // return solveTab(nums);
+        return solveSpaceOpt(nums);
+    }
+};
+```
