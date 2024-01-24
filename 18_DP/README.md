@@ -985,3 +985,149 @@ public:
     }
 };
 ```
+
+## DP with binary search
+
+<https://leetcode.com/problems/longest-increasing-subsequence/>
+
+same question as above Find longest increasing subsequence but solved using BS
+
+```cpp
+class Solution {
+public:
+    int Optimal(vector<int> &arr){
+        if(arr.size() == 0)return 0;
+        vector<int> ans;
+        ans.push_back(arr[0]);  
+        for(int i=1;i<arr.size();i++){
+            if(arr[i] > ans.back()){
+                //include
+                ans.push_back(arr[i]);
+            } else {
+                //overwrite
+                int index = lower_bound(ans.begin(),ans.end(),arr[i]) - ans.begin();
+                ans[index] = arr[i];
+            }
+        }
+        return ans.size();
+    }
+    int lengthOfLIS(vector<int>& nums) {
+        return Optimal(nums);
+    }
+};
+```
+
+## Russian Doll envelopes
+
+<https://leetcode.com/problems/russian-doll-envelopes/description/>
+
+```cpp
+class Solution {
+public:
+    int solveMem(vector<vector<int>> &nums,int prev,int curr,vector<vector<int>>&dp) {
+        if(curr >= nums.size()) return 0;
+        if(dp[prev+1][curr] != -1) return dp[prev+1][curr];
+        int include = 0;
+        int exclude = 0;
+        if(prev == -1 || (nums[prev][0] < nums[curr][0] && nums[prev][1] < nums[curr][1])){
+            include = 1 + solveMem(nums,curr,curr+1,dp);
+            exclude = 0 + solveMem(nums,prev,curr+1,dp);
+        } else {
+            exclude = 0 + solveMem(nums,prev,curr+1,dp);
+        }
+        dp[prev+1][curr] = max(include,exclude);
+        return dp[prev+1][curr];
+    }
+    int Optimal(vector<vector<int>> &arr) {
+        if(arr.size() == 0) return 0;
+        vector<int> ans;
+        ans.push_back(arr[0][1]);  
+        for(int i=1;i<arr.size();i++){
+            if(arr[i][1] > ans.back()){
+                //include
+                ans.push_back(arr[i][1]);
+            } else {
+                //overwrite
+                int index = lower_bound(ans.begin(),ans.end(),arr[i][1]) - ans.begin();
+                // if(index == ans.size()) ans[index-2] = arr[i];
+                // else ans[index] = arr[i];
+                ans[index] = arr[i][1];
+            }
+        }
+        return ans.size();
+    }
+    static bool comp(vector<int> &a,vector<int> &b){
+        if(a[0] == b[0]) return a[1] > b[1];
+        else return a[0] < b[0];
+    }
+    int maxEnvelopes(vector<vector<int>>& nums) {
+        // sort(nums.begin(),nums.end(),comp);
+        // vector<vector<int> >dp(nums.size()+2,vector<int>(nums.size()+2,-1));
+        // return solveMem(nums,-1,0,dp);
+        sort(nums.begin(),nums.end(),comp);
+        return Optimal(nums);
+    }
+};
+```
+
+## maximum height by stacking cuboids
+
+```cpp
+class Solution {
+public:
+    bool check(vector<int>&a,vector<int>&b){
+        if(a[0] >= b[0] && a[1] >= b[1] && a[2] >= b[2]){
+            return true;
+        } else {
+            return false;
+        }
+    }
+    int solveMem(vector<vector<int>> &nums,int prev,int curr,vector<vector<int>>&dp) {
+        if(curr >= nums.size()) return 0;
+        if(dp[prev+1][curr] != -1) return dp[prev+1][curr];
+        int include = 0;
+        int exclude = 0;
+        if(prev == -1 || check(nums[curr],nums[prev])) {
+            include = nums[curr][2] + solveMem(nums,curr,curr+1,dp);
+            exclude = 0 + solveMem(nums,prev,curr+1,dp);
+        } else {
+            exclude = 0 + solveMem(nums,prev,curr+1,dp);
+        }
+        dp[prev+1][curr] = max(include,exclude);
+        return dp[prev+1][curr];
+    }
+     int solveSpaceOpt(vector<vector<int>> nums){
+        int n = nums.size();
+       vector<int> currRow(n+1,0);
+       vector<int> nextRow(n+1,0);
+        for(int curr = n-1 ; curr >=0; curr--){
+            for(int prev = curr - 1; prev>= -1; prev--){
+                int include = 0;
+                int exclude = 0;
+                if(prev == -1 || check(nums[curr], nums[prev])){
+                    include = nums[curr][2] + nextRow[curr+1];
+                    exclude = 0 + nextRow[prev+1];
+                } else {
+                    exclude = 0 + nextRow[prev+1];
+                }
+                currRow[prev+1] = max(include,exclude);
+            }
+            //shift yahi galti hoti hai
+            nextRow = currRow; //going backwards
+        }
+        return currRow[0];
+    }
+    static bool comp(vector<int>&a,vector<int>&b){
+        return a[0] < b[0];
+    }
+    int maxHeight(vector<vector<int>>& cuboids) {
+        for(auto &i:cuboids){
+            sort(i.begin(),i.end());
+        }
+        sort(cuboids.begin(),cuboids.end());
+        // vector<vector<int> >dp(cuboids.size()+2,vector<int>(cuboids.size()+2,-1));
+        // return solveMem(cuboids,-1,0,dp);
+        return solveSpaceOpt(cuboids);
+    }
+};
+```

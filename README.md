@@ -438,10 +438,77 @@ github repository of DSA challanges
 [Implement trie prefix tree](/17_Maps/Assignment.md#implement-trie-prefix-tree)  
 [Replace words](/17_Maps/Assignment.md#replace-words)  
 [Top K frequent words](/17_Maps/Assignment.md#top-k-frequent-words)  
-[Camelcase matching](/17_Maps/Assignment.md#camelcase-matching)    
+[Camelcase matching](/17_Maps/Assignment.md#camelcase-matching)
 [Palindrome pairs](/17_Maps/Assignment.md#palindrome-pairs)  
 
 ## DP
+
+Approach
+When to apply DP
+Top down (Memoization)
+Bottom Up (Tabulation)
+Space Optimization
+1D DP and 2D DP
+Fibonacci
+Coin change
+House robber
+Painting Fence
+0/1 knapsack problem - 2D DP problem
+Partition equal subset sum
+Number of dice roll with target
+Minimum swaps to make sequence increasing
+Guess number higher or lower II
+Minimum cost tree leaf values
+Unique binary search tree
+DP on string
+Find longes increasing subsequence
+DP with binary search
+Russian Doll envelopes
+Maximum Height by stacking cuboids
+
+### Practice question of DP
+
+Linear DP
+
+- Perfect Squares Leetcode
+- Min Cost for Tickets Leetcode
+
+DP on Strings
+
+- Longest Palindromic SubString Leetcode
+- Distinct Subsequences Leetcode
+- Min ASCII Delete Sum for 2 Strings Leetcode
+- Word Break 1 and 2 Leetcode
+
+DP on Trees
+
+- House Robber iii Leetcode
+- Unique BST ii Leetcode
+
+DP on Intervals
+
+- Stone Games Leetcode
+- Burst balloons Leetcode
+
+LIS / LCS Variants
+
+- Intervleaving Strings Leetcode
+- Min Insertion steps to make a string palindrome Leetcode
+- Min Number of Removals to make Mountain Array Leetcode
+- Make Array Strictly increasing Leetcode
+Buy & Sell Stocks Variants [all 5 variants] Leetcode
+- 1st Variant [121. Best Time to Buy and Sell Stock] - Already Covered in Recursion Week HomeWork
+
+Knapsack DP
+
+- Target Sum Leetcode
+- Min Swaps to make Sequences increasing Leetcode
+- Reducing Dishes Leetcode
+- Ones and Zeroes Leetcode
+
+MinMax DP
+
+- Predict the Winner Leetcode
 
 ## Graph
 
@@ -449,7 +516,7 @@ github repository of DSA challanges
 
 [Arrival time of train](/20_Greedy/README.md#arrival-time-of-train)  
 [Lollipop](/20_Greedy/README.md#lollipop)  
-[DEFKIN](/20_Greedy/README.md#defkin)   
+[DEFKIN](/20_Greedy/README.md#defkin)
 [Min cost of ropes](/20_Greedy/README.md#min-cost-of-ropes)  
 [Huffman encoding](/20_Greedy/README.md#huffman-encoding)  
 [Fractional knapsack](/20_Greedy/README.md#fractional-knapsack)  
