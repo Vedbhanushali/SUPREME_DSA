@@ -443,72 +443,74 @@ github repository of DSA challanges
 
 ## DP
 
-Approach
-When to apply DP
-Top down (Memoization)
-Bottom Up (Tabulation)
-Space Optimization
-1D DP and 2D DP
-Fibonacci
-Coin change
-House robber
-Painting Fence
-0/1 knapsack problem - 2D DP problem
-Partition equal subset sum
-Number of dice roll with target
-Minimum swaps to make sequence increasing
-Guess number higher or lower II
-Minimum cost tree leaf values
-Unique binary search tree
-DP on string
-Find longes increasing subsequence
-DP with binary search
-Russian Doll envelopes
-Maximum Height by stacking cuboids
+[Approach](/18_DP/README.md#approaches)  
+[When to apply DP](/18_DP/README.md#when-to-apply-dp)  
+[Top down (Memoization)](/18_DP/README.md#top-down-memoization)  
+[Bottom Up (Tabulation)](/18_DP/README.md#bottom-up-tabulation)  
+[Space Optimization](/18_DP/README.md#space-optimization)  
+[1D DP and 2D DP](/18_DP/README.md#1d-dp-and-2d-dp)  
+[Fibonacci](/18_DP/README.md#fibonacci)  
+[Coin change](/18_DP/README.md#coin-change)  
+[House robber](/18_DP/README.md#house-robber)  
+[Painting Fence](/18_DP/README.md#painting-fence)  
+[0/1 knapsack problem - 2D DP problem](/18_DP/README.md#01-knapsack-problem---2d-dp-problem)  
+[Partition equal subset sum](/18_DP/README.md#partition-equal-subset-sum)  
+[Number of dice roll with target](/18_DP/README.md#number-of-dice-roll-with-target)  
+[Minimum swaps to make sequence increasing](/18_DP/README.md#minimum-swaps-to-make-sequence-increasing)  
+[Guess number higher or lower II](/18_DP/README.md#guess-number-higher-or-lower-ii)  
+[Minimum cost tree leaf values](/18_DP/README.md#minimum-cost-tree-from-leaf-values)  
+[Unique binary search tree](/18_DP/README.md#unique-binary-search-tree)  
+[DP on string](/18_DP/README.md#dp-on-string)  
+[Find longes increasing subsequence](/18_DP/README.md#find-longest-increasing-subsequence)  
+[DP with binary search](/18_DP/README.md#dp-with-binary-search)  
+[Russian Doll envelopes](/18_DP/README.md#russian-doll-envelopes)  
+[Maximum Height by stacking cuboids](/18_DP/README.md#maximum-height-by-stacking-cuboids)  
 
 ### Practice question of DP
 
 Linear DP
 
-- Perfect Squares Leetcode
-- Min Cost for Tickets Leetcode
+- [Perfect Squares Leetcode](/18_DP/Assignment.md#perfect-squares-leetcode)  
+- [Min Cost for Tickets Leetcode](/18_DP/Assignment.md#min-cost-for-tickets-leetcode)  
 
 DP on Strings
 
-- Longest Palindromic SubString Leetcode
-- Distinct Subsequences Leetcode
-- Min ASCII Delete Sum for 2 Strings Leetcode
-- Word Break 1 and 2 Leetcode
+- [Longest Palindromic SubString Leetcode](/18_DP/Assignment.md#longest-palindromic-substring-leetcode)  
+- [Distinct Subsequences Leetcode](/18_DP/Assignment.md#distinct-subsequences-leetcode)  
+- [Min ASCII Delete Sum for 2 Strings Leetcode](/18_DP/Assignment.md#min-ascii-delete-sum-for-2-strings-leetcode)  
+- [Word Break 1 and 2 Leetcode](/18_DP/Assignment.md#word-break-1-and-2-leetcode)  
 
 DP on Trees
 
-- House Robber iii Leetcode
-- Unique BST ii Leetcode
+- [House Robber iii Leetcode](/18_DP/Assignment.md#house-robber-iii-leetcode)  
+- [Unique BST ii Leetcode](/18_DP/Assignment.md#unique-bst-ii-leetcode)  
 
 DP on Intervals
 
-- Stone Games Leetcode
-- Burst balloons Leetcode
+- [Stone Games Leetcode](/18_DP/Assignment.md#stone-games-leetcode)  
+- [Burst balloons Leetcode](/18_DP/Assignment.md#burst-balloons-leetcode)  
 
 LIS / LCS Variants
 
-- Intervleaving Strings Leetcode
-- Min Insertion steps to make a string palindrome Leetcode
-- Min Number of Removals to make Mountain Array Leetcode
-- Make Array Strictly increasing Leetcode
+- [Intervleaving Strings Leetcode](/18_DP/Assignment.md#intervleaving-strings-leetcode)  
+- [Min Insertion steps to make a string palindrome Leetcode](/18_DP/Assignment.md#min-insertion-steps-to-make-a-string-palindrome-leetcode)  
+- [Min Number of Removals to make Mountain Array Leetcode](/18_DP/Assignment.md#min-number-of-removals-to-make-mountain-array-leetcode)  
+- [Make Array Strictly increasing Leetcode](/18_DP/Assignment.md#make-array-strictly-increasing-leetcode)  
+
 Buy & Sell Stocks Variants [all 5 variants] Leetcode
-- 1st Variant [121. Best Time to Buy and Sell Stock] - Already Covered in Recursion Week HomeWork
+
+- [1st Variant [121. Best Time to Buy and Sell Stock] - Already Covered in Recursion Week HomeWork](/18_DP/Assignment.md#1st-variant-121-best-time-to-buy-and-sell-stock---already-covered-in-recursion-week-homework)  
 
 Knapsack DP
 
-- Target Sum Leetcode
-- Min Swaps to make Sequences increasing Leetcode
-- Reducing Dishes Leetcode
-- Ones and Zeroes Leetcode
+- [Target Sum Leetcode](/18_DP/Assignment.md#target-sum-leetcode)  
+- [Min Swaps to make Sequences increasing Leetcode](/18_DP/Assignment.md#min-swaps-to-make-sequences-increasing-leetcode)  
+- [Reducing Dishes Leetcode](/18_DP/Assignment.md#reducing-dishes-leetcode)  
+- [Ones and Zeroes Leetcode](/18_DP/Assignment.md#ones-and-zeroes-leetcode)  
 
-MinMax DP
+MinMax DPs
 
-- Predict the Winner Leetcode
+- [Predict the Winner Leetcode](/18_DP/Assignment.md#predict-the-winner-leetcode)  
 
 ## Graph
 
