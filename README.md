@@ -454,6 +454,7 @@ github repository of DSA challanges
 [House robber](/18_DP/README.md#house-robber)  
 [Painting Fence](/18_DP/README.md#painting-fence)  
 [0/1 knapsack problem - 2D DP problem](/18_DP/README.md#01-knapsack-problem---2d-dp-problem)  
+[Out of Boundary Paths - 3D DP problem](/18_DP/README.md#out-of-boundary-paths---3d-dp-problem)  
 [Partition equal subset sum](/18_DP/README.md#partition-equal-subset-sum)  
 [Number of dice roll with target](/18_DP/README.md#number-of-dice-roll-with-target)  
 [Minimum swaps to make sequence increasing](/18_DP/README.md#minimum-swaps-to-make-sequence-increasing)  

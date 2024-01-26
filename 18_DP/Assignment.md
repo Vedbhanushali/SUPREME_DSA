@@ -4,6 +4,33 @@
 
 ### Perfect Squares Leetcode
 
+<https://leetcode.com/problems/perfect-squares/>
+
+```cpp
+class Solution {
+public:
+    int solve(int n,vector<int> &dp){
+        if(n < 0) return INT_MAX;
+        if(n == 0) return 0;
+        if(dp[n] != -1) return dp[n];
+
+        int ans = INT_MAX;
+        int limit = sqrt(n);
+        for(int i=1;i<=limit;i++){
+            ans = min(ans,solve( n - (i*i) , dp )); //INT_MAX or 0 1 2 3
+        }
+
+        if(ans != INT_MAX) ans++;
+        dp[n] = ans;
+        return dp[n];
+    }
+    int numSquares(int n) {
+        vector<int> dp(n+1,-1);
+        return solve(n,dp);
+    }
+};
+```
+
 ### Min Cost for Tickets Leetcode
 
 ## DP on Strings

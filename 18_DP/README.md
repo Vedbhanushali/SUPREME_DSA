@@ -470,6 +470,42 @@ int main(){
 }
 ```
 
+## Out of Boundary Paths - 3D DP problem 
+
+<https://leetcode.com/problems/out-of-boundary-paths>
+
+```cpp
+class Solution {
+public:
+    int MOD = 1e9+7;
+    int solve(int &m, int &n, int maxMove, int x, int y,vector< vector< vector<int> >> & dp){
+        //base case
+        if( (x < 0 || x >= m || y < 0 || y>= n) ) {
+            //valid case
+            return 1;
+        }
+        if(maxMove <= 0) {
+            //mean not out side boundary but still maxmove zero
+            return 0; //no answer will be found later
+        }
+        if(dp[maxMove][x][y] != -1 ) return dp[maxMove][x][y]%MOD;
+
+        int ans = 0;
+        ans = ( ans + solve(m,n,maxMove-1,x+1,y,dp) ) %MOD;
+        ans = ( ans + solve(m,n,maxMove-1,x-1,y,dp) ) %MOD;
+        ans = ( ans + solve(m,n,maxMove-1,x,y-1,dp) ) %MOD;
+        ans = ( ans + solve(m,n,maxMove-1,x,y+1,dp) ) %MOD;
+
+        dp[maxMove][x][y] = ans;
+        return  dp[maxMove][x][y] %MOD;
+    }
+    int findPaths(int m, int n, int maxMove, int startRow, int startColumn) {
+        vector< vector< vector<int> > > dp(maxMove+1,vector<vector<int>> (m+1, vector<int> (n+1,-1)) );
+        return solve(m,n,maxMove,startRow,startColumn,dp);
+    }
+};
+```
+
 ## Partition equal subset sum
 
 <https://leetcode.com/problems/partition-equal-subset-sum/>
