@@ -173,9 +173,108 @@ public:
 
 ### Word Break 1 and 2 Leetcode
 
+<https://leetcode.com/problems/word-break/>
+
+```cpp
+class Solution {
+public: 
+    bool checkWord(string &word,vector<string> &wordDict){
+        for(auto i:wordDict){
+            if(i == word) return true;
+        }
+        return false;
+    }
+    bool solve(string &s,vector<string>&wordDict,int start,vector<int> &dp){
+        if(start >= s.size()) return true;
+        if(dp[start] != -1) return dp[start];
+
+        bool ans = false;
+        string word = "";
+        for(int i=start;i<s.size();i++){
+            word += s[i];
+            if(checkWord(word,wordDict)){
+                ans = ans || solve(s,wordDict,i+1,dp);
+            }
+        }
+        return dp[start] = ans;
+    }
+    bool wordBreak(string s, vector<string>& wordDict) {
+        vector<int> dp(s.size()+1,-1);
+        return solve(s,wordDict,0,dp);
+    }
+};
+```
+
+<https://leetcode.com/problems/word-break-ii/>
+
+```cpp
+class Solution {
+public:
+    unordered_map<int,vector<string> > dp;
+    vector<string> solve(string &s,unordered_map<string,bool> &dict,int start){
+        if(start >= s.size()) return {""};
+        if(dp.find(start) != dp.end()) return dp[start];
+        vector<string> ans;
+        string word;
+        for(int i=start;i<s.size();i++){
+            // word.push_back(s[i]);
+            word += s[i];
+            if(!dict[word]) continue;
+            // if(dict.find(word) == dict.end()) continue;
+            //found in dict
+            auto right = solve(s,dict,i+1);
+            for(auto rightPart : right ){
+                string endPart;
+                if(rightPart.size() > 0) endPart = " "+rightPart;
+                ans.emplace_back(word+endPart);
+            }
+        }
+        return dp[start] = ans;
+    }
+    vector<string> wordBreak(string s, vector<string>& wordDict) {
+        unordered_map<string,bool> dict;
+        for(auto i:wordDict){
+            dict[i] = 1;
+        }
+        return solve(s,dict,0);
+    }
+};
+```
+
 ## DP on Trees
 
-### House Robber iii Leetcode
+### House Robber ii & iii Leetcode
+
+<https://leetcode.com/problems/house-robber-ii/>
+
+```cpp
+class Solution {
+public:
+    int solve(vector<int>& nums,int &low,int high,vector<int>& dp){
+        if(high < low) return 0;
+        if(high == low) return nums[low];
+        if(dp[high]!= -1) return dp[high];
+
+        //include
+        int include = nums[high] + solve(nums,low,high-2,dp);
+        //exclude
+        int exclude = 0 + solve(nums,low,high-1,dp);
+
+        return dp[high] = max(include,exclude);
+    }
+    int rob(vector<int>& nums) {
+        if(nums.size() == 1) return nums[0];
+        //size > 2
+        vector<int> dp(nums.size()+1,-1);
+        vector<int> dp2(nums.size()+1,-1);
+        int low1 = 0;
+        int high1 = nums.size()-2;
+        int low2 = 1;
+        int high2 = nums.size()-1;
+        return max(solve(nums,low1,high1,dp),solve(nums,low2,high2,dp2));
+    }
+};
+```
 
 ### Unique BST ii Leetcode
 
