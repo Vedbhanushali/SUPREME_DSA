@@ -167,7 +167,7 @@ github repository of DSA challanges
 [count inversion](/9_backtracking/Assignment.md#count-inversion)  
 [inplace mergesort](/8_Divide_and_conquor/README.md#inplace-merge-sort)  
 [max sub array sum](/9_backtracking/Assignment.md#max-sub-array-sum)  
-[quicksort end element as pivot  best way (short)](/8_Divide_and_conquor/README.md#quicksort)
+[quicksort end element as pivot  best way short](/8_Divide_and_conquor/README.md#quicksort)  
 [combination sum](/9_backtracking/Assignment.md#combination-sum)  
 [combination sum II](/9_backtracking/Assignment.md#combination-sum-ii)  
 [permutation II](/9_backtracking/Assignment.md#permutation-ii)  
