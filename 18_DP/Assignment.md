@@ -313,3 +313,31 @@ public:
 ## MinMax DP
 
 ### Predict the Winner Leetcode
+
+### Partition Array for Maximum Sum
+
+<https://leetcode.com/problems/partition-array-for-maximum-sum/description/>
+
+```cpp
+class Solution {
+public:
+    int solve(vector<int> &arr,int &k,int &n,int index,vector<int> &dp){
+        if(index >= n) return 0;
+        if(dp[index]!= -1) return dp[index];
+
+        int maxi = INT_MIN;
+        int ans = 0;
+        for(int i=index; i < min(n,index+k); i++ ){
+            maxi = max(maxi,arr[i]);
+            int sum = maxi * (i-index+1) + solve(arr,k,n,i+1,dp);
+            ans = max(ans,sum);
+        }
+        return dp[index] = ans;
+    }
+    int maxSumAfterPartitioning(vector<int>& arr, int k) {
+        int n = arr.size();
+        vector<int> dp(arr.size()+1,-1);
+        return solve(arr,k,n,0,dp);
+    }
+};
+```

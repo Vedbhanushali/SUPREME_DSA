@@ -512,6 +512,7 @@ Knapsack DP
 MinMax DPs
 
 - [Predict the Winner Leetcode](/18_DP/Assignment.md#predict-the-winner-leetcode)  
+- [Partition Array for Maximum Sum](/18_DP/Assignment.md#partition-array-for-maximum-sum)  
 
 ## Graph
 
