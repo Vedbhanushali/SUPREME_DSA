@@ -276,7 +276,178 @@ public:
 };
 ```
 
+<https://leetcode.com/problems/house-robber-iii/>
+
+```cpp
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    int solve(TreeNode* root,unordered_map<TreeNode*,int> &dp){
+        if(root == NULL) return 0;
+        if(dp.find(root)!=dp.end()) return dp[root];
+
+        int include = 0;
+        int exclude = 0;
+        //include 
+        include = root->val;
+        if(root->left) include += solve(root->left->left,dp) + solve(root->left->right,dp);
+        if(root->right) include += solve(root->right->left,dp) + solve(root->right->right,dp);
+
+        //exclude
+        exclude = solve(root->left,dp) + solve(root->right,dp);
+        return dp[root] = max(include,exclude);
+    }
+    int rob(TreeNode* root) {
+        unordered_map<TreeNode*,int> dp;
+        return solve(root,dp);
+    }
+};
+```
+
 ### Unique BST ii Leetcode
+
+```cpp
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+
+    vector<TreeNode*> solve(int start,int end){
+        if(start > end) {
+            return {NULL};
+        }
+        if(start == end) {
+            TreeNode* root = new TreeNode(start);
+            return {root};
+        }
+
+        vector<TreeNode*> ans;
+        for(int i=start;i<=end;i++){
+            vector<TreeNode*> left =  solve(start,i-1);
+            vector<TreeNode*> right = solve(i+1,end);
+
+            for(int j=0;j<left.size();j++){
+                for(int k=0;k<right.size();k++) {
+                    TreeNode* root = new TreeNode(i);
+                    root->left = left[j];
+                    root->right = right[k];
+                    ans.emplace_back(root);
+                }
+            }
+        }
+        return ans;
+    }
+    vector<TreeNode*> generateTrees(int n) {
+        if(n == 0) return {};
+        return solve(1,n); 
+    }
+};
+```
+
+```cpp
+class Solution {
+public:
+    
+    vector<TreeNode*> solve(int start,int end, vector<vector<vector<TreeNode* > > > &dp){
+        if(start > end) {
+            return {NULL};
+        }
+        if(start == end) {
+            TreeNode* root = new TreeNode(start);
+            return {root};
+        }
+        if(dp[start][end].size()) return dp[start][end];
+
+        vector<TreeNode*> ans;
+        for(int i=start;i<=end;i++){
+            vector<TreeNode*> left =  solve(start,i-1,dp);
+            vector<TreeNode*> right = solve(i+1,end,dp);
+
+            for(int j=0;j<left.size();j++){
+                for(int k=0;k<right.size();k++) {
+                    TreeNode* root = new TreeNode(i);
+                    root->left = left[j];
+                    root->right = right[k];
+                    ans.emplace_back(root);
+                }
+            }
+        }
+        return dp[start][end] = ans;
+    }
+    vector<TreeNode*> generateTrees(int n) {
+        if(n == 0) return {};
+        vector<vector<vector<TreeNode* > > > dp(n+1, vector<vector<TreeNode*> > (n+1));
+        return solve(1,n,dp); 
+    }
+};
+```
+
+```cpp
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    map<pair<int,int>,vector<TreeNode*> > dp;
+    vector<TreeNode*> solve2(int start,int end){
+        if(start > end) {
+            return {NULL};
+        }
+        if(start == end) {
+            TreeNode* root = new TreeNode(start);
+            return {root};
+        }
+        if(dp.find({start,end})!=dp.end())return dp[{start,end}];
+
+        vector<TreeNode*> ans;
+        for(int i=start;i<=end;i++){
+            vector<TreeNode*> left =  solve2(start,i-1);
+            vector<TreeNode*> right = solve2(i+1,end);
+
+            for(int j=0;j<left.size();j++){
+                for(int k=0;k<right.size();k++) {
+                    TreeNode* root = new TreeNode(i);
+                    root->left = left[j];
+                    root->right = right[k];
+                    ans.emplace_back(root);
+                }
+            }
+        }
+        return dp[{start,end}] = ans;
+    }
+    vector<TreeNode*> generateTrees(int n) {
+        if(n == 0) return {};
+        return solve2(1,n);
+    }
+};
+```
 
 ## DP on Intervals
 
