@@ -453,6 +453,85 @@ public:
 
 ### Stone Games Leetcode
 
+<https://leetcode.com/problems/stone-game/description/>
+
+```cpp
+class Solution {
+public:
+    bool solve(vector<int>&piles,int start,int end,int alice,int bob,vector<vector<int> > &dp){
+        if(start > end) {
+            return alice > bob;
+        }
+        if(dp[start][end]!=-1) return dp[start][end];
+        
+        if((end-start)&1) {
+            //bob turn
+            //first and then last chosing
+            return dp[start][end] = solve(piles,start+1,end,alice,bob+piles[start],dp) | solve(piles,start,end-1,alice,bob+piles[end],dp);
+        } else {
+            // alice turn
+            //first and then last chosing
+            return dp[start][end] = solve(piles,start+1,end,alice+piles[start],bob,dp) | solve(piles,start,end-1,alice+piles[end],bob,dp);
+        }
+    }
+    bool stoneGame(vector<int>& piles) {
+        vector< vector<int> > dp(piles.size()+1,vector<int> (piles.size()+1,-1));
+        return solve(piles,0,piles.size()-1,0,0,dp);
+    }
+};
+```
+
+<https://leetcode.com/problems/stone-game-ii/>
+
+```cpp
+class Solution {
+public:
+    int Mysolve(vector<int>&piles,bool aliceTurn,int start,int M){
+        if(start >= piles.size()) {
+            return 0;
+        }
+
+        int total = 0;
+        int ans = aliceTurn ? INT_MIN : INT_MAX;
+        int n = piles.size();
+        for(int x=start; x <  min( start + 2*M, n) ; x++){
+            total += piles[x];
+            if(aliceTurn){
+                ans = max(ans,total + Mysolve(piles,!aliceTurn,x+1,max(x-start+1,M)));
+            } else {
+                ans = min(ans,Mysolve(piles,!aliceTurn,x+1,max(x-start+1,M)));
+            }
+        }
+        return ans;
+    }
+    int solve(vector<int> &piles,int index,int M,int alice,vector<vector<vector<int> > >&dp){
+        if(index >= piles.size()) {
+            return 0;
+        }
+        if(dp[index][M][alice]!=-1) return dp[index][M][alice];
+
+        int ans = alice ? INT_MIN : INT_MAX;
+        int total = 0;
+        for(int X=1;X<=2*M;X++){
+            if(index+X-1 >= piles.size()) break;
+            total += piles[index+X-1];
+            if(alice){
+                ans = max(ans,total + solve(piles,index+X,max(M,X),!alice,dp));
+            } else {
+                ans = min(ans,0 + solve(piles,index+X,max(M,X),!alice,dp));
+            }
+        }
+        return dp[index][M][alice] = ans;
+    }
+    int stoneGameII(vector<int>& piles) {
+
+        // return Mysolve(piles,true,0,1);
+        vector< vector< vector<int> > > dp(piles.size()+1,vector<vector<int>> (piles.size()+1,vector<int> (2,-1)));
+        return solve(piles,0,1,true,dp);
+    }
+};
+```
+
 ### Burst balloons Leetcode
 
 ## LIS / LCS Variants
