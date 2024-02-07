@@ -532,6 +532,35 @@ public:
 };
 ```
 
+<https://leetcode.com/problems/stone-game-iii/>
+
+```cpp
+class Solution {
+public:
+    int solve(vector<int>&stone,int index,vector<int>&dp){
+        if(index >= stone.size()) {
+            return 0;
+        }
+        if(dp[index]!=INT_MIN) return dp[index];
+        int ans = INT_MIN;
+        int total = 0;
+        for(int x = 1;x<=3;x++){
+            if(index+x-1 >= stone.size()) break;
+            total += stone[x+index-1];
+            ans = max(ans,total-solve(stone,x+index,dp));
+        }
+        return dp[index] = ans;
+    }
+    string stoneGameIII(vector<int>& stone) {
+        vector<int> dp(stone.size(),INT_MIN);
+        int ans =  solve(stone,0,dp);
+        if(ans < 0) return "Bob";
+        if(ans > 0) return "Alice";
+        return "Tie";
+    }
+};
+```
+
 ### Burst balloons Leetcode
 
 ## LIS / LCS Variants
