@@ -561,11 +561,61 @@ public:
 };
 ```
 
-### Burst balloons Leetcode
+### Burst balloons Leetcode (Building recusion tree from bottom) IMP
+
+<https://leetcode.com/problems/burst-balloons/>
+
+```cpp
+class Solution {
+public:
+    int solve(vector<int>& nums,int start,int end,vector<vector<int> > &dp){
+        if(start > end) return 0;
+        if(dp[start][end]!=-1) return dp[start][end];
+        int coins = INT_MIN;
+        for(int i=start;i<=end;i++){
+            coins = max(coins,
+                nums[start-1] * nums[i] * nums[end+1]
+                + solve(nums,start,i-1,dp) + solve(nums,i+1,end,dp)
+            );
+        }
+        return dp[start][end] = coins;
+    }
+    int maxCoins(vector<int>& nums) {
+        nums.insert(nums.begin(),1);
+        nums.push_back(1);
+        vector<vector<int> > dp(nums.size()+1,vector<int> (nums.size()+1,-1));
+        return solve(nums,1,nums.size()-2,dp);
+    }
+};
+```
 
 ## LIS / LCS Variants
 
 ### Intervleaving Strings Leetcode
+
+<https://leetcode.com/problems/interleaving-string/>
+
+```cpp
+class Solution {
+public:
+    bool solve(string &s1,string &s2,string &s3,int i,int j,int k,vector<vector<vector<int> > > &dp){
+        if(i >= s1.size() && j>=s2.size() && k>=s3.size()) return true;
+        if(dp[i][j][k]!=-1) return dp[i][j][k];
+        bool flag = false;
+        if( i<s1.size() && s1[i] == s3[k]){
+            flag = flag | solve(s1,s2,s3,i+1,j,k+1,dp);
+        }
+        if( j<s2.size() && s2[j] == s3[k]){
+            flag = flag | solve(s1,s2,s3,i,j+1,k+1,dp);
+        }
+        return dp[i][j][k] = flag;
+    }
+    bool isInterleave(string s1, string s2, string s3) {
+        vector< vector< vector<int> > > dp(s1.size()+1,vector< vector<int> > (s2.size()+1, vector<int> (s3.size()+1,-1)));
+        return solve(s1,s2,s3,0,0,0,dp);
+    }
+};
+```
 
 ### Min Insertion steps to make a string palindrome Leetcode
 
