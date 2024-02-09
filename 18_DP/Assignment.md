@@ -625,6 +625,72 @@ public:
 
 ### Make Array Strictly increasing Leetcode
 
+### Largest Divisible Subset
+
+<https://leetcode.com/problems/largest-divisible-subset/description/>
+
+```cpp
+class Solution {
+public:
+    // map<pair<int,int>,vector<int> > dp;
+    // vector<int> solve(vector<int> &nums,int index,int prev,vector<int>&output){
+    //     if(index >= nums.size()){
+    //         //base case;
+    //         return output;
+    //     }
+    //     if(dp.find({index,prev})!=dp.end()) dp[{index,prev}];
+
+    //     // take case
+    //     vector<int> take;
+    //     vector<int> leave;
+    //     if(output.size() == 0 || (nums[index]%prev==0)){
+    //         output.emplace_back(nums[index]);
+    //         take = solve(nums,index+1,nums[index],output);
+    //         output.pop_back();
+    //     }
+    //     // leave case 
+    //     leave = solve(nums,index+1,prev,output);
+    //     return dp[{index,prev}] = take.size() > leave.size() ? take : leave;
+    // }
+    vector<int> largestDivisibleSubset(vector<int>& nums) {
+        // sort(nums.begin(),nums.end());
+        // vector<int> output;
+        // return solve(nums,0,-1,output);
+        int n = nums.size();
+        vector<int> count(n);
+        vector<int> pre(n);
+        // int[] pre = new int[n];
+        // Arrays.sort(nums);
+        sort(nums.begin(),nums.end());
+        int maxi = 0, index = -1;
+        for (int i = 0; i < n; i++) {
+            count[i] = 1;
+            pre[i] = -1;
+            for (int j = i - 1; j >= 0; j--) {
+                if (nums[i] % nums[j] == 0) {
+                    if (1 + count[j] > count[i]) {
+                        count[i] = count[j] + 1;
+                        pre[i] = j;
+                    }
+                }
+            }
+            if (count[i] > maxi) {
+                maxi = count[i];
+                index = i;
+            }
+        }
+        // List<Integer> res = new ArrayList<>();
+        vector<int> res;
+        while (index != -1) {
+            res.emplace_back(nums[index]);
+            // res.add(nums[index]);
+            index = pre[index];
+        }
+        return res;
+    }
+};
+```
+
 ## Buy & Sell Stocks Variants [all 5 variants] Leetcode
 
 ### 1st Variant [121. Best Time to Buy and Sell Stock] - Already Covered in Recursion Week HomeWork
