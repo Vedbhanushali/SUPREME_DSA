@@ -619,7 +619,90 @@ public:
 
 ### Min Insertion steps to make a string palindrome Leetcode
 
+<https://leetcode.com/problems/minimum-insertion-steps-to-make-a-string-palindrome/>
+
+```cpp
+class Solution {
+public:
+     int t[501][501]; //0 to 500 index
+    int solve(string &s,int i,int j){
+        if(i>j)
+        return 0;
+
+        if(i==j)
+        return 1;
+
+        if(t[i][j]!=-1)
+            return t[i][j];
+        
+        if(s[i]==s[j])
+            return t[i][j] = 2 + solve(s,i+1,j-1);
+        else
+            return t[i][j] = max(solve(s,i+1,j),solve(s,i,j-1));
+
+    }
+    int longestPalindromeSubseq(string &s){
+        memset(t,-1,sizeof(t));
+        return solve(s,0,s.length()-1); 
+    }
+    int minInsertions(string s) {
+        return (s.size() - longestPalindromeSubseq(s));
+    }
+};
+```
+
 ### Russian Dolls Envelopes Leetcode
+
+<https://leetcode.com/problems/russian-doll-envelopes/>
+
+```cpp
+class Solution {
+public:
+    int solveMem(vector<vector<int>> &nums,int prev,int curr,vector<vector<int>>&dp) {
+        if(curr >= nums.size()) return 0;
+        if(dp[prev+1][curr] != -1) return dp[prev+1][curr];
+        int include = 0;
+        int exclude = 0;
+        if(prev == -1 || (nums[prev][0] < nums[curr][0] && nums[prev][1] < nums[curr][1])){
+            include = 1 + solveMem(nums,curr,curr+1,dp);
+            exclude = 0 + solveMem(nums,prev,curr+1,dp);
+        } else {
+            exclude = 0 + solveMem(nums,prev,curr+1,dp);
+        }
+        dp[prev+1][curr] = max(include,exclude);
+        return dp[prev+1][curr];
+    }
+    int Optimal(vector<vector<int>> &arr) {
+        if(arr.size() == 0) return 0;
+        vector<int> ans;
+        ans.push_back(arr[0][1]);  
+        for(int i=1;i<arr.size();i++){
+            if(arr[i][1] > ans.back()){
+                //include
+                ans.push_back(arr[i][1]);
+            } else {
+                //overwrite
+                int index = lower_bound(ans.begin(),ans.end(),arr[i][1]) - ans.begin();
+                // if(index == ans.size()) ans[index-2] = arr[i];
+                // else ans[index] = arr[i];
+                ans[index] = arr[i][1];
+            }
+        }
+        return ans.size();
+    }
+    static bool comp(vector<int> &a,vector<int> &b){
+        if(a[0] == b[0]) return a[1] > b[1];
+        else return a[0] < b[0];
+    }
+    int maxEnvelopes(vector<vector<int>>& nums) {
+        // sort(nums.begin(),nums.end(),comp);
+        // vector<vector<int> >dp(nums.size()+2,vector<int>(nums.size()+2,-1));
+        // return solveMem(nums,-1,0,dp);
+        sort(nums.begin(),nums.end(),comp);
+        return Optimal(nums);
+    }
+};
+```
 
 ### Min Number of Removals to make Mountain Array Leetcode
 
