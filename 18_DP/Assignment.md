@@ -823,6 +823,39 @@ public:
 };
 ```
 
+## Best time to buy and sell stock II 
+
+<https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/>
+
+```cpp
+class Solution {
+public: 
+    int solve(vector<int>&prices,int index,int buy,vector<vector<int> >&dp){
+        if(index >= prices.size()) return 0;
+        if(dp[index][buy]!=-1) return dp[index][buy];
+
+        if(buy){
+            return dp[index][buy] = max(solve(prices,index+1,!buy,dp) - prices[index],solve(prices,index+1,buy,dp));
+        } else {
+            int sell = INT_MIN;
+            for(int i=index;i<prices.size();i++)
+                sell = max(sell,solve(prices,i+1,!buy,dp) + prices[i]);
+            return dp[index][buy] = sell;
+        }
+    }
+    int maxProfit(vector<int>& prices) {
+        // vector<vector<int>> dp(prices.size()+1,vector<int> (2,-1));
+        // return solve(prices,0,true,dp);
+        int res = 0;
+        int n = prices.size();
+        for(int i = 0; i < n-1; i++) {
+            res += max(0, prices[i+1] - prices[i] );
+        }
+        return res;
+    }
+};
+```
+
 ## Knapsack DP
 
 ### Target Sum Leetcode
