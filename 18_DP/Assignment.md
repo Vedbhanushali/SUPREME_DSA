@@ -831,6 +831,7 @@ public:
 class Solution {
 public: 
     int solve(vector<int>&prices,int index,int buy,vector<vector<int> >&dp){
+        //my thinking 
         if(index >= prices.size()) return 0;
         if(dp[index][buy]!=-1) return dp[index][buy];
 
@@ -843,15 +844,62 @@ public:
             return dp[index][buy] = sell;
         }
     }
+    int supreme(vector<int>&prices,int index,int buy,vector<vector<int> >&dp){
+        //supreme logic
+        if(index >= prices.size()) return 0;
+        if(dp[index][buy] != -1 )return dp[index][buy];
+
+        int profit = 0;
+        if(buy){
+            //buy or ignore
+            profit = max(supreme(prices,index+1,!buy,dp)-prices[index],supreme(prices,index+1,buy,dp));
+        } else {
+            //sell or ignore
+            profit = max(supreme(prices,index+1,!buy,dp)+prices[index],supreme(prices,index+1,buy,dp));
+        }
+        return dp[index][buy] = profit;
+    }
     int maxProfit(vector<int>& prices) {
         // vector<vector<int>> dp(prices.size()+1,vector<int> (2,-1));
         // return solve(prices,0,true,dp);
-        int res = 0;
-        int n = prices.size();
-        for(int i = 0; i < n-1; i++) {
-            res += max(0, prices[i+1] - prices[i] );
+        // int res = 0;
+        // int n = prices.size();
+        // for(int i = 0; i < n-1; i++) {
+        //     res += max(0, prices[i+1] - prices[i] );
+        // }
+        // return res;
+        vector<vector<int>> dp(prices.size()+1,vector<int> (2,-1));
+        return supreme(prices,0,1,dp);
+    }
+};
+```
+
+### Best time to buy and sell stock III
+
+<https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/>
+
+```cpp
+class Solution {
+public:
+    int supreme(vector<int>&prices,int index,int buy,int limit,vector<vector<vector<int>>>&dp){
+        //supreme logic
+        if(index >= prices.size() || limit == 0) return 0;
+
+        if(dp[index][buy][limit] != -1 ) return dp[index][buy][limit];
+
+        int profit = 0;
+        if(buy){
+            //buy or ignore
+            profit = max(supreme(prices,index+1,!buy,limit,dp)-prices[index],supreme(prices,index+1,buy,limit,dp));
+        } else {
+            //sell or ignore
+            profit = max(supreme(prices,index+1,!buy,limit-1,dp)+prices[index],supreme(prices,index+1,buy,limit,dp));
         }
-        return res;
+        return dp[index][buy][limit] = profit;
+    }
+    int maxProfit(vector<int>& prices) {
+        vector<vector<vector<int>>> dp(prices.size()+1,vector<vector<int>> (2,vector<int> (3,-1)));
+        return supreme(prices,0,1,2,dp);
     }
 };
 ```
