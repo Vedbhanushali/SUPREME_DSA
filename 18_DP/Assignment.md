@@ -904,6 +904,64 @@ public:
 };
 ```
 
+### Best time to buy and sell stock IV
+
+<https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/submissions/1177124555/>
+
+```cpp
+class Solution {
+public:
+ int supreme(vector<int>&prices,int index,int buy,int limit,vector<vector<vector<int>>>&dp){
+        //supreme logic
+        if(index >= prices.size() || limit == 0) return 0;
+
+        if(dp[index][buy][limit] != -1 ) return dp[index][buy][limit];
+
+        int profit = 0;
+        if(buy){
+            //buy or ignore
+            profit = max(supreme(prices,index+1,!buy,limit,dp)-prices[index],supreme(prices,index+1,buy,limit,dp));
+        } else {
+            //sell or ignore
+            profit = max(supreme(prices,index+1,!buy,limit-1,dp)+prices[index],supreme(prices,index+1,buy,limit,dp));
+        }
+        return dp[index][buy][limit] = profit;
+    }
+    int maxProfit(int k, vector<int>& prices) {
+         vector<vector<vector<int>>> dp(prices.size()+1,vector<vector<int>> (2,vector<int> (k+1,-1)));
+        return supreme(prices,0,1,k,dp);
+    }
+};
+```
+
+### Best time to buy and sell stock V (Best Time to Buy and Sell Stock with Transaction Fee)
+
+<https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/description/>
+
+```cpp
+class Solution {
+public:
+    int supreme(vector<int>&prices,int index,int buy,int &fee,vector<vector<int> >&dp){
+        //supreme logic
+        if(index >= prices.size()) return 0;
+        if(dp[index][buy] != -1 )return dp[index][buy];
+
+        int profit = 0;
+        if(buy){
+            //buy or ignore
+            profit = max(supreme(prices,index+1,!buy,fee,dp)-prices[index],supreme(prices,index+1,buy,fee,dp));
+        } else {
+            //sell or ignore
+            profit = max(supreme(prices,index+1,!buy,fee,dp)+prices[index]-fee,supreme(prices,index+1,buy,fee,dp));
+        }
+        return dp[index][buy] = profit;
+    }
+    int maxProfit(vector<int>& prices, int fee) {
+        vector<vector<int>> dp(prices.size()+1,vector<int> (2,-1));
+        return supreme(prices,0,1,fee,dp);
+    }
+};
+```
 ## Knapsack DP
 
 ### Target Sum Leetcode
