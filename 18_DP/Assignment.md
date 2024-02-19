@@ -973,7 +973,7 @@ public:
 
 ### Ones and Zeroes Leetcode
 
-## MinMax DP
+## MinMax DP 
 
 ### Predict the Winner Leetcode
 
