@@ -142,7 +142,7 @@ void levelOrderTraversalNewLine(Node* root){
         q.pop();
         if(temp == NULL){
             cout<<endl;
-            if(!q.emtpy()) q.push(NULL);
+            if(!q.empty()) q.push(NULL);
 
         } else {
             cout<<temp->data;
