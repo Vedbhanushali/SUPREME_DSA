@@ -195,7 +195,7 @@ approach -
 ```cpp
 
 void printMiddle(stack<int> st,int &totalSize){
-    if(st.emtpy()) {
+    if(st.empty()) {
         cout<<"stack is empty no middle element";
         return;
     }
