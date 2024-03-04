@@ -16,7 +16,7 @@ github repository of DSA challanges
 
 [Sort zero's & one's (Dutch national flag problem)](/3_Array/README.md#sort-zeros--ones-dutch-national-flag-problem)  
 [Pascal Triangle](/3_Array/README.md#pascal-triangle)  
-[CODE SNIPPETS (swapping,reverse array)](/3_Array/README.md#code-snippets)
+[CODE SNIPPETS (swapping,reverse array)](/3_Array/README.md#code-snippets)  
 [Vector merge two vectors in new vector](/3_Array/README.md#merge-two-vectors)
 
 ### Array Practice Questions
