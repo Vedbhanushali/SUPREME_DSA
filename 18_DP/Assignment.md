@@ -967,7 +967,7 @@ public:
 
 ### Target Sum Leetcode
 
-### Min Swaps to make Sequences increasing Leetcode 
+### Min Swaps to make Sequences increasing Leetcode
 
 ### Reducing Dishes Leetcode
 
