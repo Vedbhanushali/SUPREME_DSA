@@ -977,6 +977,11 @@ public:
 
 ### Predict the Winner Leetcode
 
+https://leetcode.com/problems/predict-the-winner/
+
+```cpp
+```
+
 ### Partition Array for Maximum Sum
 
 <https://leetcode.com/problems/partition-array-for-maximum-sum/description/>
