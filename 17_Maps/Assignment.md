@@ -1,5 +1,28 @@
 # hashMap and Tries Assignment
 
+## Custom Sort String (using HashMap in class level)
+
+<https://leetcode.com/problems/custom-sort-string>
+
+```cpp
+class Solution {
+public:
+    static unordered_map<char,int> hashMap;
+    static bool comp(char &a,char &b){
+        return hashMap[a] < hashMap[b];
+    }
+    string customSortString(string order, string s) {
+        for(int i = 0;i<order.size();i++){
+            hashMap[order[i]] = i;
+        }
+        sort(s.begin(),s.end(),comp);
+        return s;
+    }
+};
+
+unordered_map<char, int> Solution::hashMap;
+```
+
 ## Array subset of another array
 
 <https://www.geeksforgeeks.org/problems/array-subset-of-another-array2317/1>

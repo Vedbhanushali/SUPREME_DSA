@@ -430,6 +430,7 @@ github repository of DSA challanges
 
 ### Practice question for Map & Tries
 
+[Custom Sort String (using HashMap in class level)](/17_Maps/Assignment.md#custom-sort-string-using-hashmap-in-class-level)  
 [Array subste of another array](/17_Maps/Assignment.md#array-subset-of-another-array)  
 [Union of two linked list](/17_Maps/Assignment.md#union-of-two-linked-list)  
 [Intersection of two linked list](/17_Maps/Assignment.md#intersection-of-two-linked-list)  
