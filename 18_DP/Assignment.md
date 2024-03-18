@@ -706,6 +706,54 @@ public:
 
 ### Min Number of Removals to make Mountain Array Leetcode
 
+<https://leetcode.com/problems/minimum-number-of-removals-to-make-mountain-array/>
+
+```cpp
+class Solution {
+public:
+    int solveLis(vector<int> &arr,vector<int> &lis){
+        //LEARN it IMP
+        if(arr.size() == 0)return 0;
+        vector<int> ans;
+        ans.push_back(arr[0]);
+        lis.push_back(1);  
+        for(int i=1;i<arr.size();i++){
+            if(arr[i] > ans.back()){
+                //include
+                ans.push_back(arr[i]);
+                lis.push_back(ans.size());
+            } else {
+                //overwrite
+                int index = lower_bound(ans.begin(),ans.end(),arr[i]) - ans.begin();
+                ans[index] = arr[i];
+                lis.push_back(index+1);
+            }
+        }
+        return ans.size();
+    }
+    int minimumMountainRemovals(vector<int>& nums) {
+        vector<int> LIS;
+        vector<int> LDS;
+
+        solveLis(nums,LIS);
+        reverse(nums.begin(),nums.end());
+        solveLis(nums,LDS);
+        // for(auto i:LIS){
+        //     cout<<i<<" ";
+        // }cout<<endl;
+        // for(auto i:LDS){
+        //     cout<<i<<" ";
+        // }cout<<endl;
+        int ans = INT_MIN;
+        for(int i=0;i<nums.size();i++){
+            if(LIS[i] == 1 || LDS[nums.size()-1-i] == 1 ) continue;
+            ans = max(ans,LIS[i]+LDS[nums.size()-1-i]-1);
+        }
+        return nums.size()-ans;
+    }
+};
+```
+
 ### Make Array Strictly increasing Leetcode
 
 ### Largest Divisible Subset
