@@ -1015,6 +1015,28 @@ public:
 
 ### Target Sum Leetcode
 
+<https://leetcode.com/problems/target-sum/>
+
+```cpp
+class Solution {
+public:
+    int solve(vector<int>&nums,int i,int target,  map<pair<int,int>,int> &dp){
+        if(i >= nums.size()) {
+            if(target == 0) return 1; 
+            else return 0;
+        }
+        if(dp.find({i,target})!=dp.end()) return dp[{i,target}];
+
+        //plus
+        return dp[{i,target}] = solve(nums,i+1,target-nums[i],dp) + solve(nums,i+1,target+nums[i],dp);
+    }
+    int findTargetSumWays(vector<int>& nums, int target) {
+        map<pair<int,int>,int> dp;
+        return solve(nums,0,target,dp);
+    }
+};
+```
+
 ### Min Swaps to make Sequences increasing Leetcode
 
 ### Reducing Dishes Leetcode
