@@ -871,7 +871,7 @@ public:
 };
 ```
 
-### Best time to buy and sell stock II 
+### Best time to buy and sell stock II
 
 <https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/>
 
@@ -1039,15 +1039,136 @@ public:
 
 ### Min Swaps to make Sequences increasing Leetcode
 
+<https://leetcode.com/problems/minimum-swaps-to-make-sequences-increasing/description/>
+
+```cpp
+class Solution {
+public:
+    int solve(vector<int>&nums1,vector<int>&nums2,int i,int p1,int p2){
+        if(i >= nums1.size()) return 0;
+
+        int swap=INT_MAX,noswap=INT_MAX;
+        if(p1 < nums2[i] && p2 < nums1[i]){
+            swap = 1 + solve(nums1,nums2,i+1,nums2[i],nums1[i]);
+        }
+        //no swap
+        if(p1 < nums1[i] && p2 < nums2[i]) {
+            noswap = solve(nums1,nums2,i+1,nums1[i],nums2[i]);
+        }
+        return min(swap,noswap);
+    }
+    int solveMem(vector<int>&nums1,vector<int>&nums2,int i,int p1,int p2,vector<vector<int>>&dp,int isSwap){
+        if(i >= nums1.size()) return 0;
+        if(dp[i][isSwap]!=-1) return dp[i][isSwap];
+
+        int swap=INT_MAX,noswap=INT_MAX;
+        if(p1 < nums2[i] && p2 < nums1[i]){
+            swap = 1 + solveMem(nums1,nums2,i+1,nums2[i],nums1[i],dp,1);
+        }
+        //no swap
+        if(p1 < nums1[i] && p2 < nums2[i]) {
+            noswap = solveMem(nums1,nums2,i+1,nums1[i],nums2[i],dp,0);
+        }
+        return dp[i][isSwap] = min(swap,noswap);
+    }
+    int minSwap(vector<int>& nums1, vector<int>& nums2) {
+        // return solve(nums1,nums2,0,-1,-1,dp);
+
+        vector<vector<int> > dp(nums1.size(),vector<int>(2,-1));
+        return solveMem(nums1,nums2,0,-1,-1,dp,0);
+    }   
+};
+```
+
 ### Reducing Dishes Leetcode
 
+<https://leetcode.com/problems/reducing-dishes/>
+
+```cpp
+class Solution {
+public:
+    int solve(vector<int>&sat,int i,int time,vector<vector<int>> &dp){
+        if(i>= sat.size()) return 0;
+        if(dp[i][time]!=-1) return dp[i][time];
+
+        int include = time * sat[i] + solve(sat,i+1,time+1,dp);
+        int exclude = solve(sat,i+1,time,dp);
+        return dp[i][time] = max(include,exclude);
+    }
+    int maxSatisfaction(vector<int>& sat) {
+        vector<vector<int> > dp(sat.size()+1,vector<int>(sat.size()+1,-1));
+        sort(sat.begin(),sat.end());
+        return solve(sat,0,1,dp);
+    }
+};
+```
+
 ### Ones and Zeroes Leetcode
+
+<https://leetcode.com/problems/ones-and-zeroes/>
+
+```cpp
+class Solution {
+public:
+    void convert(vector<string> &strs,vector<pair<int,int>> &arr){
+        for(auto s : strs){
+            int zero = 0;
+            int one = 0;
+            for(auto ch : s){
+                if(ch == '0') zero++;
+                else one++;
+            }
+            arr.push_back({zero,one});
+        }
+    }
+    int solve(vector<pair<int,int>>&arr,int i,int m,int n){
+        if(i>=arr.size()) return 0;
+        int zeros = arr[i].first;
+        int ones = arr[i].second; 
+        int include  = 0,exclude = 0;
+
+        if(m-zeros >=0 && n-ones>=0) {
+            include = 1+solve(arr,i+1,m-zeros,n-ones);
+        }
+        exclude = solve(arr,i+1,m,n);
+
+        return max(include,exclude);
+    }
+     int solveMem(vector<pair<int,int>>&arr,int i,int m,int n,vector<vector<vector<int>>>&dp){
+        if(i>=arr.size()) return 0;
+        if(dp[i][m][n]!=-1) return dp[i][m][n];
+
+        int zeros = arr[i].first;
+        int ones = arr[i].second; 
+        int include  = 0,exclude = 0;
+
+        if(m-zeros >=0 && n-ones>=0) {
+            include = 1+solveMem(arr,i+1,m-zeros,n-ones,dp);
+        }
+        exclude = solveMem(arr,i+1,m,n,dp);
+
+        return dp[i][m][n] = max(include,exclude);
+    }
+    int findMaxForm(vector<string>& strs, int m, int n) {
+        vector<pair<int,int>> arr;
+        convert(strs,arr);
+        // for(auto i:arr){
+        //     cout<<i.first<<" "<<i.second<<endl;
+        // }
+
+        // return solve(arr,0,m,n);
+        //i,m,n
+        vector<vector<vector<int>>> dp(strs.size()+1,vector<vector<int>> (m+1,vector<int>(n+1,-1)));
+        return solveMem(arr,0,m,n,dp);
+    }
+};
+```
 
 ## MinMax DP
 
 ### Predict the Winner Leetcode
 
-https://leetcode.com/problems/predict-the-winner/
+<https://leetcode.com/problems/predict-the-winner/>
 
 ```cpp
 class Solution {
