@@ -619,6 +619,7 @@ public:
     }
 };
 ```
+
 ## Trapping rain Water 
 
 https://leetcode.com/problems/trapping-rain-water/
@@ -692,6 +693,50 @@ vector<int> maxStack(vector<int>& v){
             int curr = height[i];
             if(prev[i-1]>curr && next[i+1]>curr)
                 ans += min(prev[i-1],next[i+1])-curr; 
+        }
+        return ans;
+    }
+};
+```
+
+
+
+## Minimum Remove to Make Valid Parentheses
+
+<https://leetcode.com/problems/minimum-remove-to-make-valid-parentheses/description/>
+
+```cpp
+class Solution {
+public:
+    string minRemoveToMakeValid(string s) {
+        string ans = "";
+        stack<char> st;
+        for(auto i:s){
+            if(i == '('){
+                st.push('(');
+                ans += i;
+            } else if(i == ')'){
+                if(!st.empty()){
+                    ans += i;
+                    st.pop();
+                }
+            } else {
+                ans += i;
+            }
+        }
+        int open = st.size();
+        // cout<<ans<<" "<<open;
+        if(open) {
+            string newAns = "";
+            for(int i = ans.size()-1;i>=0;i--){
+                if(ans[i] == '(' && open) {
+                    open--;
+                } else {
+                    newAns += ans[i];
+                }
+            }
+            reverse(newAns.begin(),newAns.end());
+            return newAns;
         }
         return ans;
     }
