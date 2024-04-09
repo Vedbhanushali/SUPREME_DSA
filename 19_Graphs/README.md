@@ -73,3 +73,9 @@ n - number of nodes
 1 - {{3,2},{2,3}}
 2 - {{3,8}}
 3 - {}
+
+## Graph Structure
+
+```cpp
+
+```
