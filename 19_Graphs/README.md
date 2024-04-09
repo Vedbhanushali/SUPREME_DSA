@@ -74,8 +74,128 @@ n - number of nodes
 2 - {{3,8}}
 3 - {}
 
-## Graph Structure
+## Graph data Structure
 
 ```cpp
+#include<iostream>
+#include<vector>
+#include<unordered_map>
+#include<list>
 
+using namespace std;
+
+class Graph {
+    public:
+        unordered_map<int,list<int>> adjList;
+
+    void addEdge(int u,int v,bool direction) {
+        //direction = 0 mean undirected graph
+        //direction = 1 mean directed graph
+        // u -> v edge
+        adjList[u].push_back(v);
+        if(direction == 0){
+            // mean undirected mean v -> u edge
+            adjList[v].push_back(u);
+        }
+    }
+
+    void printAdjacencyList() {
+        for(auto node:adjList){
+            cout<<node.first<<"->";
+            for(auto neighbour : node.second) {
+                cout<<neighbour<<", ";
+            }cout<<endl;
+        }
+    }
+};
+
+class WeightedGraph {
+    unordered_map<int,list<pair<int,int>>> adjList;
+
+    void addEdge(int u,int v,int weight,bool direction){
+        adjList[u].push_back({v,weight});
+        if(direction == 0){
+            adjList[v].push_back({u,weight});
+        }
+    }
+
+    void printAdjacencyList(){
+        for(auto node:adjList){
+            cout<<node.first<<" -> ";
+            for(auto neighbour : node.second){
+                cout<<"{"<<neighbour.first<<","<<neighbour.second<<"}, ";
+            }
+            cout<<endl;
+        }
+    }
+};
+
+//Generic Graph datatype of node on fly
+template <typename T>
+class GenericGraph {
+    public:
+        unordered_map<T,list<T>> adjList;
+
+    void addEdge(T u,T v,bool direction) {
+        //direction = 0 mean undirected graph
+        //direction = 1 mean directed graph
+        // u -> v edge
+        adjList[u].push_back(v);
+        if(direction == 0){
+            // mean undirected mean v -> u edge
+            adjList[v].push_back(u);
+        }
+    }
+
+    void printAdjacencyList() {
+        for(auto node:adjList){
+            cout<<node.first<<"->";
+            for(auto neighbour : node.second) {
+                cout<<neighbour<<", ";
+            }cout<<endl;
+        }
+    }
+};
+int main() {
+
+    Graph dg;
+    //creating a directed graph
+    dg.addEdge(0,1,1);
+    dg.addEdge(1,2,1);
+    dg.addEdge(0,2,1);
+    cout<<endl;
+    dg.printAdjacencyList();
+    
+    //creating a undirected graph
+    Graph ug;
+    ug.addEdge(0,1,0);
+    ug.addEdge(1,2,0);
+    ug.addEdge(0,2,0);
+    cout<<endl;
+    ug.printAdjacencyList();
+
+    //creating a weighted undirected graph
+    WeightedGraph wug;
+    wug.addEdge(0,1,4,0);
+    wug.addEdge(1,2,5,0);
+    wug.addEdge(0,2,7,0);
+    cout<<endl;
+    wug.printAdjacencyList();
+
+    //weighted directed graph
+    WeightedGraph wdg;
+    wdg.addEdge(0,1,4,1);
+    wdg.addEdge(1,2,5,1);
+    wdg.addEdge(0,2,7,1);
+    cout<<endl;
+    wdg.printAdjacencyList();
+
+
+    //Generic graph
+    Graph<int> numberGraph;
+    numberGraph.addEdge(0,1,0);
+    Graph<char> characterGraph;
+    characterGraph.addEdge('a','b',0);
+    return 0;
+}
 ```
