@@ -215,6 +215,10 @@ it is like level order traversal in tree and also need to keep track of visited 
 - DFS
 It is like inorder, preorder of postorder traversal of tree.
 
+#### Disconnected graph
+
+there may be many graph components but they all are considered a single graph which is know as disconnected graph
+
 ```cpp
 #include<iostream>
 #include<vector>
@@ -312,6 +316,4 @@ int main() {
 }
 ```
 
-#### Disconnected graph
 
-there may be many graph components but they all are considered a single graph which is know as disconnected graph
