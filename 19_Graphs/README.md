@@ -509,3 +509,64 @@ int main() {
     return 0;
 }
 ```
+
+## Topological sort
+
+It is applicable to only Directed acyclic graph **DAG**,
+
+Topological sort is linear ordering of vertices such that for every edge (u->v) u comes before v in that ordering
+
+```cpp
+#include<iostream>
+#include<vector>
+#include<unordered_map>
+#include<list>
+#include<queue>
+#include<stack>
+
+using namespace std;
+
+template <typename T>
+class GenericGraph {
+    public:
+        unordered_map<T,list<T>> adjList;
+
+    void addEdge(T u,T v,bool direction) {
+        //direction = 0 mean undirected graph
+        //direction = 1 mean directed graph
+        // u -> v edge
+        adjList[u].push_back(v);
+        if(direction == 0){
+            // mean undirected mean v -> u edge
+            adjList[v].push_back(u);
+        }
+    }
+
+    void printAdjacencyList() {
+        for(auto node:adjList){
+            cout<<node.first<<"->";
+            for(auto neighbour : node.second) {
+                cout<<neighbour<<", ";
+            }cout<<endl;
+        }
+    }
+
+    void topoSortDfs(T src,unordered_map<T,bool> &visited,stack<T> &ans) {
+        visited[src] = true;
+        for(auto nbr:adjList[src]){
+            if(!visited[nbr]){
+                dfs(nbr,visited);
+            }
+        }
+        //same as dfs just before returning store the src node in stack
+        ans.push(src);
+    }
+};
+
+int main() {
+
+    return 0;
+}
+```
+
+//WIP
