@@ -442,6 +442,36 @@ class GenericGraph {
         return false;
     }
 
+    //refer below toposort algorithm for understanding this function
+    void topoSortBfs(int n,vector<T> & ans){ // number of nodes
+    //It will work for connected as well as disconnected graph
+        queue<T> q;
+        unordered_map<T,int> indegree;
+        for(auto i : adjList) {
+            for(auto nbr : i.second){
+                indegree[nbr]++;
+            }
+        }
+        for(int i=0;i<n;i++){
+            if(indegree[i] == 0){
+                q.push(i);
+            }
+        }
+        //bfs logic
+        while(!q.empty()){
+            T frontNode =  q.front(); q.pop();
+            //here we are push topo sort in ans but in current case only need length of toposort so we can use single variable cnt and increment it. cnt++;
+            ans.push_back(frontNode);
+            for(auto nbr: adjList[frontNode]){
+                indegree[nbr]--;
+                if(indegree[nbr] == 0){
+                    q.push(nbr);
+                }
+            }
+        }
+
+    }
+
 };
 
 int main() {
@@ -483,7 +513,7 @@ int main() {
     if(ans) cout<<"cycle detected";
     else cout<<"No cycle detected";
 
-    Graph dg;
+    Graph<int> dg;
     int n = 5; //number of nodes
     dg.addEdge(0,1,1);
     dg.addEdge(1,2,1);
@@ -506,6 +536,14 @@ int main() {
     if(ans) cout<<"cycle detected";
     else cout<<"No cycle detected";
 
+    //Cycle detection in directed graph using BFS kahn's algorithm
+    vector<int> ans;
+    dg.topoSortBfs(8,ans1);
+    if(ans.size() == 8){
+        cout<<"dg has no cycle"<<endl;
+    } else {
+        cout<<"dg has cycle"<<endl;
+    }
     return 0;
 }
 ```
@@ -515,6 +553,10 @@ int main() {
 It is applicable to only Directed acyclic graph **DAG**,
 
 Topological sort is linear ordering of vertices such that for every edge (u->v) u comes before v in that ordering
+
+Topological sort does not work on cyclic graph because we never find a node whose indegree is 0, and another point to note is that length of topo sort of cyclic graph is less than number of nodes.
+
+### Using DFS and BFS (also know ans kahn's algorithm)
 
 ```cpp
 #include<iostream>
@@ -555,18 +597,75 @@ class GenericGraph {
         visited[src] = true;
         for(auto nbr:adjList[src]){
             if(!visited[nbr]){
-                dfs(nbr,visited);
+                topoSortDfs(nbr,visited,ans);
             }
         }
         //same as dfs just before returning store the src node in stack
         ans.push(src);
     }
+
+    void topoSortBfs(int n,vector<T> & ans){ // number of nodes
+    //It will work for connected as well as disconnected graph
+        queue<T> q;
+        unordered_map<T,int> indegree;
+        for(auto i : adjList) {
+            for(auto nbr : i.second){
+                indegree[nbr]++;
+            }
+        }
+        for(int i=0;i<n;i++){
+            if(indegree[i] == 0){
+                q.push(i);
+            }
+        }
+        //bfs logic
+        while(!q.empty()){
+            T frontNode =  q.front(); q.pop();
+            ans.push_back(frontNode);
+            for(auto nbr: adjList[frontNode]){
+                indegree[nbr]--;
+                if(indegree[nbr] == 0){
+                    q.push(nbr);
+                }
+            }
+        }
+
+    }
 };
 
 int main() {
+    Graph<int> dg;
+    int n = 8; //number of nodes
+    dg.addEdge(0,1,1);
+    dg.addEdge(1,2,1);
+    dg.addEdge(2,3,1);
+    dg.addEdge(3,4,1);
+    dg.addEdge(3,5,1);
+    dg.addEdge(4,6,1);
+    dg.addEdge(5,6,1);
+    dg.addEdge(6,7,1);
 
+    stack<int> ans;
+    unordered_map<int,bool> visited;
+    for(int i=0;i<n;i++){
+        if(!visited[i])
+            dg.topoSortDfs(i,visited,ans);
+    }
+    cout<<"Topo sort using DFS:"<<endl;
+    while(!ans.empty()){
+        cout<<ans.top(); ans.pop();
+    }
+
+    vector<int> ans;
+    dg.topoSortBfs(8,ans);
+    cout<<"Topo sort using BFS:"<<endl;
+    for(auto i:ans){
+        cout<<i<<" ";
+    }
     return 0;
 }
 ```
 
-//WIP
+## Shortest path
+
+when using BFS traversal destination node visited in level is its shortest path
