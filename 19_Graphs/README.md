@@ -217,7 +217,7 @@ It is like inorder, preorder of postorder traversal of tree.
 
 #### Disconnected graph
 
-there may be many graph components but they all are considered a single graph which is know as disconnected graph
+there may be many graph components in a given graph but they all are considered a single graph know as disconnected graph
 
 ```cpp
 #include<iostream>
@@ -252,7 +252,7 @@ class GenericGraph {
             }cout<<endl;
         }
     }
-
+    //bfs for undirected graph
     void bfs(T src,unordered_map<T,bool> &visited;){
         queue<T> q;
         q.push(src);
@@ -271,7 +271,7 @@ class GenericGraph {
             }
         }
     }
-
+    //dfs for undirected
     void dfs(T src,unordered_map<T,bool>& visited){
         cout<<src;
         visited[src] = true;
@@ -318,7 +318,7 @@ int main() {
 
 ## Cycle detection
 
-need to keep track of parent if a node is visited again but it not a parent node then we can say that there is cycle
+Here we need to keep track of parent node list of all nodes. If a node is visited again but it not a parent node then we can say that there is cycle.
 
 ```cpp
 #include<iostream>
@@ -330,7 +330,7 @@ need to keep track of parent if a node is visited again but it not a parent node
 using namespace std;
 
 template <typename T>
-class GenericGraph {
+class Graph {
     public:
         unordered_map<T,list<T>> adjList;
 
@@ -384,6 +384,7 @@ class GenericGraph {
         }
     }
 
+    //uses parent feature to check cycle
     bool checkCyclicUsingBfs(T src,unordered_map<T,bool> &visited) {
         queue<T> q;
         unordered_map<T,T> parent;
@@ -407,6 +408,7 @@ class GenericGraph {
         return false;
     }
 
+    //uses parent feature to check cycle
     bool checkCyclicUsingDfs(T src,unordered_map<T,bool> &visited,T parent) {
         visited[src] = true;
         for(auto neighbour: adjList[src]){
@@ -422,6 +424,8 @@ class GenericGraph {
         return false;
     }
 
+    //remebers whole dfs path if in current path a node is already visited we conclude cycle
+    //here parent method won't work because a -> b <- c is there a and c both are parent but there is not cycle so but parent method concludes cycle as parent of b are not not same on traversal.
     bool checkCyclicDirectedGraphUsingDfs(T src,unordered_map<T,bool> &visited, unordered_map<T,bool>& dfsVisited) {
 
         visited[src] = true;
@@ -443,6 +447,7 @@ class GenericGraph {
     }
 
     //refer below toposort algorithm for understanding this function
+    //cyclic detection for directed graph using BFS
     void topoSortBfs(int n,vector<T> & ans){ // number of nodes
     //It will work for connected as well as disconnected graph
         queue<T> q;
@@ -471,7 +476,6 @@ class GenericGraph {
         }
 
     }
-
 };
 
 int main() {
@@ -657,7 +661,7 @@ int main() {
     }
 
     vector<int> ans;
-    dg.topoSortBfs(8,ans);
+    dg.topoSortBfs(n,ans);
     cout<<"Topo sort using BFS:"<<endl;
     for(auto i:ans){
         cout<<i<<" ";
@@ -669,3 +673,227 @@ int main() {
 ## Shortest path
 
 when using BFS traversal destination node visited in level is its shortest path
+here from parent we can trace the path till src going backwards after bfs traversal is completed.
+
+### using BFS
+
+```cpp
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+
+class Graph {
+    public:
+        // u -> {v,wt}
+        unordered_map<int, list< pair<int,int> > > adjList;
+
+        void addEdge(int u,int v,int wt,bool direction) {
+            //direction: 0 - undirected, 1 directed graph
+            adjList[u].push_back({v.wt});
+            if(direction == 1){
+                adjList[v].push_back({u,wt});
+            }
+        }
+
+        void printAdjList(){
+            for(auto i:adjList){
+                cout<<i.first<<" --> ";
+                for(auto j : i.second) {
+                    cout<<"("<<j.first<<","<<j.second<<")"<<endl;
+                }
+            }
+        }
+
+        void shortestPathBfs(int src,int dest){
+            queue<int> q;
+            unordered_map<int,int> parent;
+            unoredered_map<int,bool> visited;
+
+            q.push(src);
+            visited[src] = true;
+            parent[src] = -1;
+
+            while(!q.empty()){
+                int frontNode = q.front(); q.pop();
+                for(auto nbr:adjList[frontNode]){
+                    if(!visited[nbr.first]){
+                        q.push(nbr.first);
+                        visited[nbr.first] = true;
+                        parent[nbr.first] = frontNode;
+                    }
+                }
+            }
+
+            //travering parent to create path
+            vector<int> ans;
+            int node = dest;
+            while(node != -1){
+                ans.emplace_back(node);
+                node = parent[node];
+            }
+            reverse(ans.begin(),ans.end());
+            cout<<"path is ";
+            for(auto i: ans){
+                cout<<i<<" ";
+            }
+        }
+};
+
+int main() {
+    Graph g;
+
+    g.addEdge(0,1,1,1);
+    g.addEdge(1,2,1,1);
+    g.addEdge(2,3,1,1);
+
+    g.addEdge(3,4,1,1);
+    g.addEdge(0,5,1,1);
+    g.addEdge(5,4,1,1);
+
+    g.addEdge(0,6,1,1);
+    g.addEdge(6,7,1,1);
+    g.addEdge(7,8,1,1);
+    g.addEdge(8,4,1,1);
+
+    int src = 0;
+    int dest = 4;
+
+    g.shortestPathBfs(src,dest);
+    return 0;
+}
+```
+
+### using DFS
+
+- find topological sort (gives liner ordering in stack use DFS topo sort)
+- for each node in stack update the distance array
+- initial value of distance array is INT_MAX (infinity)
+- this distance array shows to reach this node minimum cost
+- one by one from stack take nodes and update their distances
+
+```cpp
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+
+class Graph {
+    public:
+        // u -> {v,wt}
+        unordered_map<int, list< pair<int,int> > > adjList;
+
+        void addEdge(int u,int v,int wt,bool direction) {
+            //direction: 0 - undirected, 1 directed graph
+            adjList[u].push_back({v.wt});
+            if(direction == 1){
+                adjList[v].push_back({u,wt});
+            }
+        }
+
+        void topoSortDfs(T src,unordered_map<T,bool> &visited,stack<T> &ans) {
+            visited[src] = true;
+            for(auto nbr:adjList[src]){
+                if(!visited[nbr.first]){
+                    topoSortDfs(nbr.first,visited,ans);
+                }
+            }
+            ans.push(src);
+        }
+    
+
+    void shortestPathDfs(int &n, int &dest,stack<int> &topoOrder){
+        vector<int> distance(n,INT_MAX);
+        int src = topoOrder.top(); topoOrder.pop();
+        distance[src] = 0;
+        for(auto nbr:adjList[src]){
+            dist[nbr.first] = max(dist[nbr.first],dist[src] + nbr.second)
+        }
+
+        while(!topoOrder.empty()){
+            int topEl = topoOrder.top();
+            topoOrder.pop();
+
+            if(dist[topEl] != INT_MAX){
+                for(auto nbr:adjList[topEl]){
+                    dist[nbr.first] = max(dist[nbr.first],dist[topEl] + nbr.second)
+                }
+            }
+        }
+
+        //printing distance array
+        for(int i=0;i<n;i++){
+            cout<<i<<" -> "<<distance[i]<<endl;
+        }
+    }
+};
+
+int main() {
+    Graph g;
+
+    //Directed graph
+    int n = 6;
+    g.addEdge(0,1,5,1);
+    g.addEdge(0,2,3,1);
+    g.addEdge(2,1,2,1);
+    g.addEdge(1,3,3,1);
+    g.addEdge(2,3,5,1);
+    g.addEdge(2,4,6,1);
+    g.addEdge(4,3,1,1);
+
+    stack<int> topoOrder;
+    unordered_map<int,bool> visited;
+    //(start,visited,ans_stack)
+    g.topoSortDfs(0,visited,topoOrder);
+
+    //(number_of_nodes,destination,stack)
+    g.shortestPathDfs(n,3,topoOrder);
+    return 0;
+}
+```
+
+## Shortest path using Dijkstra algorithm
+
+It is greedy apporach which uses heap or set this both data structure gives sorts based on shortest distance between nodes so.
+
+```cpp
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+
+class Graph {
+    public:
+        // u -> {v,wt}
+        unordered_map<int, list< pair<int,int> > > adjList;
+
+        void addEdge(int u,int v,int wt,bool direction) {
+            //direction: 0 - undirected, 1 directed graph
+            adjList[u].push_back({v.wt});
+            if(direction == 1){
+                adjList[v].push_back({u,wt});
+            }
+        }
+
+        void dijkstar(int src,int n){
+            vector<int> distance(n+1,INT_MAX); //nodes are numbered 1 to 6 so for index matching
+            set<pair<int,int>> 
+        }
+};
+
+int main() {
+    Graph g;
+
+    //Directed graph
+    int n = 6;
+    g.addEdge(6,3,2,0);
+    g.addEdge(6,1,14,0);
+    g.addEdge(3,1,9,0);
+    g.addEdge(3,2,10,0);
+    g.addEdge(1,2,7,0);
+    g.addEdge(2,4,15,0);
+    g.addEdge(4,3,11,0);
+    g.addEdge(6,5,9,0);
+    g.addEdge(4,5,6,0);
+
+    g.dijkstar(6,4,n); 
+    return 0;
+}
+```
