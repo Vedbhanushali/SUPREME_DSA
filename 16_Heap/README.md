@@ -223,7 +223,7 @@ int main(){
 
 
     // CUSTOM comparator
-    priority_queue<ListNode*,vector<ListNode*>,comp) minHeap;
+    priority_queue<ListNode*,vector<ListNode*>,comp> minHeap;
     return 0;
 }
 ```

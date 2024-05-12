@@ -853,6 +853,15 @@ int main() {
 ## Shortest path using Dijkstra algorithm
 
 It is greedy apporach which uses heap or set this both data structure gives sorts based on shortest distance between nodes so.
+E - number of edge  
+V - number of vertices  
+TC - ElogV
+
+approach :
+
+- insert src dist as 0 and insert it in set
+- one by one till set gets empty take smallest distance node
+- from this node check distance of all neighbour node is less then update in dist array as well set so new reordering happens and we get smallest distance nodes first
 
 ```cpp
 #include <iostream>
@@ -872,9 +881,40 @@ class Graph {
             }
         }
 
-        void dijkstar(int src,int n){
-            vector<int> distance(n+1,INT_MAX); //nodes are numbered 1 to 6 so for index matching
-            set<pair<int,int>> 
+        void dijkstar(int src,int n,int dest){
+            vector<int> dist(n,INT_MAX); 
+            set<pair<int,int>> st;
+            //initial steps
+            dist[src] = 0;
+            st.insert(make_pair(0,src));
+
+            while(!st.emtpy()){
+                //fetch the smallest or first element form set
+                auto topElement = *(st.begin());
+                int nodeDistance = topElement.first;
+                int node = topElement.second;
+
+                //remove from set 
+                st.erase(st.begin());
+
+                //neighbour traverse
+                for(auto nbr:adjList[node]){
+                    if(nodeDistance + nbr.second < dist[nbr.first]) {
+                        //update distance in distance array as well as set
+                        //finding entry in set
+                        auto result = st.find(make_pair(dist[nbr.first],nbr.first))
+                        //if found then remove
+                        if(result != st.end()){
+                            st.erase(result);
+                        }
+                        //updation in dist array and set
+                        dist[nbr.first] = nodeDistance + nbr.second;
+                        st.insert(make_pair(dist[nbr.first],nbr.first));
+                    }
+                }
+
+                cout<<"Ans : distance from "<<src<<" to "<<dest<<" is " <<dist[dest];
+            }
         }
 };
 
@@ -893,7 +933,116 @@ int main() {
     g.addEdge(6,5,9,0);
     g.addEdge(4,5,6,0);
 
-    g.dijkstar(6,4,n); 
+    g.dijkstar(6,4,n+1); 
     return 0;
 }
+```
+
+## Course schedule
+
+topoplogical sort question
+
+<https://leetcode.com/problems/course-schedule/>
+
+```cpp
+class Solution {
+private:
+    bool topoSortBfs(int n,unordered_map<int,list<int>> &adjList){
+        vector<int> ans;
+        unordered_map<int,int> indegree;
+        queue<int> q;
+
+        //indegree calculate
+        for(auto i : adjList) {
+            for(auto nbr : i.second){
+                indegree[nbr]++;
+            }
+        }
+        //BFS
+        for(int i=0;i<n;i++){
+            if(indegree[i] == 0){
+                q.push(i);
+            }
+        }
+        while(!q.empty()){
+            int frontNode =  q.front(); q.pop();
+            ans.push_back(frontNode);
+            for(auto nbr: adjList[frontNode]){
+                indegree[nbr]--;
+                if(indegree[nbr] == 0){
+                    q.push(nbr);
+                }
+            }
+        }
+        return ans.size() == n;
+    }
+public:
+    bool canFinish(int numCourses, vector<vector<int>>& pre) {
+        unordered_map<int,list<int>> adjList;
+        for(auto task : pre){
+            int u = task[0];
+            int v = task[1];
+            adjList[v].push_back(u);
+        }
+        //Application of toposort if able to find topo sort correct then all courses can be done
+        //condition course lenght == toposort length
+        return topoSortBfs(numCourses,adjList);
+    }
+};
+```
+
+## Course Schedule II
+
+Same as course schedule above only need to send topo sort path
+<https://leetcode.com/problems/course-schedule-ii/description/>
+
+```cpp
+class Solution {
+    private:
+    vector<int> topoSortBfs(int n,unordered_map<int,list<int>> &adjList){
+        vector<int> ans;
+        unordered_map<int,int> indegree;
+        queue<int> q;
+
+        //indegree calculate
+        for(auto i : adjList) {
+            for(auto nbr : i.second){
+                indegree[nbr]++;
+            }
+        }
+        //BFS
+        for(int i=0;i<n;i++){
+            if(indegree[i] == 0){
+                q.push(i);
+            }
+        }
+        while(!q.empty()){
+            int frontNode =  q.front(); q.pop();
+            ans.push_back(frontNode);
+            for(auto nbr: adjList[frontNode]){
+                indegree[nbr]--;
+                if(indegree[nbr] == 0){
+                    q.push(nbr);
+                }
+            }
+        }
+        if(ans.size() == n){
+            return ans;
+        } else {
+            return {};
+        }
+    }
+public:
+    vector<int> findOrder(int numCourses, vector<vector<int>>& pre) {
+        unordered_map<int,list<int>> adjList;
+        for(auto task : pre){
+            int u = task[0];
+            int v = task[1];
+            adjList[v].push_back(u);
+        }
+        //Application of toposort if able to find topo sort correct then all courses can be done
+        //condition course lenght == toposort length
+        return topoSortBfs(numCourses,adjList);
+    }
+};
 ```
