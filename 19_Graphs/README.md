@@ -763,7 +763,7 @@ int main() {
 }
 ```
 
-### using DFS
+### using DFS / Topological sort
 
 - find topological sort (gives liner ordering in stack use DFS topo sort)
 - for each node in stack update the distance array
@@ -801,11 +801,11 @@ class Graph {
     
 
     void shortestPathDfs(int &n, int &dest,stack<int> &topoOrder){
-        vector<int> distance(n,INT_MAX);
+        vector<int> dist(n,INT_MAX);
         int src = topoOrder.top(); topoOrder.pop();
-        distance[src] = 0;
+        dist[src] = 0;
         for(auto nbr:adjList[src]){
-            dist[nbr.first] = max(dist[nbr.first],dist[src] + nbr.second)
+            dist[nbr.first] = min(dist[nbr.first],dist[src] + nbr.second)
         }
 
         while(!topoOrder.empty()){
@@ -814,7 +814,7 @@ class Graph {
 
             if(dist[topEl] != INT_MAX){
                 for(auto nbr:adjList[topEl]){
-                    dist[nbr.first] = max(dist[nbr.first],dist[topEl] + nbr.second)
+                    dist[nbr.first] = min(dist[nbr.first],dist[topEl] + nbr.second)
                 }
             }
         }
@@ -938,6 +938,222 @@ int main() {
 }
 ```
 
+## Number of provincies
+
+<https://leetcode.com/problems/number-of-provinces/>
+
+approach - using dfs or bfs just need to count number of components of graph
+
+```cpp
+class Solution {
+public:
+    void bfs(int node, vector<vector<int>>& isConnected, vector<bool>& visit) {
+        queue<int> q;
+        q.push(node);
+        visit[node] = true;
+
+        while (!q.empty()) {
+            node = q.front();
+            q.pop();
+
+            for (int i = 0; i < isConnected.size(); i++) {
+                if (isConnected[node][i] && !visit[i]) {
+                    q.push(i);
+                    visit[i] = true;
+                }
+            }
+        }
+    }
+    void dfs(int node,vector<vector<int>>& grid,vector<bool>& visited){
+        visited[node] = true;
+        for(int i=0;i<grid.size();i++){
+            if(grid[node][i] == 1 && !visited[i]){
+                visited[i] = true;
+                dfs(i,grid,visited);
+            }
+        }
+    }
+
+    int findCircleNum(vector<vector<int>>& isConnected) {
+        // int n = isConnected.size();
+        // int numberOfComponents = 0;
+        // vector<bool> visit(n);
+
+        // for (int i = 0; i < n; i++) {
+        //     if (!visit[i]) {
+        //         numberOfComponents++;
+        //         bfs(i, isConnected, visit);
+        //     }
+        // }
+
+        // return numberOfComponents;
+        int ans = 0;
+        int n = isConnected.size();
+        vector<bool> visited(n);
+        for(int i=0;i<n;i++){
+            if(!visited[i]){
+                ans++;
+                dfs(i,isConnected,visited);
+            }
+        }
+        return ans;
+    }
+};
+```
+
+## Number of islands
+
+approach - using dfs exploring all connected islands, (and keeping count of disconnected graph component when explored)
+
+<https://leetcode.com/problems/number-of-islands/>
+
+```cpp
+class Solution {
+public:
+    void solve(int x,int y,vector<vector<char>>&grid){
+        //up call
+        if(x-1>=0 && grid[x-1][y] == '1'){
+            grid[x-1][y] = '0';
+            solve(x-1,y,grid);
+        }
+        //down call
+        if(x+1<grid.size() && grid[x+1][y] == '1'){
+            grid[x+1][y] = '0';
+            solve(x+1,y,grid);
+        }
+        //left call
+        if(y-1>=0 && grid[x][y-1] == '1'){
+            grid[x][y-1] = '0';
+            solve(x,y-1,grid);
+        }
+        //right call
+        if(y+1<grid[0].size() && grid[x][y+1] == '1'){
+            grid[x][y+1] = '0';
+            solve(x,y+1,grid);
+        }
+    }
+    int numIslands(vector<vector<char>>& grid) {
+        int m = grid.size();
+        int n = grid[0].size();
+        int ans = 0;
+        for(int i=0;i<grid.size();i++){
+            for(int j=0;j<grid[0].size();j++){
+                if(grid[i][j] == '1'){
+                    ans++;
+                    solve(i,j,grid);
+                }
+            }
+        }
+        return ans;
+    }
+};
+```
+
+## Flood fill
+
+approach - it is dfs approach marking all connected nodes to given color
+
+<https://leetcode.com/problems/flood-fill/>
+
+```cpp
+class Solution {
+public:
+    void solve(vector<vector<int>>&image,int &mainColor,int& color,int x,int y,vector<vector<bool>>&visited){
+        //left
+        image[x][y] = color;
+        if(y-1>=0 && image[x][y-1] == mainColor && !visited[x][y-1]){
+            visited[x][y-1] = true;
+            solve(image,mainColor,color,x,y-1,visited);
+        }
+        //right
+        if(y+1<image[0].size() && image[x][y+1] == mainColor && !visited[x][y+1]){
+            visited[x][y+1] = true;
+            solve(image,mainColor,color,x,y+1,visited);
+        }
+        //bottom
+         if(x+1<image.size() && image[x+1][y] == mainColor && !visited[x+1][y]){
+            visited[x+1][y] = true;
+            solve(image,mainColor,color,x+1,y,visited);
+        }
+        //up
+        if(x-1>=0 && image[x-1][y] == mainColor && !visited[x-1][y]){
+            visited[x-1][y] = true;
+            solve(image,mainColor,color,x-1,y,visited);
+        }
+    }
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int x, int y,int color) {
+        int mainColor = image[x][y];
+        vector<vector<bool>> visited(image.size(), vector<bool>(image[0].size(),false));
+        solve(image,mainColor,color,x,y,visited);
+        return image;
+    }
+};
+```
+
+## Rotting oranges
+
+<https://leetcode.com/problems/rotting-oranges/>
+
+approach - bfs algorithm such a way need to find how much deep level can go that is answer that much minimum time it will take to rot all oranges
+
+```cpp
+class Solution {
+public:
+
+    int orangesRotting(vector<vector<int>>& grid) {
+        //bfs approach and level is ans
+        queue<pair<int,pair<int,int>>> q; //level is also stored
+
+        for(int i=0;i<grid.size();i++){
+            for(int j=0;j<grid[0].size();j++){
+                if(grid[i][j] == 2){
+                    q.push({0,{i,j}});
+                }
+            }
+        }
+        
+        int ans = 0;
+        //x and y = 2 is already visited
+        
+        while(!q.empty()){
+            auto currNode = q.front();
+            q.pop();
+            int level = currNode.first;
+            ans = max(ans,level);
+            int x = currNode.second.first;
+            int y = currNode.second.second;
+            //up
+            if(x - 1 >=0 && grid[x-1][y] == 1) {
+                grid[x-1][y] = 2; //visited
+                q.push({level+1,{x-1,y}});
+            }
+            //down
+            if(x+1 <grid.size() && grid[x+1][y] == 1){
+                grid[x+1][y] = 2;
+                q.push({level+1,{x+1,y}});
+            }
+            //left
+            if(y-1>=0 && grid[x][y-1] == 1){
+                grid[x][y-1] = 2;
+                q.push({level+1,{x,y-1}});
+            }
+            //right
+            if(y+1<grid[0].size() && grid[x][y+1] == 1){
+                grid[x][y+1] = 2;
+                q.push({level+1,{x,y+1}});
+            }
+        }
+        
+        for(int i=0;i<grid.size();i++){
+            for(int j=0;j<grid[0].size();j++){
+                if(grid[i][j] == 1) return -1;
+            }
+        }
+        return ans;
+    }
+};
+```
+
 ## Course schedule
 
 topoplogical sort question
@@ -1045,4 +1261,97 @@ public:
         return topoSortBfs(numCourses,adjList);
     }
 };
+```
+
+## Word ladder
+
+application - shortest path finding using BFS
+
+<https://leetcode.com/problems/word-ladder/>
+
+```cpp
+class Solution {
+public:
+    int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
+        //using bfs shortest path
+        queue<pair<string,int>> q;
+        q.push({beginWord,1});
+        unordered_set<string> st(wordList.begin(),wordList.end()); //act as visited array
+        //difference is that visited will be removed from the set
+        //word inserted in queue will be removed from set
+        while(!q.empty()){
+            pair<string,int> fnode = q.front(); q.pop();
+            string currString = fnode.first;
+            int level = fnode.second;
+
+            //check if it is destination word
+            if(currString == endWord) return level;
+
+            for(int index = 0;index<currString.length();index++){
+                //replacing index values with a to z
+                char originalChar = currString[index];
+                for(char ch = 'a';ch<='z';ch++){
+                    currString[index] = ch;
+                    //check new word in wordlist
+                    if(st.find(currString)!=st.end()){
+                        //found
+                        q.push({currString,level+1});
+                        st.erase(currString);
+                    }
+                }
+                //bringing back the original string
+                currString[index] = originalChar;
+            }
+        }
+        return 0;
+    }
+};
+```
+
+## Path With Minimum Effort
+
+approach - Dijkstar algorithm using priority queue
+
+<https://leetcode.com/problems/path-with-minimum-effort/submissions/1258696482/>
+
+```cpp
+
+class Solution {
+public:
+    int minimumEffortPath(vector<vector<int>>& heights) {
+        priority_queue< pair<int,pair<int,int>>, vector<pair<int,pair<int,int>>>, greater<pair<int,pair<int,int>>>> pq;
+        vector<vector<int>> dist(heights.size(), vector<int>(heights[0].size(),INT_MAX));
+        pq.push({0,{0,0}});
+        dist[0][0] = 0;
+        while(!pq.empty()){
+            auto fNode = pq.top();
+            pq.pop();
+            int frontNodeDifference = fNode.first;
+            int x = fNode.second.first;
+            int y = fNode.second.second;
+
+            //check if not reached ans
+            if(x ==  heights.size() -1 && y == heights[0].size() - 1){
+                return dist[x][y];
+            }
+
+            int dx[] = {-1,0,1,0};
+            int dy[] = {0,1,0,-1};
+            for(int i=0;i<4;i++){
+                int newX = x + dx[i];
+                int newY = y + dy[i];
+                if(newX >=0 && newY>=0 && newX < heights.size() && newY < heights[0].size()){
+                    int currDiff = abs(heights[x][y] - heights[newX][newY]);
+                    int newMax = max(frontNodeDifference,currDiff);
+                    if(newMax < dist[newX][newY]) {
+                        dist[newX][newY] = newMax;
+                        pq.push({newMax,{newX,newY}});
+                    }
+                }
+            }
+        }
+        return 0;
+    }
+};
+
 ```
