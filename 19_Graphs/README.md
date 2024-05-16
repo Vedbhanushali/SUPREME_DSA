@@ -1353,5 +1353,194 @@ public:
         return 0;
     }
 };
+```
 
+## CONS of djikstar algorithm
+
+if graph contains a negative cycle djistar will fail
+in undirected graph if single edge is negative then also it will create negative cycle.
+for example of this adjlist
+A -> {B,-2}
+B -> {C,-3}
+C -> {A,-4}
+
+here initial shortest path to A will be 0 then in after exploring it will become (-2-3-4 = -9) and so on it will get stuck in loop.
+
+To overcome finding shortest path for negative weights. comes
+
+## Bellman - Ford Algorithm
+
+In this algorithm need to perform relaxation(updating minimum distance array operation) on all edges n-1 times.
+
+### how to detect negative cycle
+
+After n-1 times relaxation if still distance array changes this means that there is negative cycle and minimum distance is not possible here.
+
+TC - E*V (TC of djikstar is Elogv which is lesser compared to bellam ford)
+
+```cpp
+# include <iostream>
+# include <bits/stdc++.h>
+using namespace std;
+
+class Graph {
+    public:
+        // u -> {v,wt}
+        unordered_map<int, list< pair<int,int> > > adjList;
+
+        void addEdge(int u,int v,int wt,bool direction) {
+            //direction: 0 - directed, 1 undirected graph
+            adjList[u].push_back({v.wt});
+            if(direction == 0){
+                adjList[v].push_back({u,wt});
+            }
+        }
+
+        void bellmanFord(int src,int n){
+            //assuming directed weighted graph
+            vector<int> dist(n,INT_MAX);
+            dis[src] = 0;
+
+            //n-1 relaxation
+            for(int i=0;i<n-1;i++){
+                //for all edges
+                for(auto t : adjList){
+                    //nbr.second is list of nbr
+                    int u = t.first;
+                    for(auto nbr : t.second){
+                        int v = nbr.first;
+                        int wt = nbr.second;
+                        if(dist[u]!=INT_MAX){
+                            if(dist[u] + wt < dist[v]){
+                                dist[v] = dist[u] + wt;
+                            }
+                        }    
+                    }
+                }
+            }
+
+            //to check for negative cycle
+            //performing relaxation again
+            bool negaticeCycle = false;
+            for(auto t : adjList){
+                //nbr.second is list of nbr
+                int u = t.first;
+                for(auto nbr : t.second){
+                    int v = nbr.first;
+                    int wt = nbr.second;
+                    if(dist[u]!=INT_MAX){
+                        if(dist[u] + wt < dist[v]){
+                            //here cycle found
+                            negativeCycle = true;
+                            break;
+                        }
+                    }
+                }    
+            }
+            if(negativeCycle) {
+                cout<<"Negative cycle present"
+                return;
+            }
+            //printing result distance array
+            for(auto i:dist){
+                cout<<i<<" ";
+            }cout<<endl;
+        }
+};
+
+int main() {
+    Graph g;
+
+    //Directed graph
+    int n = 5;
+    g.addEdge(0,1,-1,0);
+    g.addEdge(0,2,4,0);
+    g.addEdge(1,2,3,0);
+    g.addEdge(1,3,2,0);
+    g.addEdge(1,4,2,0);
+    g.addEdge(3,1,1,0);
+    g.addEdge(3,2,5,0);
+    g.addEdge(4,3,-3,0);
+
+    g.bellmanFord(0,n); 
+    return 0;
+}
+```
+
+## Floyd Warshall
+
+it is used to find multiple source shortest path
+
+approach
+
+1. create 2D matrix of all nodes(nxn) i(rows) & j(column) represent distance between u to v (where i is u and j is v)
+2. Intialize matrix diagonals to zero(0) because u to u distance is 0 and others to infinity(10000) (don't use INT_MAX it will make addition to it out of bound for int)
+3. make entry of direct connection in dist array
+4. use intermediate to find distance from dest to intermediate and from intermediate to destination and check if it minimum then actual direct connection then update.
+
+```cpp
+# include <iostream>
+# include <bits/stdc++.h>
+using namespace std;
+
+class Graph {
+    public:
+        // u -> {v,wt}
+        unordered_map<int, list< pair<int,int> > > adjList;
+
+        void addEdge(int u,int v,int wt,bool direction) {
+            //direction: 0 - directed, 1 undirected graph
+            adjList[u].push_back({v.wt});
+            if(direction == 0){
+                adjList[v].push_back({u,wt});
+            }
+        }
+
+        void floydWarshall(int n){
+            vector<vector<int>> dist(n,vector<int>(n,1e9));
+            //diagonal zero
+            for(int i=0;i<n;i++){
+                dist[i][i] = 0;
+            }
+
+            for(auto t:adjList){
+                int u = t.first;
+                for(auto nbr : t.second){
+                    int v = nbr.first;
+                    int wt = nbr.second;
+                    dist[u][v] = wt;
+                }
+            }
+
+            for(int intermediate = 0;intermediate<n;intermediate++){
+                for(int src=0;src<n;src++){
+                    for(int dest=0;dest<n;dest++){
+                        dist[src][dest] = min(dist[src][dest],dist[src][intermediate] + dist[intermediate][dest]);
+                    }
+                }
+            }
+
+            //printing ans
+            for(auto i:dist){
+                for(auto j:i){
+                    cout<<j<<" ";
+                }cout<<endl;
+            }
+        }
+};
+
+int main() {
+    Graph g;
+
+    //Directed graph
+    int n = 5;
+    g.addEdge(0,1,3,0);
+    g.addEdge(0,3,5,0);
+    g.addEdge(1,0,2,0);
+    g.addEdge(1,3,4,0);
+    g.addEdge(2,1,1,0);
+    g.addEdge(3,2,2,0);
+    g.floydWarshall(n);
+    return 0;
+}
 ```
