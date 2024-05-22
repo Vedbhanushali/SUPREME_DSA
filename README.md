@@ -98,6 +98,7 @@ github repository of DSA challanges
 [Integers to Roman](./5_char_array_string/Assignment.md#integers-to-roman)  
 [Zigzag conversion](./5_char_array_string/Assignment.md#zigzag-conversion)  
 [Largest number](./5_char_array_string/Assignment.md#largest-number)
+[Palindrome Partitioning](/5_char_array_string/Assignment.md#palindrome-partitioning)
 
 ## Pointers and Mathematics algorithms
 
