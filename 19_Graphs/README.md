@@ -1544,3 +1544,218 @@ int main() {
     return 0;
 }
 ```
+
+## Strongly Connected component (SCC) / Kosaraju algorithm
+
+this is a component from which you can reach to from given vertex to another vertex of that component in the graph.
+
+### approach
+
+- find ordering in which we should traverse the graph (toposort)
+- reverse all the edges
+- one by one from stack start traversing all component with visited tracking (number of component found will be the answer of SCC)
+
+```cpp
+# include <iostream>
+# include <bits/stdc++.h>
+using namespace std;
+
+class Graph {
+    public:
+        // u -> {v,wt}
+        unordered_map<int, list< int > > adjList;
+
+        void addEdge(int u,int v,bool direction) {
+            //direction: 0 - directed, 1 undirected graph
+            adjList[u].push_back(v);
+            if(direction == 1){
+                adjList[v].push_back(u);
+            }
+        }
+
+        void dfsTopoSort(int src,stack<int>&s,unordered_map<int,bool>&visited){
+            visited[src] = true;
+            for(auto nbr : adjList[src]){
+                if(!visited[nbr]){
+                    dfsTopoSort(nbr,s,visited);
+                }
+            }
+            s.push(src);
+        }
+
+        void dfs(int src,unordered_map<int,bool>&visited,unordered_map<int,list<int>> &newAdjList){
+            visited[src] = true;
+            cout<<src<<", ";
+            for(auto nbr:newAdjList[src]){
+                if(!visited[nbr]){
+                    dfs(nbr,visited,newAdjList);
+                }
+            }
+        }
+        int countSCC(int n){
+            stack<int> s;
+            unordered_map<int,bool> visited;
+            
+            //1. finding topo sort
+            for(int i=0;i<n;i++){
+                if(!visited[i]){
+                    dfsTopoSort(i,s,visited);
+                }
+            }
+
+            //2. reversing all edges
+            unordered_map<int,list<int>> newAdjList;
+            for(auto t:adjList){
+                for(auto nbr:t.second){
+                    newAdjList[nbr].push_back(t.first);
+                }
+            }
+
+            //3. traversing 
+            int count = 0;
+            unordered_map<int,bool> visited2;
+            while(!s.empty()){
+                int node = s.top();
+                s.pop();
+                if(!visited2[i]){
+                    cout<<"printing :"<<count+1;
+                    dfs(i,visited2,newAdjList);
+                    count++;
+                }
+            }
+            
+            return count;
+        }
+}
+};
+
+int main() {
+    Graph g;
+
+    //Directed graph
+    int n = 8;
+    g.addEdge(0,1,0);
+    g.addEdge(1,2,0);
+    g.addEdge(2,3,0);
+    g.addEdge(3,0,0);
+    g.addEdge(2,4,0);
+    g.addEdge(4,5,0);
+    g.addEdge(5,6,0);
+    g.addEdge(6,4,0);
+    g.addEdge(6,7,0);
+    int ans = g.countSCC(n);
+    cout<<ans;
+    return 0;
+}
+```
+
+## Bridge in a Graph / Tarjan's algorithm
+
+A edge removal which create more than 1 disconnected component in a graph is called bridge.
+keeping track of insertion time(tin) and lowest time (tlow) to reach a node. if child node lowest time is less than parent mean it concludes that child can be reached from other nodes faster than the current traversal parent node so parent child edge is not a bridge but vice versa is true.
+
+```cpp
+# include <iostream>
+# include <bits/stdc++.h>
+using namespace std;
+
+class Graph {
+    public:
+        // u -> {v,wt}
+        unordered_map<int, list< int > > adjList;
+
+        void addEdge(int u,int v,bool direction) {
+            //direction: 0 - directed, 1 undirected graph
+            adjList[u].push_back(v);
+            if(direction == 1){
+                adjList[v].push_back(u);
+            }
+        }
+
+        void findBridges(int src,int parent,int &timer,vector<int>&tin,vector<int>&tlow,unordered_map<int,bool>&visited){
+            visited[src] = true;
+            tin[src] = timer;
+            tlow[src] = timer;
+            for(auto nbr:adjList[src]){
+                if(nbr == parent) continue;
+                if(!visited[nbr]){
+                    findBridges(nbr,src,timer+1,tin,tlow,visited);
+                    tlow[src] = min(tlow[src],tlow[nbr]);
+                    //checking bridge
+                    //yaha galti hoti hai tlow change ho sakta hai lekin tin parent to hamesa fix rahega
+                    if(tlow[nbr] > tin[src]){
+                        cout<<"there is bridge between: "<<src<<" "<<nbr;
+                    } 
+                } else {
+                    //not parent and visited then check the tlow if current node can be reached from that at lower time.
+                    tlow[src] = min(tlow[src],tlow[nbr]);
+                }
+            }
+        }
+};
+
+int main() {
+    Graph g;
+
+    //Directed graph
+    int n = 5;
+    g.addEdge(0,1,1);
+    g.addEdge(0,2,1);
+    g.addEdge(2,1,1);
+    g.addEdge(0,3,1);
+    g.addEdge(3,4,1);
+    vector<int> tin(n);
+    vector<int> tlow(n);
+    unordered_map<int,bool> visited;
+    g.findBridges(0,-1,0,tin,tlow,visited);
+    return 0;
+}
+```
+
+## Critical connections in a network
+
+approach same as above (finding bridges)
+
+<https://leetcode.com/problems/critical-connections-in-a-network/description/>
+
+```cpp
+
+class Solution {
+public:
+    void findBridges(int src,int parent,int timer,unordered_map<int,list<int>>&adjList,vector<int>&tin,vector<int>&tlow,unordered_map<int,bool>&visited,vector<vector<int>>&answer){
+            visited[src] = true;
+            tin[src] = timer;
+            tlow[src] = timer;
+            for(auto nbr:adjList[src]){
+                if(nbr == parent) continue;
+                if(!visited[nbr]){
+                    findBridges(nbr,src,timer+1,adjList,tin,tlow,visited,answer);
+                    tlow[src] = min(tlow[src],tlow[nbr]);
+                    //checking bridge
+                    //yaha galti hoti hai tlow change ho sakta hai lekin tin parent to hamesa fix rahega
+                    if(tlow[nbr] > tin[src]){
+                        // cout<<"there is bridge between: "<<src<<" "<<nbr;
+                        vector<int> temp = {src,nbr};
+                        answer.emplace_back(temp);
+                    } 
+                } else {
+                    //not parent and visited then check the tlow if current node can be reached from that at lower time.
+                    tlow[src] = min(tlow[src],tlow[nbr]);
+                }
+            }
+        }
+    vector<vector<int>> criticalConnections(int n, vector<vector<int>>& connections) {
+        unordered_map<int,list<int>> adjList;
+        for(auto i:connections){
+            adjList[i[0]].emplace_back(i[1]);
+            adjList[i[1]].emplace_back(i[0]);
+        }
+        vector<vector<int>> answer;
+        vector<int> tin(n);
+        vector<int> tlow(n);
+        unordered_map<int,bool> visited;
+        findBridges(0,-1,0,adjList,tin,tlow,visited,answer);
+        return answer;
+    }
+};
+```
