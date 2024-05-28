@@ -87,6 +87,27 @@ int spanningTree(int V,vector<vector<int>> adj[]){
 
 ## Kruskal's Algorithm
 
+used to find minimum spanning tree. approach is using disjoint set, disjoint set is way to find whether two nodes are in same component or not.
+two type of operation can be done on disjoint set
+
+1. findParent or findSet (both are same)
+2. union()
+
+Union
+
+- all component are parent of itselt at starting
+- when two component are union which have more rank (more element) will become parent when both have same rank any one can became parent of that union.
+
+### algorithm
+
+- uses linear DS which stores all edges in form of [u,v,w]
+- parent vector (initial values pointing to itself mean num[index] = index)
+- rank vector (initial value 0)
+- sort edges based on weights
+- find lowest weight edge will get u and v
+- find parent of u and v (p1 != p2 both are in different component then need to union else ignore)
+- in union process (make parent who rank is higher and also increase its rank again)
+
 ## Eventual Safe States
 
 ## Word Ladder-2
