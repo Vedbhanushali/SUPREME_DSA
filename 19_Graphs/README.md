@@ -1355,7 +1355,7 @@ public:
 };
 ```
 
-## CONS of djikstar algorithm
+## CONS of djikstra algorithm
 
 if graph contains a negative cycle djistar will fail
 in undirected graph if single edge is negative then also it will create negative cycle.

@@ -108,6 +108,66 @@ Union
 - find parent of u and v (p1 != p2 both are in different component then need to union else ignore)
 - in union process (make parent who rank is higher and also increase its rank again)
 
+```cpp
+static bool mycmp(vector<int> &a,vector<int> &b){
+    return a[2] < b[2];
+}
+int findParent(vector<int>&parent,int node){
+    if(parent[node] == node){
+        return node;
+    }
+    //actually it is
+    // return findParent(parent,parent[node]);
+    //but applying DP or path compression to get faster results
+    return parent[node] = findParent(parent,parent[node]); //path compression
+}
+void unionSet(int u,int v,vector<int>&parent,vector<int>&rank){
+    u = findParent(parent,u);
+    v = findparent(parent,v);
+    if(rank[u] < rant[v]){
+        //u will be added in v
+        parent[u] = v;
+        rank[v]++;
+    } else {
+        parent[v] = u;
+        rank[u]++;
+    }
+}
+int spanningTree(int V,vector<vector<int>>adj[]){
+    vector<int> parent(V);
+    vector<int> rank(V,0);
+    for(int u=0;u<V;u++){
+        parent[u] = u;
+    }
+    
+    //creating linear DS of edges of graph
+    vector<vector<int>>edges;
+    for(int u=0;u<V;u++){
+        for(auto edge:adj[u]){
+            int v = edge[0];
+            int w = edge[1];
+            edges.push_back({u,v,w});
+        }
+    }
+    //sorting edges
+    sort(edges.begin(),edges.end(),mycmp);
+
+    int ans = 0;
+    for(auto edge:edges){
+        int u = edge[0];
+        int v = edge[1];
+        int w = edge[2];
+        u = findParent(u);
+        v = findParent(v);
+        if(u != v){
+            unionSet(u,v,parent,rank);
+            ans += w; //here in union we are uniont parent 
+        }
+    }
+    return ans;
+}
+```
+
 ## Eventual Safe States
 
 ## Word Ladder-2
