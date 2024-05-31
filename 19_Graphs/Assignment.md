@@ -170,11 +170,134 @@ int spanningTree(int V,vector<vector<int>>adj[]){
 
 ## Eventual Safe States
 
+approach cycle detection
+
+```cpp
+bool cycleDetection(vector<int> adj[],int src,unordered_map<int,bool>&visited,unordered_map<int,bool>&dfsVisited,vector<bool>&safeNode){
+    visited[src] = true;
+    dfsVisited[src] = true;
+    safeNode[src] = false;
+    for(auto nbr:adj[src]){
+        if(visited[nbr] && dfsVisited[nbr]){       
+            //cycle found
+            return true; 
+        }
+        if(!visited[nbr]){
+            //need to explore it
+            if(cycleDetection(adj,nbr,visited,dfsVisited)) return true; 
+        }
+    }
+    dfsVisited[src] = false; 
+    safeNode[src] = true;
+    return false;
+}
+vector<int> eventualSafeNodes(int V,vector<int>adj[]){
+    vector<int> ans;
+    unordered_map<int,bool> visited, dfsVisited;
+    vector<bool> safeNode(V);
+    for(int i =0;i<V;i++){
+        if(!visited[i])
+            cycleDetection(adj,i,visited,dfsVisited,safeNode);
+    }
+    for(int i=0;i<V;i++){
+        if(safeNode[i]){
+            ans.push_back(i);
+        }
+    } 
+    return ans;
+}
+```
+
 ## Word Ladder-2
+
+approach bfs to find shortest path (also storing all that shortest path of that level)
+
+```cpp
+vector<vector<string>> findSequence(string beginWord,string endWord,vector<string>&wordList){
+    vector<vector<string>> ans;
+    //here as per word ladder we were only storing pair string,int (current latest and level), but here storing vector<string> which contains the whole path traversed.
+    queue<pair<vector<string>,int>>q;
+    q.push({{beginWord},1});
+    unordered_set<string> st(wordList,begin(),wordList.end());
+    int prevLevel = -1;
+    vector<string>toBeRemoved; //removing from set after completion of currentLevel
+    while(!q.empty()){
+        pair<vector<string>,int> frontNode = q.front(); q.pop();
+
+        vector<string> currSeq = frontNode.first;
+        string currString = currSeq[currSeq.size()-1];
+        int currLevel = frontNode.second;
+
+        if(currLevel != prevLevel){
+            for(auto s : toBeRemoved){
+                st.erase(s);
+            }
+            toBeRemoved.clear();
+            prevLevel = currLevel;
+        }
+        
+        if(currString == endWord){
+            ans.push_back(currSeq);
+        }
+
+        for(int index=0;index<currString.length();index++){
+            char OriginalChar = currString[index];
+            for(char ch = 'a';ch<='z';ch++){
+                currString[index] = ch;
+                if(st.find(currString)!=st.end()){
+                    auto temp = currSeq;
+                    temp.push_back(currString);
+                    q.push({temp,currLevel+1});
+                    toBeRemoved.push_back(currString);
+                }
+            }
+            currString[index] = originalChar;
+        }
+    }
+    return ans;
+}
+```
 
 ## Minimum Multiplications to reach End
 
+approach - bfs to find shortest path
+
+```cpp
+int minimumMultiplications(vector<int>&arr,int start,int end){
+    //bfs
+    queue<int> q;
+    const int mod = 100000;
+    vector<int> ans(100000,-1); //will also work as visited array in bfs and it stores steps of bfs level
+    ans[start] = 0;
+    q.push(start);
+    while(!q.empty()){
+        int front = q.front();
+        q.pop();
+
+        if(front == end){
+            return ans[front];
+        }
+
+        for(auto i: arr){
+            int newNode = (i * frontNode)%mod;
+            if(ans[newNode] == -1){
+                ans[newNode] = ans[front] + 1;
+                q.push(newNode);
+            }
+        }
+    }
+    return -1;
+}
+```
+
 ## Number of Operations to Make Network Connected
+
+approach - kruskal's algorithm (disjoint set union to get minimum edges required to joined disjoined component of graph)
+
+steps
+
+- A way to find number of connected components let it be n then will require n-1 edges to connect all disconnected component of graph
+- A way to find extra edges (n-1) from connected nodes such that it's removal doesn't increase diconnected component.
 
 ## Find the City With the Smallest Number of Neighbours at a Threshold Distance
 
