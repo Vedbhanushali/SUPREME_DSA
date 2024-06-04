@@ -292,12 +292,18 @@ int minimumMultiplications(vector<int>&arr,int start,int end){
 
 ## Number of Operations to Make Network Connected
 
+<https://leetcode.com/problems/number-of-operations-to-make-network-connected/description/>
+
 approach - kruskal's algorithm (disjoint set union to get minimum edges required to joined disjoined component of graph)
 
 steps
 
 - A way to find number of connected components let it be n then will require n-1 edges to connect all disconnected component of graph
 - A way to find extra edges (n-1) from connected nodes such that it's removal doesn't increase diconnected component.
+
+```cpp
+
+```
 
 ## Find the City With the Smallest Number of Neighbours at a Threshold Distance
 
