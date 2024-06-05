@@ -160,8 +160,8 @@ int spanningTree(int V,vector<vector<int>>adj[]){
         u = findParent(u);
         v = findParent(v);
         if(u != v){
-            unionSet(u,v,parent,rank);
-            ans += w; //here in union we are uniont parent 
+            unionSet(u,v,parent,rank); 
+            ans += w; //every time we do union we are considering that edge to part of MST 
         }
     }
     return ans;
@@ -302,9 +302,193 @@ steps
 - A way to find extra edges (n-1) from connected nodes such that it's removal doesn't increase diconnected component.
 
 ```cpp
+class Solution {
+public:
+    int findParent(vector<int>&parent,int node){
+        if(parent[node] == node){
+            return node;
+        }
+        return parent[node] = findParent(parent,parent[node]);
+    }
+    void unionSet(int u,int v,vector<int>&parent,vector<int>&rank){
+        u = findParent(parent,u);
+        v = findParent(parent,v);
+        if(rank[u] < rank[v]){
+            parent[u] = v;
+            rank[v]++;
+        } else {
+            parent[v] = u;
+            rank[u]++;
+        }
+    }
+    int makeConnected(int n, vector<vector<int>>& connections) {
+        //need to find nocc and no of extra edges
 
+        vector<int> parent(n);
+        vector<int> rank(n,0);
+        for(int i=0;i<n;i++){
+            parent[i] = i;
+        }
+
+        int extraEdges = 0;
+        for(auto edge: connections){
+            int u = edge[0];
+            int v = edge[1];
+
+            u = findParent(parent,u);
+            v = findParent(parent,v);
+            if( u != v){
+                //both are different components
+                unionSet(u,v,parent,rank);
+            } else {
+                //both are in same component 
+                //this edge is extra u , v
+                extraEdges++;   
+            }
+        }
+        int nocc = 0; // no of connected components
+        //from parent array those whose are parent of themselves/self are part of unique components
+        for(int i=0;i<n;i++){
+            if(parent[i] == i) nocc++;
+        } 
+        if(nocc -1 <= extraEdges) return nocc-1;
+        return -1;
+    }
+};
+```
+
+## Accounts Merge
+
+approach - Krushkal's algorithm of find disjoint set
+
+<https://leetcode.com/problems/accounts-merge/>
+
+```cpp
+class Solution {
+public:
+    int findParent(vector<int>&parent,int node){
+        if(parent[node] == node){
+            return node;
+        }
+        return parent[node] = findParent(parent,parent[node]);
+    }
+    void unionSet(int u,int v,vector<int>&parent,vector<int>&rank){
+        u = findParent(parent,u);
+        v = findParent(parent,v);
+        if(rank[u] < rank[v]){
+            parent[u] = v;
+            rank[v]++;
+        } else {
+            parent[v] = u;
+            rank[u]++;
+        }
+    }
+    vector<vector<string>> accountsMerge(vector<vector<string>>& accounts) {
+        int n = accounts.size();
+        vector<int> parent(n);
+        vector<int> rank(n,0);
+        for(int i=0;i<n;i++){
+            parent[i] = i;
+        }
+        unordered_map<string,int> hashMap; //mail -> node(number)
+        for(int i=0;i<n;i++){
+            auto account = accounts[i];
+            // 0 is node is name rest is mail
+            for(int j=1;j<account.size();j++){
+                string &mail = account[j];
+                auto it = hashMap.find(mail);
+                if(it==hashMap.end()){
+                    //not found
+                    hashMap[mail] = i;
+                } else {
+                    unionSet(i,it->second,parent,rank);
+                }
+            }
+        }
+
+        unordered_map<int,set<string>> preAns;
+        for(auto it:hashMap){
+            auto accountNo = it.second;
+            auto mail = it.first;
+            accountNo = findParent(parent,accountNo);
+            preAns[accountNo].insert(mail);
+        }
+
+        vector<vector<string>>ans;
+        for(auto it:preAns){
+            auto accountNo = it.first;
+            auto name = accounts[accountNo][0];
+            auto setString = it.second;
+            vector<string> temp;
+            temp.push_back(name);
+            for(auto i : setString) temp.emplace_back(i);
+            ans.emplace_back(temp);
+        }
+        return ans;
+    }
+};
 ```
 
 ## Find the City With the Smallest Number of Neighbours at a Threshold Distance
 
-## Accounts Merge
+approach - dijkstra algorithm
+
+<https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/>
+
+```cpp
+class Solution {
+public:
+    int dickstar(int src,int n,unordered_map<int,list<pair<int,int>>>&adjList,int &distanceThreshold){
+        vector<int> dist(n,INT_MAX);
+        set<pair<int,int>> st; // {distance , node}
+        dist[src] = 0;
+        st.insert({0,src});
+        int reachableCities = 0;
+
+        while(!st.empty()){
+            auto top = *st.begin();
+            st.erase(st.begin());
+
+            int nodeDist = top.first;
+            int node = top.second;
+
+            if(node != src && nodeDist <= distanceThreshold ){
+                reachableCities++;
+            }
+            for(auto nbr : adjList[node]){ //adjlist {u -> {v,w},{v,w}}
+                int newDist = nodeDist + nbr.second;
+                if ( newDist < dist[nbr.first]) {
+                    auto it = st.find({dist[nbr.first],nbr.first});
+                    if(it != st.end()){
+                        //found
+                        st.erase(it); //remove old entry and as add newDist which is lesser
+                    }
+                    dist[nbr.first] = newDist;
+                    st.insert({newDist,nbr.first});
+                }
+            }
+        }
+        return reachableCities;
+    }
+    int findTheCity(int n, vector<vector<int>>& edges, int distanceThreshold) {
+        unordered_map<int,list<pair<int,int>>> adjList;
+        for(auto e : edges){
+            int &u = e[0];
+            int &v = e[1];
+            int &w = e[2];
+            adjList[u].push_back({v,w});
+            adjList[v].push_back({u,w}); //bidirectional
+        }
+        int city = 0;
+        int minimumReachableCities = INT_MAX;
+        for(int u=0;u<n;u++){
+            int reachableFromU = dickstar(u,n,adjList,distanceThreshold);
+            if( reachableFromU <= minimumReachableCities) {
+                minimumReachableCities = reachableFromU;
+                city = u;
+            }
+        }
+        return city;
+    }
+};
+```
