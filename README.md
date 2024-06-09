@@ -106,6 +106,7 @@ github repository of DSA challanges
 [GCD euclid algorithm](/6_pointers_maths/README.md#gcd-euclid-algorithm)  
 [Modulus properties](/6_pointers_maths/README.md#modulus-properties)  
 [Fast exponential pow(a,b)](/6_pointers_maths/README.md#fast-exponential)  
+[Find modulus of negative number](/6_pointers_maths/README.md#find-modulus-of-negative-number)  
 [Pigeon hole](/6_pointers_maths/README.md#pigeon-hole)  
 [catalan number bst](/6_pointers_maths/README.md)  
 [inclusion exclusion principle](/6_pointers_maths/README.md)  

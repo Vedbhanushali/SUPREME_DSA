@@ -121,6 +121,21 @@ int exp(int a,int b){
 }
 ```
 
+## Find modulus of negative number
+
+```cpp
+#include <iostream>
+using namespace std;
+ 
+int main()
+{
+ 
+    int a = -7, b = 5;
+    cout << ((a % b) + b) % b;
+    return 0;
+}
+```
+
 ## Pigeon hole
 
 ## catalan number BST
