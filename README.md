@@ -429,6 +429,7 @@ github repository of DSA challanges
 [Trie structure](/17_Maps/README.md#trie-structure)  
 [Longest common prefix](/17_Maps/README.md#longest-common-prefix)  
 [Implement dictornary](/17_Maps/README.md#implement-dictonary)  
+[Mutliset to find min and max in single Data structure](/17_Maps/README.md#mutliset-to-find-min-and-max-in-single-data-structure)  
 
 ### Practice question for Map & Tries
 

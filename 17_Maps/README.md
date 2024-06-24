@@ -365,3 +365,89 @@ int main() {
     return 0;
 }
 ```
+
+## Mutliset to find min and max in single Data structure
+
+### stl algorithm
+
+```cpp
+    // can contain duplicate entries also 
+    // below will be created in ascending order
+    multiset<int> m; 
+    // below will be in descending order
+    multiset<int, greater<int> > m2;
+    m.insert(1);
+    m.insert(3);
+    m.insert(2);
+    m.insert(2);
+    m.insert(2);
+    multiset<int>::iterator itr;
+    for (itr = m.begin(); itr != m.end(); ++itr) {
+        cout << *itr << " ";
+    } 
+    // OUTPUT - 1 2 2 2 3
+    cout<<"max : "<<*m.rbegin()<<endl; // OUTPUT - 3
+    cout<<"min : "<<*m.begin()<<endl; //OUTPUT - 2
+    // erase on single instance of 
+    m.erase(m.find(2)); //OUTPUT - 1 2 2 3
+    // erase all instance of provided
+    m.erase(2); // 1 3
+```
+
+<https://leetcode.com/problems/longest-continuous-subarray-with-absolute-diff-less-than-or-equal-to-limit/description/>
+
+```cpp
+class Solution {
+public:
+    int longestSubarray(vector<int>& A, int limit) {
+        //this is magic code
+        // int i = 0, j;
+        // multiset<int> m;
+        // for (j = 0; j < A.size(); ++j) {
+        //     m.insert(A[j]);
+        //     if (*m.rbegin() - *m.begin() > limit) {
+        //         //max - min > limit
+        //         m.erase(m.find(A[i]));
+        //         i++;
+        //     }
+        // }
+        // return j - i;
+        int s = 0;
+        int e = 0;
+        int ans = 0;
+        int maxi = INT_MIN;
+        int mini = INT_MIN;
+        multiset<int> ms;
+        // ms.insert(10005);
+        // ms.insert(-10005);
+        while(e<A.size() && s<A.size()){
+            // cout<<"s "<<s<<" e "<<e<<endl;
+            ms.insert(A[e]);
+            // for(auto it = ms.begin();it!=ms.end();it++) cout<<*it<<" ";
+            //     cout<<endl;
+            maxi = *ms.rbegin();
+            mini = *ms.begin();
+            // cout<<"maxi "<<maxi<<" mini "<<mini<<endl;
+            if(maxi - mini <= limit){
+                // cout<<"went inside : "<<e-s+1<<endl;
+                ans = max(ans,e-s+1);
+                e++;
+            } else {
+                // ms.erase(A[s]);
+                multiset<int>::iterator itr;
+                itr = ms.find(A[s]);
+                // cout<<"clearing ";
+                // cout<<*itr<<endl;
+                if(itr != ms.end())
+                    ms.erase(itr);
+                itr = ms.find(A[e]);//because re entry will be done 
+                if(itr!=ms.end())
+                    ms.erase(itr);
+                s++;
+            }
+        }
+        // ans = max(ans,e-s+1);
+        return ans;
+    }
+};
+```
