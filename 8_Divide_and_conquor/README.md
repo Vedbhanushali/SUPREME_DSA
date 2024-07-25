@@ -117,39 +117,47 @@ void mergeInPlace(vector<int> &v,int start,int mid,int end){
 TC - O(nlogn)
 
 ```cpp
-void quickSort(int arr[],int s,int e){
+class Solution {
+public:
+    void quickSort(vector<int>&arr,int s,int e){
     if(s>=e){
         return;
     }
-    int pivot = partition(arr,s,e);
-    quickSort(arr,s,pivot-1);
-    quickSort(arr,pivot,e);
+    int pivotIndex = partition(arr,s,e);
+    quickSort(arr,s,pivotIndex-1);
+    quickSort(arr,pivotIndex+1,e);
 }
-int partition(int arr[],int s,int e){
+int partition(vector<int> &arr,int s,int e){
     int pivot = arr[s];
     int pivotIndex = s;
     int count = 0;
-    for(int i=0;i<=e;i++){
+    for(int i=s;i<=e;i++){
         if(arr[i]<=pivot){
             count++;
         }
     }
-    int rightIndex = s + count;
+    int rightIndex = s + count - 1;
     swap(arr[rightIndex],arr[pivotIndex]);
     pivotIndex = rightIndex;
     int i = s;
     int j = e;
-    while(i<pivotIndex && j<pivotIndex){
+    while(i<pivotIndex && j>pivotIndex){
         if(arr[i]<=pivot){
             i++;
-        } else if(arr[i]>pivot){
+        } else if(arr[j]>pivot){
             j--;
         } else {
             swap(arr[i++],arr[j--]);
         }
     }
-    return pivot;
+    return pivotIndex;
 }
+    vector<int> sortArray(vector<int>& nums) {
+        //quick sort algorithm
+        quickSort(nums,0,nums.size()-1);
+        return nums;
+    }
+};
 ```
 
 ## QuickSort other
