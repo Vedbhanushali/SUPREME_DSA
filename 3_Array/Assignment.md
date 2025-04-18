@@ -18,7 +18,7 @@ while(mid <= high){
     if(arr[mid] == 0){
         swap(arr[mid],arr[low]);
         low++; //
-        mid++; //doint this becase it is sure that at arr[low] it will be 1 only if 2 it will be already handled
+        mid++; //doing this because it makes sure that at arr[low] it will be 1 only if 2 it will be already handled
     } else if(arr[mid]==1){
         mid++;
     } else {
@@ -28,14 +28,14 @@ while(mid <= high){
 }
 ```
 
-## move all -ve no the left side of array
+## move all -ve number to left side of array
 
 1. sort
 2. dutch national flag approach 0,1 consider 0 as negative and 1 as positive
 
 ## find duplicate Number
 
-Q. nums n iszes containing n+1 integers in range [1,n] only one repeating number return repeated number  
+Q. nums n sizes containing n+1 integers in range [1,n] only one repeating number return repeated number  
 [1,3,4,2,2] answer - 2
 
 answer
@@ -262,22 +262,11 @@ reverse(ans.begin(),ans.end());
 ## Find Factorial of number
 
 ```cpp
-vector<int> factorial(int N){
-    vector<int> ans;
-    ans.push_back(1);
-    int carry = 0;
-    for (int i = 2; i <= N; i++) {
-        for(int j = 0; j < arr.size(); j++) {
-            int x = arr[j]*i + carry;
-            arr[j] = x % carry ;
-            carry  = x / 10;
-        }
-        while (carry) {
-            ans.push_back(carry%10);
-            carry /= 10;
-        }
+int factorial(int N){
+    int ans = 1;
+    for(int i=2;i<=N;i++){
+        ans *= i;
     }
-    reverse(ans.begin(),ans.end());
     return ans;
 }
 ```

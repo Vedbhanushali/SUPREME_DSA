@@ -51,7 +51,7 @@ vector<vector<int>> answer;
 // 1st way
 temp = a
 a = b
-b = a
+b = temp
 // 2nd way
 a = a+b;
 b = a-b;
