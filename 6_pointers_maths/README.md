@@ -64,6 +64,26 @@ gcd(a,b) = gcd(b-a,a) for (b>a)
 ```
 
 ```cpp
+int gcd(int a, int b)
+{
+    // Everything divides 0
+    if (a == 0)
+        return b;
+    if (b == 0)
+        return a;
+
+    // Base case
+    if (a == b)
+        return a;
+
+    // a is greater
+    if (a > b)
+        return gcd(a - b, b);
+    return gcd(a, b - a);
+}
+```
+
+```cpp
 int gcd(int a,int b){
     if(a==0 || b==0) return 0;
     while(a>0 && b>0){
@@ -109,13 +129,11 @@ another approach divide and conquor
 ```cpp
 int exp(int a,int b){
     int ans = 1;
-    while(b>0){
-        if(b&1){
-            ans = ans * a;
-        } else {
-            ans = a * a;
-        }
-        b= b>>1;
+    while(b>0) {
+        if (b & 1) 
+            ans = (ans*a);
+        b = b>>1; 
+        a = (a*a); 
     }
     return ans;
 }

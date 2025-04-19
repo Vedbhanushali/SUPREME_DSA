@@ -226,7 +226,7 @@ int find_peak(vector<int> v,int target){
     int mid = s + (e-s)/2;
     int ans = -1;
     while(s<e){
-        if(arr[mid] < arr[mid + 1]){
+        if(mid+1 < arr.size() && arr[mid] < arr[mid + 1]){
             //right search
             // on left slope
             start = mid + 1;

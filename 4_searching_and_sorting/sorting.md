@@ -10,10 +10,8 @@ for(int i=0;i<n-1;i++){
     minIndex = i
     for(int j=i+1;j<n;j++){
         if(arr[j]<arr[minIndex]){
-            arr[minIndex] = arr[j];
+            minIndex = j;
         }
-        // for above we can also write
-        //arr[minIndex] = min(arr[minIndex],arr[j]);
     }
     swap(arr[i],arr[minIndex]);
 }
