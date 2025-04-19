@@ -224,7 +224,7 @@ int ans = solve(7,5,2,2);
 if(ans < 0) cout<<"no segments possible"
 ```
 
-## Maximum sum of adjacent elements
+## Maximum sum of non-adjacent elements
 
 find non adjacent elements whose sum is maximum
 
