@@ -156,7 +156,7 @@ Animal e(*ptr);
 ## Destructor
 
 - for static allocation automatically memory is free
-- for dynamic allocatio memory release necessary
+- for dynamic allocation memory release necessary
 
 ```cpp
 class Animal {
@@ -192,7 +192,7 @@ int main(){
     Animal a;
     a.sex = 0;
     return 0;
-    //for destructor will be by default call automatically
+    //for a destructor will be by default call automatically
 
     Animal *b = new Animal();
     b->sex = 0;
@@ -386,7 +386,7 @@ class Animal {
 };
 class Dog: public Animal {
     public:
-    void speak(){
+    void speak() {
         cout<<"Barking";
     }
 };

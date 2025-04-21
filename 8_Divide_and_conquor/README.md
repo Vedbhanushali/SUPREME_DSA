@@ -86,7 +86,7 @@ void mergeInPlace(vector<int> &v,int start,int mid,int end){
     int total_len = end-start+1;
     int gap = total_len/2 + total_len%2;
     while(gap>0){
-        int i=start;
+        int i = start;
         int j = start + gap;
         while(j<=end){
             if(v[i] > v[j]){

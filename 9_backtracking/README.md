@@ -45,6 +45,10 @@ int rob(vector<int> &nums,int i){
 ```
 
 ## Rate in maze
+{ 1, 0, 0, 0 },
+{ 1, 1, 0, 1 },
+{ 1, 1, 0, 0 },
+{ 0, 1, 1, 1 } 
 
 0 - rasta blocked  
 1 - rasta open  
