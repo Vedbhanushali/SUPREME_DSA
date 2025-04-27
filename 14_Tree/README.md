@@ -309,8 +309,6 @@ public:
 };
 ```
 
-HW
-
 ## Check if two tree are identical or not
 
 <https://leetcode.com/problems/same-tree/>
@@ -582,7 +580,6 @@ int findposition(int inorder[],int size,int element){
     for(int i=0;i<size;i++){
         if(element == inorder[i]) index = i;
     }
-
     return index;
 }
 Node* buildTreeFromInorderPreorder(int inorder[],int preorder[], int size,int &preIndex,int inorderStart,int inorderEnd){
@@ -636,9 +633,9 @@ void printTopView(Node* root){
         q.pop();
 
         Node* frontNode = temp.first;
-        int HD = temp.second;
+        int HD = temp.second; //HD - horizontal distance
 
-        if(topNode.find[hd]==topNode.end()){ //not found hd
+        if(topNode.find(hd)==topNode.end()){ //not found hd
             topNode[hd] = frontNode->data;
         }
         

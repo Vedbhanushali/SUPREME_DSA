@@ -262,9 +262,9 @@ Node* reverseKNodes(Node *head,int k){
         count++;
     }
     //recursive call
-    if(forward!=NULL){
+    if(curr!=NULL){
         //we still have nodes to reverse
-        head->next = reverseKNodes(forward,k)
+        head->next = reverseKNodes(curr,k)
     }
     //return head of the linked list
     return prev;
@@ -283,7 +283,7 @@ Approach
 
 - can be solved using maps storing node address as key and value as boolean (true for visited)
 - floyd cycle detection (slow fast pointer approach)
-  - (sloww == fast) - loop present
+  - (slow == fast) - loop present
   - (fast == NULL) - loop not present
 
 ```cpp
@@ -323,10 +323,12 @@ Node* startingPoint(Node* &head){
             slow = slow->next;
         }
         if(slow == fast) {
+            //loop is present
             slow = head;
             break;
         }
     }
+    //case when above while loop stop when fast went NULL
     if(fast==NULL) return head; // if no loop then return head
     while(slow!=fast){
         slow = slow->next;
@@ -336,7 +338,7 @@ Node* startingPoint(Node* &head){
 }
 ```
 
-Removing loop
+Removing loop and returning head
 
 ```cpp
 Node* removeLoop(Node* &head){
@@ -346,14 +348,15 @@ Node* removeLoop(Node* &head){
     Node* fast = head;
     Node* prev = NULL;
     while(fast!=NULL){
+        prev = fast;
         fast = fast->next;
         if(fast->next!=NULL){
+            prev = fast;
             fast = fast->next;
             slow = slow->next;
         }
         if(slow == fast) {
             slow = head;
-            prev = fast;
             break;
         }
     }
@@ -364,7 +367,7 @@ Node* removeLoop(Node* &head){
         fast = fast->next;
     }
     prev->next = NULL;
-    return slow; 
+    return head; 
 }
 ```
 
