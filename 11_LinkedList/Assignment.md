@@ -136,6 +136,7 @@ ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
 <https://leetcode.com/problems/merge-two-sorted-lists/>
 
 approach
+- two pointer approach to merge two linked list
 
 ```cpp
 
@@ -350,7 +351,7 @@ public:
         return newHead;
     }
     Node* helper(Node* head){
-        if(head == 0 ) return head;
+        if(head == 0) return head;
         //inserting new items after one another
         Node* it = head;
         while(it!=NULL){
