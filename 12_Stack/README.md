@@ -240,6 +240,9 @@ void insertAtBottom(stack<int> &s){
 
 ## reverse a stack using only one stack
 
+Approach
+- empty current stack using recursion once hit base case (empty) insert elements at bottom of stack
+
 ```cpp
 void insertAtBottom(stack<int> &s,int target){
     if(s.empty()){
@@ -313,10 +316,7 @@ void sortStack(stack<int>&s){
 }
 ```
 
-## Remove redundant brackets
 
-```cpp
-```
 
 ## Min stack
 
@@ -324,34 +324,32 @@ void sortStack(stack<int>&s){
 
 ```cpp
 class MinStack {
+    stack<pair<int,int>> st;
 public:
-    vector< pair<int,int> > st;
     MinStack() {
         
     }
     
     void push(int val) {
         if(st.empty()){
-            pair<int,int> p = make_pair(val,val);
-            st.push_back(p);
-        } else {
-            pair<int,int> p;
-            p.first = val;
-            p.second = min(val,st.back().second);
-            st.push_back(p);
+            st.push({val,val});
+            return;
         }
+        pair<int,int> curr = st.top();
+        int mini = min(val,curr.second);
+        st.push({val,mini});
     }
     
     void pop() {
-        st.pop_back();
+        st.pop();
     }
     
     int top() {
-        return st.back().first;
+        return st.top().first;
     }
     
     int getMin() {
-        return st.back().second;
+        return st.top().second;
     }
 };
 
@@ -478,8 +476,8 @@ vector<int> nextSmaller(vector<int> &v){
     return ans;
 }
 int largestRectangleArea(vector<int>& heights) {
-    vector<int> prev = prevSmaller(heights);
-    vector<int> next = nextSmaller(heights);
+    vector<int> prev = prevSmaller(heights); //index of prev smaller element
+    vector<int> next = nextSmaller(heights); //index of next smaller element
 
     int MaxArea = 0;
     for(int i = 0;i<heights.size();i++){

@@ -727,6 +727,7 @@ public:
         int open = st.size();
         // cout<<ans<<" "<<open;
         if(open) {
+            //open from right side which are not close removing them.
             string newAns = "";
             for(int i = ans.size()-1;i>=0;i--){
                 if(ans[i] == '(' && open) {
