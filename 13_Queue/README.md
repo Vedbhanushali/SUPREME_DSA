@@ -125,6 +125,8 @@ int main(){
 
 ## Circular Queue
 
+A circular queue is a linear data structure that overcomes the limitations of a regular (linear) queue by connecting the end of the queue back to the beginning, forming a circle. This circular structure allows the queue to efficiently reuse space when elements are removed, preventing memory wastage and enabling continuous operations.
+
 ```cpp
 class CirQueue{
     public:
@@ -524,6 +526,7 @@ int main(){
 <https://practice.geeksforgeeks.org/problems/first-negative-integer-in-every-window-of-size-k3345/1>
 
 INPUT vector: 12,-1,-7,8,-15,30,16,28 ,  k=3  
+OUTPUT - [-1, -1, -7, -15, -15, 0] 
 
 Approach  
 q to store index of elments

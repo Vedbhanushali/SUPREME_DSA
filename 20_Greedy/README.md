@@ -150,7 +150,7 @@ TODO
 
 ## Fractional knapsack
 
-given value and weight array and given capacity chose such maximum values such that their wieght does not exceed given capacity.
+given value and weight array and given capacity chose such maximum values such that their weight does not exceed given capacity.
 
 will compare based on ration of value per kg
 
@@ -172,7 +172,7 @@ int main() {
     sort(data.begin(),data.end(),comp);
     int ans = 0;
     for(int i=0;i<n;i++){
-        pair<int,int item = data[i];
+        pair<int,int> item = data[i];
         int itemVal = item.first;
         int itemWt = item.second;
         if(itemWt <= capacity){
