@@ -589,7 +589,7 @@ public:
 };
 ```
 
-## LIS / LCS Variants
+## LIS / LCS Variants (Longest increasing Subsequence/Longest Common Subsequence)
 
 ### Intervleaving Strings Leetcode
 
@@ -602,10 +602,10 @@ public:
         if(i >= s1.size() && j>=s2.size() && k>=s3.size()) return true;
         if(dp[i][j][k]!=-1) return dp[i][j][k];
         bool flag = false;
-        if( i<s1.size() && s1[i] == s3[k]){
+        if( i<s1.size() && k <s3.size() && s1[i] == s3[k]){
             flag = flag | solve(s1,s2,s3,i+1,j,k+1,dp);
         }
-        if( j<s2.size() && s2[j] == s3[k]){
+        if( j<s2.size() && k < s3.size() && s2[j] == s3[k]){
             flag = flag | solve(s1,s2,s3,i,j+1,k+1,dp);
         }
         return dp[i][j][k] = flag;

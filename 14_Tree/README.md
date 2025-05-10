@@ -156,6 +156,22 @@ void levelOrderTraversalNewLine(Node* root){
         
     }
 }
+
+void levelOrderTraversalNewLine(Node* root){
+    queue<Node*> q;
+    q.push(root);
+    
+    while(!q.empty()){
+        int s = q.size();
+        while(s--){
+            Node* curr = q.front(); q.pop();
+            cout<<curr->val;
+            if(curr->left) q.push(curr->left);
+            if(curr->right) q.push(curr->right);
+        }
+        cout<<endl; // level over new level will start
+    }
+}
 ```
 
 ## Inorder Traversal - LNR

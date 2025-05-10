@@ -66,6 +66,7 @@ class Solution {
 public:
     int findposition(vector<int>&inorder,int size,int element){
         int index = -1;
+        //can use binary search to find element in inorder as it inorder of BST is in ascending order.
         for(int i=0;i<size;i++){
             if(element == inorder[i]) index = i;
         }
@@ -77,12 +78,12 @@ public:
             return NULL;
         }
 
-        int element = preorder[preIndex++];
+        int element = preorder[preIndex];
         TreeNode* root = new TreeNode(element);
         int pos = findposition(inorder,size,element);
 
-        root->left = buildTreeFromInorderPreorder(inorder,preorder,size,preIndex,inorderStart,pos-1);
-        root->right = buildTreeFromInorderPreorder(inorder,preorder,size,preIndex,pos+1,inorderEnd);
+        root->left = buildTreeFromInorderPreorder(inorder,preorder,size,preIndex+1,inorderStart,pos-1);
+        root->right = buildTreeFromInorderPreorder(inorder,preorder,size,preIndex+1,pos+1,inorderEnd);
 
         return root;
     }

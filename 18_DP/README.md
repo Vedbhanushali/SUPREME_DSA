@@ -321,7 +321,7 @@ int main(){
 
 ## 0/1 knapsack problem - 2D DP problem
 
-problem - given a set of n items numbered from 1 to n each with wieght wi and value vi along with a maximum weight capacity W. maximize the sum of the values of the items in knapsack so that the sum of the weigths is less than or equal to the knapsack's capacity.
+problem - given a set of n items numbered from 1 to n each with weight wi and value vi along with a maximum weight capacity W. maximize the sum of the values of the items in knapsack so that the sum of the weigths is less than or equal to the knapsack's capacity.
 
 same pattern (TODO)
 
@@ -371,7 +371,6 @@ int solveMem(vector<int>&weight,vector<int> &value,int index,int &W,vector<vecto
     return dp[index][W];
 }
 int solveTab(vector<int>&weight,vector<int> &value,int n,int &capacity){
-    // TIMESTAMP:01:25:08
     vector<vector<int>> dp(n,vector<int> (capacity+1,0));
     for(int w=weight[0];w<=capacity;w++){
         if(weight[0] <= capacity){

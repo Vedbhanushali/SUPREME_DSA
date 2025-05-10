@@ -899,6 +899,7 @@ class Graph {
 
                 //neighbour traverse
                 for(auto nbr:adjList[node]){
+                    //nbr {value,weight}
                     if(nodeDistance + nbr.second < dist[nbr.first]) {
                         //update distance in distance array as well as set
                         //finding entry in set
@@ -912,9 +913,8 @@ class Graph {
                         st.insert(make_pair(dist[nbr.first],nbr.first));
                     }
                 }
-
-                cout<<"Ans : distance from "<<src<<" to "<<dest<<" is " <<dist[dest];
             }
+            cout<<"Ans : distance from "<<src<<" to "<<dest<<" is " <<dist[dest];
         }
 };
 
