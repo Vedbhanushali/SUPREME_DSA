@@ -353,7 +353,7 @@ vector<int> mergeKSortedArrays(int arr[][4],int k,int n){
 
     //har array ka first element insert karo
     for(int i=0;i<k;i++){
-        info* temp = new info(arrp[i][0],i,0);
+        info* temp = new info(arr[i][0],i,0);
         minHeap.push(temp);
     }
     vector<int> ans;
@@ -543,6 +543,21 @@ Return any possible rearrangement of s or return "" if not possible.
 <https://leetcode.com/problems/reorganize-string/>
 
 ```cpp
+class node {
+    public:
+    char data;
+    int count;
+    node(char d,int c){
+        data = d;
+        count = c;
+    }
+};
+class compare {
+    public:
+    bool operator()(node a,node b){
+        return a.count < b.count;
+    }
+};
 class Solution {
 public:
     string reorganizeString(string s) {

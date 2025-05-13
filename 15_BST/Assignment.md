@@ -420,6 +420,7 @@ approach -
 1. perform inorder on BST and store int in vector, now construct LL from it. TC: O(n) and SC - O(n)
 2. perform inorder on BST and store BST Node in vector, not vec[i]->left = NULL and vec[i]->right = vec[i+1] node. TC: O(n) and SC: O(n)
 3. flatten using inorder traversal on go using a dummy/prev node which will act as predecessor.
+4. Morris Traversal modified
 
 ```cpp
 void in(Node* root,Node* &prev){

@@ -582,8 +582,6 @@ public:
 };
 ```
 
-## Sum of longest bloodline TODO
-
 ## build tree from inorder and preorder traversal
 
 and
