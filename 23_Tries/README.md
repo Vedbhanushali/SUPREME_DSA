@@ -252,6 +252,28 @@ public:
         findLCP(first,ans,root);
         return ans;
     }
+    string longestCommonPrefixSecondMethod(vector<string> words) {
+        TrieNode* root = new TrieNode('-');
+        for(string &s : words){
+            insertWord(root,s);
+        }
+        string prefix = "";
+        TrieNode* curr = root;
+        while(!curr->isTerminal) {
+            int count = 0;
+            int index = -1;
+            for(int i=0;i<26;i++){
+                if(curr->children[i]) {
+                    count++;
+                    index = i;
+                }
+            }
+            if(count > 1) break;
+            prefix += ('a'+index);
+            curr = curr->children[index];
+        }
+        return prefix;
+    }
 }; 
 ```
 
