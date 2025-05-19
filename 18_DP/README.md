@@ -259,10 +259,8 @@ int solveRec(int n,int &k){
     if(n == 2){
         return k* k; //k(same) + k* (k-1) (diff)
     }
-    if(dp[n] != -1) return dp[n];
-
-    dp[n] = (solveRec(n-1,k) * solveRec(n-2,k))*(k-1);
-    return dp[n];
+    // curr wall painted in k-1 * (other walls (lets one wall is pained with k-1 color) or two walls are pained with k-1 color both possible)
+    return (solveRec(n-1,k) * solveRec(n-2,k))*(k-1);
 }
 int solveMem(int n,int &k,vector<int>& dp){
     if(n == 1){
