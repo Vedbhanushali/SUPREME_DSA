@@ -1072,7 +1072,7 @@ public:
         return dp[i][isSwap] = min(swap,noswap);
     }
     int minSwap(vector<int>& nums1, vector<int>& nums2) {
-        // return solve(nums1,nums2,0,-1,-1,dp);
+        // return solve(nums1,nums2,0,-1,-1);
 
         vector<vector<int> > dp(nums1.size(),vector<int>(2,-1));
         return solveMem(nums1,nums2,0,-1,-1,dp,0);
@@ -1097,7 +1097,7 @@ public:
     }
     int maxSatisfaction(vector<int>& sat) {
         vector<vector<int> > dp(sat.size()+1,vector<int>(sat.size()+1,-1));
-        sort(sat.begin(),sat.end());
+        sort(sat.begin(),sat.end()); //sorting so max satisifaction dist comes last with more time increase time * dish_sat value.
         return solve(sat,0,1,dp);
     }
 };
@@ -1184,7 +1184,21 @@ public:
         int diffEnd = nums[end] - solve(nums,start,end-1,dp);
         return dp[start][end] = max(diffStart,diffEnd);
     }
+    bool mySolve(vector<int>&nums,int s,int e,int p1,int p2,bool p1Turn) {
+        if (s > e) {
+            return p1 >= p2;
+        }
+        if(p1Turn) {
+            // make p1 win in any case or
+            return mySolve(nums,s+1,e,p1+nums[s],p2,!p1Turn) | mySolve(nums,s,e-1,p1+nums[e],p2,!p1Turn);
+        } else {
+            //p2 turn 
+            // if p2 makes any move in any case p1 fails return false
+            return mySolve(nums,s+1,e,p1,p2+nums[s],!p1Turn) & mySolve(nums,s,e-1,p1,p2+nums[e],!p1Turn);
+        }
+    }
     bool predictTheWinner(vector<int>& nums) {
+        // return mySolve(nums,0,nums.size()-1,0,0,true);
         vector<vector<int>> dp(nums.size()+1,vector<int>(nums.size()+1,-1));
         return solve(nums,0,nums.size()-1,dp) >= 0;
     }
