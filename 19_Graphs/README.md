@@ -1058,6 +1058,28 @@ approach - it is dfs approach marking all connected nodes to given color
 ```cpp
 class Solution {
 public:
+    void solve(vector<vector<int>>&image,int i, int j,int &color,int &prevColor,vector<vector<bool>>&visited){
+        if(i < 0 || j < 0 || i >= image.size() || j >=image[0].size()) return;
+        if(visited[i][j]) return;
+        if(image[i][j] != prevColor) return;
+
+        image[i][j] = color;
+        visited[i][j] = true;
+        
+        solve(image,i-1,j,color,prevColor,visited);
+        solve(image,i+1,j,color,prevColor,visited);
+        solve(image,i,j-1,color,prevColor,visited);
+        solve(image,i,j+1,color,prevColor,visited);
+    }
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int i, int j, int color) {
+        int prevColor = image[i][j];
+        vector<vector<bool>> visited(image.size(),vector<bool>(image[0].size(),false));
+        solve(image,i,j,color,prevColor,visited);
+        return image;
+    }
+};
+class Solution {
+public:
     void solve(vector<vector<int>>&image,int &mainColor,int& color,int x,int y,vector<vector<bool>>&visited){
         //left
         image[x][y] = color;
@@ -1470,7 +1492,7 @@ int main() {
 ## Floyd Warshall
 
 it is used to find multiple source shortest path
-
+ 
 approach
 
 1. create 2D matrix of all nodes(nxn) i(rows) & j(column) represent distance between u to v (where i is u and j is v)
@@ -1502,7 +1524,7 @@ class Graph {
             for(int i=0;i<n;i++){
                 dist[i][i] = 0;
             }
-
+            //direct connection u->v distance will be shortest.
             for(auto t:adjList){
                 int u = t.first;
                 for(auto nbr : t.second){
@@ -1547,7 +1569,7 @@ int main() {
 
 ## Strongly Connected component (SCC) / Kosaraju algorithm
 
-this is a component from which you can reach to from given vertex to another vertex of that component in the graph.
+this is a component from which you can reach from given vertex to another vertex of that component in the graph.
 
 ### approach
 
@@ -1652,7 +1674,7 @@ int main() {
 ## Bridge in a Graph / Tarjan's algorithm
 
 A edge removal which create more than 1 disconnected component in a graph is called bridge.
-keeping track of insertion time(tin) and lowest time (tlow) to reach a node. if child node lowest time is less than parent mean it concludes that child can be reached from other nodes faster than the current traversal parent node so parent child edge is not a bridge but vice versa is true.
+keeping track of insertion time(tin) and lowest time (tlow) to reach a node. if child/nbr node lowest time is less than parent mean it concludes that child/nbr can be reached from other nodes faster than the current traversal parent node so parent child edge is not a bridge but vice versa is true.
 
 ```cpp
 # include <iostream>
@@ -1676,10 +1698,11 @@ class Graph {
             visited[src] = true;
             tin[src] = timer;
             tlow[src] = timer;
+            timer++;
             for(auto nbr:adjList[src]){
                 if(nbr == parent) continue;
                 if(!visited[nbr]){
-                    findBridges(nbr,src,timer+1,tin,tlow,visited);
+                    findBridges(nbr,src,timer,tin,tlow,visited);
                     tlow[src] = min(tlow[src],tlow[nbr]);
                     //checking bridge
                     //yaha galti hoti hai tlow change ho sakta hai lekin tin parent to hamesa fix rahega
@@ -1704,10 +1727,11 @@ int main() {
     g.addEdge(2,1,1);
     g.addEdge(0,3,1);
     g.addEdge(3,4,1);
+    int timer = 0;
     vector<int> tin(n);
     vector<int> tlow(n);
     unordered_map<int,bool> visited;
-    g.findBridges(0,-1,0,tin,tlow,visited);
+    g.findBridges(0,-1,timer,tin,tlow,visited);
     return 0;
 }
 ```

@@ -15,7 +15,7 @@ minimum spanning tree (from all possible subsets of spanning tree whoes edges we
 
 - convert a graph to a tree (no cycle)
 - in tree, every node should be reachable by every other node
-- Tree would have n nodes and n-1 nodes
+- Tree would have n nodes and n-1 edges
 
 steps -
 
