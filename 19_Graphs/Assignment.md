@@ -1,14 +1,6 @@
 # Assignment
 
-## Prim's Algorithm
-
-Used to find minimum spanning tree, it does by building tree from scratch. it contains three data structure ( key, MST, parent)
-
-- key: contains value of each node
-- MST: tracks which node has been included in MST as of now
-- parent: stores final structure of MST.
-
-### Spanning Tree
+## Spanning Tree & MST
 
 (removes edges from graph to convert it into tree)
 minimum spanning tree (from all possible subsets of spanning tree whoes edges weights sum is minimum is minimum spanning tree)
@@ -16,6 +8,37 @@ minimum spanning tree (from all possible subsets of spanning tree whoes edges we
 - convert a graph to a tree (no cycle)
 - in tree, every node should be reachable by every other node
 - Tree would have n nodes and n-1 edges
+
+## MST finding alorithms
+
+Minimum Spanning Tree (MST) is a fundamental concept in graph theory and has various applications in network design, clustering, and optimization problems. Two of the most commonly used algorithms to find the MST of a graph are Prim's and Kruskal's algorithms. Although both algorithms achieve the same goal, they do so in different ways. In this article we are going to explore the differences between them which can help in choosing the right algorithm for specific types of graphs and applications.
+
+- Prim's Algorithm:
+Prim's algorithm is a greedy algorithm that builds the MST incrementally. It starts with a single vertex and grows the MST one edge at a time, always choosing the smallest edge that connects a vertex in the MST to a vertex outside the MST.
+
+    Steps of Prim's Algorithm:
+Initialization: Start with an arbitrary vertex and mark it as part of the MST.
+Edge Selection: From the set of edges that connect vertices in the MST to vertices outside the MST, select the edge with the minimum weight.
+Update: Add the selected edge and the connected vertex to the MST.
+Repeat: Repeat the edge selection and update steps until all vertices are included in the MST.
+Prim's algorithm is typically implemented using a priority queue to efficiently select the minimum weight edge at each step.
+
+- Kruskal's Algorithm:
+Kruskal's algorithm is also a greedy algorithm but takes a different approach. It begins with all the vertices and no edges, and it adds edges one by one in increasing order of weight, ensuring no cycles are formed until the MST is complete.
+
+    Steps of Kruskal's Algorithm:
+Initialization: Sort all the edges in the graph by their weight in non-decreasing order.
+Edge Selection: Starting from the smallest edge, add the edge to the MST if it doesn't form a cycle with the already included edges.
+Cycle Detection: Use a union-find data structure to detect and prevent cycles.
+Repeat: Continue adding edges until the MST contains exactly (V-1) edges, where V is the number of vertices.
+
+## Prim's Algorithm
+
+Used to find minimum spanning tree, it does by building tree from scratch. it contains three data structure ( key, MST, parent)
+
+- key: contains value of each node
+- MST: tracks which node has been included in MST as of now
+- parent: stores final structure of MST.
 
 steps -
 
@@ -29,7 +52,14 @@ steps -
 }
 
 ```cpp
-//V is number of Vertices in graph
+#include<iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+// Prims algorithm to find minimum spanning tree
+// Key - contains the minimum weight edge for each vertex
+// MST - boolean array to check if the vertex is included in the MST
+// parent - to store the parent of each vertex in the MST
 int getMinValueNode(vector<int>&key,vector<int>&mst){
     int temp = INT_MAX;
     int index = -1; //node having min value
@@ -41,7 +71,7 @@ int getMinValueNode(vector<int>&key,vector<int>&mst){
     }
     return index; //index represent node
 }
-int spanningTree(int V,vector<vector<int>> adj[]){
+int spanningTree(int V,vector<vector<pair<int,int>>> adj[]){
     //prims algorithm
     vector<int> key(V,INT_MAX);
     key[0] = 0;
@@ -59,12 +89,14 @@ int spanningTree(int V,vector<vector<int>> adj[]){
         mst[u] = true;
 
         //process adj node
-        for(auto edge : adj[u]){
-            int v = edge[0];
-            int w = edge[1];
-            if(mst[v] == false && wt < key[v]){
-                key[v] = wt;
-                parent[v] = u;
+        for(auto edges : adj[u]){
+            for(auto edge : edges){
+                int v = edge.first;
+                int wt = edge.second;
+                if(mst[v] == false && wt < key[v]){
+                    key[v] = wt;
+                    parent[v] = u;
+                }
             }
         }
     }
@@ -74,14 +106,30 @@ int spanningTree(int V,vector<vector<int>> adj[]){
     for(int u=0;u<parent.size();u++){
         if(parent[u] == -1) continue;
         for(auto edge : adj[u]){
-            int v = edge[0];
-            int wt = edge[1];
-            if(parent[u] == v) {
-                sum +=w;
+            for(auto edge : edge){
+                int v = edge.first;
+                int wt = edge.second;
+                if(parent[u] == v) {
+                    sum +=wt;
+                }
             }
         }
     }
     return sum;
+}
+
+int main() {
+    int V = 5; // Number of vertices
+    vector<vector<pair<int,int>>> adj[V];
+    // Adding edges to the graph
+    adj[0].push_back({{1, 2}, {2, 3}});
+    adj[1].push_back({{0, 2}, {2, 1}});
+    adj[2].push_back({{0, 3}, {1, 1}, {3, 4}});
+    adj[3].push_back({{2, 4}, {4, 5}});
+    adj[4].push_back({{3, 5}});
+    int totalWeight = spanningTree(V, adj);
+    cout << "Total weight of the minimum spanning tree: " << totalWeight << endl;
+    return 0;
 }
 ```
 
@@ -150,7 +198,7 @@ int spanningTree(int V,vector<vector<int>>adj[]){
         }
     }
     //sorting edges
-    sort(edges.begin(),edges.end(),mycmp);
+    sort(edges.begin(),edges.end(),mycmp); //sorting on wt
 
     int ans = 0;
     for(auto edge:edges){
@@ -169,6 +217,8 @@ int spanningTree(int V,vector<vector<int>>adj[]){
 ```
 
 ## Eventual Safe States
+
+<https://leetcode.com/problems/find-eventual-safe-states/>
 
 approach cycle detection
 
@@ -208,7 +258,59 @@ vector<int> eventualSafeNodes(int V,vector<int>adj[]){
 }
 ```
 
+approach using outDegree
+```cpp
+class Solution {
+public:
+    vector<int> eventualSafeNodes(vector<vector<int>>& graph) {
+        int n = graph.size();
+        vector<int> outDegree(n);
+        vector<vector<int>> toFrom(n);
+
+        for (int i = 0; i < n; i++) {
+            for (auto node : graph[i]) {
+                toFrom[node].push_back(i);
+                outDegree[i]++;
+            }
+        }
+
+        queue<int> q;
+        // Push all the nodes with outDegree zero in the queue.
+        for (int i = 0; i < n; i++) {
+            if (outDegree[i] == 0) { //as this is terminal node
+                q.push(i);
+            }
+        }
+
+        vector<bool> safe(n);
+        while (!q.empty()) {
+            int node = q.front();
+            q.pop();
+            safe[node] = true;
+
+            for (auto& from : toFrom[node]) {
+                // Delete the edge "from -> to".
+                outDegree[from]--;
+                if (outDegree[from] == 0) {
+                    q.push(from);
+                }
+            }
+        }
+
+        vector<int> safeNodes;
+        for(int i = 0; i < n; i++) {
+            if(safe[i]) {
+                safeNodes.push_back(i);
+            }
+        }
+        return safeNodes;
+    }
+};
+```
+
 ## Word Ladder-2
+
+<https://leetcode.com/problems/word-ladder-ii/description/>
 
 approach bfs to find shortest path (also storing all that shortest path of that level)
 
