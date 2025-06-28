@@ -172,7 +172,7 @@ int findParent(vector<int>&parent,int node){
 void unionSet(int u,int v,vector<int>&parent,vector<int>&rank){
     u = findParent(parent,u);
     v = findparent(parent,v);
-    if(rank[u] < rant[v]){
+    if(rank[u] < rank[v]){
         //u will be added in v
         parent[u] = v;
         rank[v]++;
@@ -320,7 +320,7 @@ vector<vector<string>> findSequence(string beginWord,string endWord,vector<strin
     //here as per word ladder we were only storing pair string,int (current latest and level), but here storing vector<string> which contains the whole path traversed.
     queue<pair<vector<string>,int>>q;
     q.push({{beginWord},1});
-    unordered_set<string> st(wordList,begin(),wordList.end());
+    unordered_set<string> st(wordList.begin(),wordList.end());
     int prevLevel = -1;
     vector<string>toBeRemoved; //removing from set after completion of currentLevel
     while(!q.empty()){
@@ -343,7 +343,7 @@ vector<vector<string>> findSequence(string beginWord,string endWord,vector<strin
         }
 
         for(int index=0;index<currString.length();index++){
-            char OriginalChar = currString[index];
+            char originalChar = currString[index];
             for(char ch = 'a';ch<='z';ch++){
                 currString[index] = ch;
                 if(st.find(currString)!=st.end()){
@@ -362,6 +362,8 @@ vector<vector<string>> findSequence(string beginWord,string endWord,vector<strin
 
 ## Minimum Multiplications to reach End
 
+<https://www.geeksforgeeks.org/problems/minimum-multiplications-to-reach-end/1>
+
 approach - bfs to find shortest path
 
 ```cpp
@@ -370,6 +372,7 @@ int minimumMultiplications(vector<int>&arr,int start,int end){
     queue<int> q;
     const int mod = 100000;
     vector<int> ans(100000,-1); //will also work as visited array in bfs and it stores steps of bfs level
+    //dp of already calculated multiplication storing level.
     ans[start] = 0;
     q.push(start);
     while(!q.empty()){
