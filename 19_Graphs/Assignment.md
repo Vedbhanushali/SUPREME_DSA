@@ -536,7 +536,9 @@ public:
 
 ## Find the City With the Smallest Number of Neighbours at a Threshold Distance
 
-approach - dijkstra algorithm
+approach - 
+1. dijkstra algorithm
+2. using Floyd Warshall
 
 <https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/>
 
@@ -594,6 +596,53 @@ public:
             }
         }
         return city;
+    }
+};
+```
+
+```cpp
+class Solution {
+public:
+    int findTheCity(int n, vector<vector<int>>& edges, int distanceThreshold) {
+        vector<vector<int>> distance(n,vector<int>(n,1e9));
+        //self
+        for(int u=0;u<n;u++){
+            distance[u][u] = 0;
+        }
+        //direct connection
+        for(auto edge : edges){
+            int u = edge[0];
+            int v = edge[1];
+            int w = edge[2];
+            distance[u][v] = w;
+            distance[v][u] = w;
+        }
+
+        for(int i=0;i<n;i++){
+            for(int src = 0;src < n;src++){
+                for(int destination=0;destination<n;destination++){
+                        distance[src][destination] = min(distance[src][destination],distance[src][i]+distance[i][destination]);
+                }
+            }
+        }
+        int ans = INT_MAX;
+        int index = -1;
+        for(int i=0;i<n;i++){
+            int consider = 0;
+            for(int j=0;j<n;j++){
+                // cout<<distance[i][j]<<" ";
+                if(i == j) continue;
+                if(distance[i][j] <= distanceThreshold) {
+                    consider++;
+                }
+            }
+            // cout<<endl;
+            if(consider <= ans) {
+                ans = consider;
+                index = i;
+            }
+        }
+        return index;
     }
 };
 ```
