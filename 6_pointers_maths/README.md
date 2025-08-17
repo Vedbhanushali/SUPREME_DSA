@@ -154,6 +154,31 @@ int main()
 }
 ```
 
+## base 10 to base k Conversion
+
+```cpp
+string convertToBase(int n, int k) {
+    if (n == 0) return "0";   // special case for 0
+    
+    string digits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"; 
+    // supports up to base 36
+    string res = "";
+
+    bool isNegative = (n < 0);   // check sign
+    long long num = abs((long long)n); // use long long to avoid overflow
+
+    while (num > 0) {
+        int remainder = num % k;
+        res.push_back(digits[remainder]);  // store digit
+        num /= k;
+    }
+
+    if (isNegative) res.push_back('-');  // add sign
+
+    reverse(res.begin(), res.end());  // reverse because we built it backwards
+    return res;
+}
+```
 ## Pigeon hole
 
 ## catalan number BST
